@@ -1,0 +1,118 @@
+
+
+
+<!--pager.js-->
+<!--Contenido-->
+<div class="ui container segment basic">
+
+		<div class="ui list" >
+	  <div class="item">
+		<div class="ui red raised very padded text container segment"> <!--dataucts"-->
+		  <h1 class="ui center aligned header"><%= @product.commercial_name %></h1>
+		  <div class="ui two column doubling stackable grid container" >
+			  <div class="column" >
+				<img src= "/image_store/product<%= @product.id %>.gif" width="250" height="250"/>
+			  </div>
+
+			  <div class="column"  >
+
+          <div class="ui padded basic segment" style="text-align: justify;">
+          </div>
+          <!--</tr>-->
+						<span style="color:#0E6EB8"><b>Descripción: </b></span>
+          <p><%=@product.description%></p>
+          <span style="color:#0E6EB8"><b>Certificación: </b></span><%=@product.certification%><br>
+          <span style="color:#0E6EB8"><b>Posición arancelaria: </b></span><%=@product.tariff_position%><br><br>
+					<span style="color:#0E6EB8"><%= link_to 'Volver', :back %></span>
+
+
+				<div class="ui floated container basic">
+						<a class="field"></a>
+				</div>
+
+				<!--modal Informacion-->
+				<div class="ui modal compact">
+					<i class="close icon"></i>
+						<div class="header">
+							Empresa: Pil Andina S.A
+						</div>
+						<div class="ui two column doubling stackable grid container">
+							<div class="column">
+								<h1 class="ui icon center aligned header basic container">
+									<img class="ui centered medium image" src="images/perfilPil.png"/>
+									<div class="content">PIL ANDINA S.A
+										<div class="sub header">Contacto: Victor Hugo Franco Garcia <br>
+											Dirección: Av. Blanco Galindo km 10 <br>
+											Teléfono: 4251000 - 4213209 <br>
+											E-mail: pil@bolivia.com <br>
+											Web: www.pilandina.com <br>
+											Actividad: Producción industrializada de Lacteos<br>
+											Codigo Arancelario: 98.838.842
+										</div>
+									</div>
+								</h1>
+							</div>
+							<div class="ui centered column segment container basic">
+								<div class= "ui center aligned container basic">
+								<div class="ui olive button"><i class="left arrow icon divider" id="prev"></i></div>
+								<div class="ui blue button"><i class="right arrow icon divider" id="next"></i></div>
+								</div>
+								<div class= "ui center aligned container basic">
+									<div class="ui center segment basic">
+										<div class="carrusel">
+											<a href="mantequillaInfo.html"><img class="ui image centered" src="images/mantequilla.jpg"  width="220" height="250"></a>
+											<div><img class="ui image centered" src="images/helado.png" width="220" height="250"></div>
+											<div><img class="ui image centered" src="images/yogurtbebiblepil.png" width="220" height="250"></div>
+											<div><img class="ui image centered" src="images/yogurt.png" width="220" height="250"></div>
+											<div><img class="ui image centered" src="images/yogumon.jpg" width="220" height="250"></div>
+										</div>
+									</div>
+								</div>
+							</div>
+							</div>
+						</div>
+						<!--Fin
+           Informacion-->
+
+					</div>
+				<script type="text/javascript">
+					$('.ui.modal')
+					.modal('attach events', '.field', '.show')
+					;
+					</script>
+      <!--   <script>
+           page('/product/show/:id',product)
+					 <!--ruta,callback
+					 page()
+					 function product(ctx){
+           document.querySelector('p')
+					 .textContent='viewing product' + (ctx.params.id) ||''
+
+					 }
+				 </script>-->
+
+			  </div>
+		  </div>
+		</div>
+	</div>
+</div>
+<!--fin pestañas-->
+<script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="//code.jquery.com/jquery-1.7.js"></script>
+<script type="text/javascript" src="slick/slick.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	$('.carrusel').slick({
+		slidesToShow: 1,
+		slidesToScroll: 1,
+		autoplay: true,
+		autoplaySpeed: 3000,
+		speed: 1500,
+		prevArrow: $('#prev'),
+		nextArrow: $('#next'),
+		infinite: true
+	});
+});
+</script>
+</html>

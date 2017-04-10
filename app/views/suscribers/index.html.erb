@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.4/semantic.min.css" media="screen" title="no title" charset="utf-8">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.4/semantic.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.0/knockout-min.js"></script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+
+<head>
+	<title>Buscar Sector</title>
+</head>
+<style>
+					#boton_menu{
+						display: none;
+					}
+					@media screen and (max-width:1107px ){
+						#header_menu{
+						display: none;
+						}
+						#boton_menu{
+							display: flex;
+						}
+					}
+         #fondoFooter{
+          background-color: #216521;
+         }
+        #opFooter{
+          color: white;
+          font: bold;
+        }
+</style>
+
+<body>
+	<!--header-->
+  <div class="ui sticky container segment fluid" style="padding-left:0; padding-right:0; padding-bottom:0;">
+      <!--inicio título-->
+      <div class="ui internally grid">
+      <div class="row">
+        <div class="three wide column">
+          <img class="ui left mini image circular" src="images/logomenu.png">
+        </div>
+        <div class="ten wide column">
+          <h1 class="ui header center aligned">
+               Catálogo de Productos y Servicios "Hecho en Bolivia"
+            </h1>
+        </div>
+        <div class="three wide column">
+          <div class="ui header right aligned">
+            <img src="images/logocato.png">
+            </div>
+        </div>
+      </div>
+
+    </div>
+      <!--fin título-->
+      <!--Menu-->
+      <div id="header_menu" class="ui inverted menu" style="margin:auto; background-color:rgb(0,125,49);">
+        <a class="item"><i class="home icon"></i>Inicio</a>
+        <a class="item"><i class="help circle icon"></i>¿Quiénes somos?</a>
+        <a class="item"><i class="info circle icon"></i>Informacion <br> para emprendedores</a>
+        <a class="item"><i class="warning circle icon"></i>Legislación  Empresarial</a>
+        <a class="item"><i class="newspaper icon"></i>Noticias</a>
+        <div class="right menu">
+          <a class="item"><i class="sign in icon"></i>Ingresar como usuario</a>
+        </div>
+      </div>
+      <!--fin Menu-->
+      <!--boton menu-->
+      <div id="boton_menu" class="ui inverted menu" style="margin:auto; background-color:rgb(0,125,49);">
+          <a id="toggle" class="item"><i class="sidebar icon"></i>Menu</a>
+          <div class="right menu">
+            <a class="item"><i class="sign in icon"></i>Ingresar como usuario</a>
+          </div>
+      </div>
+      <!--fin boton menu-->
+      <!--Sidebar-->
+        <div class="ui sidebar inverted vertical left menu" style="margin:auto; background-color:rgb(0,125,49);">
+           <a class="item"><i class="home icon"></i>Inicio</a>
+           <a class="item"><i class="help circle icon"></i>¿Quiénes somos?</a>
+           <a class="item"><i class="info circle icon"></i>Informacion  para emprendedores</a>
+           <a class="item"><i class="warning circle icon"></i>Legislación  Empresarial</a>
+           <a class="item"><i class="newspaper icon"></i>Noticias</a>
+         </div>
+      <!--Fin Sidebar-->
+</div>
+          <!--funcinamiento sticky para el menu Importante-->
+        <script type="text/javascript">
+          $('.ui.sticky').sticky();
+
+          $('#toggle').click(function(){
+              $('.ui.sidebar').sidebar('toggle');
+          });
+        </script>
+    <!--Fin header-->
+<div class="ui container center aligned  segment basic">
+			<h1>
+			Lista De suscriptores
+			</h1>
+			<div>
+			<table class="ui compact celled table" >
+			<thead>
+				<tr>
+				<th>id</th>
+				<th>correo</th>
+				<th>codigo</th>
+
+			</tr></thead>
+			<tbody data-bind="foreach: suscribers">
+				<tr >
+
+					<td class="left aligned" data-bind="text: id">  </td>
+					<td class="center aligned" data-bind="text: email"></td>
+					<td class="center aligned" data-bind="text: code" > </td>
+
+				</tr>
+			</tbody>
+		</table>
+		    </p>
+		  </div>
+
+
+
+
+</div>
+	<!--Footer-->
+<div class="ui center aligned inverted darkgreen vertical footer segment" id="fondoFooter">
+   <div class="ui horizontal inverted small divided link list">
+      <a class="item" href="#"><p id="opFooter">Mapa de la Ubicación</p></a>
+      <a class="item" href="#"><p id="opFooter">Contáctanos </p></a>
+      <a class="item" href="terminosYcondiciones.html"><p id="opFooter">Términos y condiciones</p></a>
+      <a class="item" href="#"><p id="opFooter">Visita nuestra página</p></a>
+    </div>
+</div>
+<!--Footer-->
+
+<%= javascript_include_tag "application", params[:controller] %>
+
+		</body>
+	</html>

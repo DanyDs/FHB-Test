@@ -1,0 +1,107 @@
+<script>
+$(document).ready(function () {
+          var role = localStorage.getItem("UserRole");
+          if (!role || role != "general") {
+              alert("Acceso denegado, no tiene autorización para este contenido");
+              location.href = "/logins";
+              return;
+
+          }
+        })
+</script>
+<!-- Breadcrumbs -->
+<div class="ui container segment basic">
+  <div class="ui large breadcrumb">
+    <div class="active section">Usuarios</div>
+  </div>
+  <div class="ui yellow left aligned padded basic segment">
+    <div class="ui right floated container basic">
+    </div>
+  </div>
+</div>
+<div data-bind="visible: hasError" class="ui negative message">
+                <i  data-bind="click: noErrors"></i>
+                <div class="header">
+                 Tu nuevo usuario no puede ser creada por los siguientes campos:
+                </div>
+                <ul data-bind="foreach:errorMessages"> <li><p data-bind="text: $data"></p></li></ul>
+
+  </div>
+<div class="ui center aligned container basic">
+    <div class="ui form piled segment" >
+      <h3 class="ui center aligned dividing header">NUEVA CUENTA </h3>
+      <div class="">
+
+        <div class="two fields">
+        <div class="field">
+          <label>Nombre</label>
+          <input placeholder="Nombres" maxlength="70" type="text" name = "name" data-bind = "value: editingUserModel().user.name">
+        </div>
+        <div class="field">
+          <label>Apellido</label>
+          <input placeholder="Apellidos"  maxlength="70" name = "last_name" type="text" data-bind = "value: editingUserModel().user.last_name">
+                  </div>
+        </div>
+
+        <div class="field">
+          <label>Correo Electrónico</label>
+          <input placeholder="ejemplo@email.com"  maxlength="70" name = "email" type="text" data-bind = "value: editingUserModel().user.email">
+        </div>
+
+        <div class="two fields">
+          <div class="field">
+            <label>Contraseña</label>
+            <input placeholder=""  maxlength="40" name = "password" type="password" data-bind = "value: editingUserModel().user.password">
+          </div>
+          <div class="field">
+            <label >Confirmar contraseña</label>
+            <input placeholder="" id = "dir" maxlength="100" type = "password" name = "dir"  data-bind = "value: editingUserModel().user.password_confirmation">
+          </div>
+        </div>
+        </div>
+
+      <div class="two fields">
+        <div class="field">
+          <label>Control de Departamentos</label>
+            <select name="skills[]" multiple   class="ui dropdown" data-bind = "selectedOptions: selectedDepartments">
+            <option value="">Departamento</option>
+            <option value=" Beni">Beni</option>
+            <option value=" Cochabamba">Cochabamba</option>
+            <option value=" Chuquisaca">Chuquisaca</option>
+            <option value=" La Paz">La Paz</option>
+            <option value=" Oruro">Oruro</option>
+            <option value=" Pando">Pando</option>
+            <option value=" Potosi">Potosi</option>
+            <option value=" Santa Cruz">Santa Cruz</option>
+            <option value=" Tarija">Tarija</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Rol</label>
+          <select name="skills"  class="ui dropdown" data-bind = "value: editingUserModel().user.rol">
+          <option value="Administrador">Administrador</option>
+          <option value="Supervisor">Supervisor</option>
+          </select>
+        </div>
+      </div>
+        <div class="ui center aligned container basic">
+          <div class="ui green submit button" data-bind="click: createUser" >Guardar</div>
+        </div>
+      </div>
+    </div>
+</div>
+<br>
+
+<script type="text/javascript">
+  $('.ui.dropdown').dropdown();
+  $('#createUserDialog')
+      .modal('attach events', '.olive.button', 'show')
+      .modal('setting', 'closable', false)
+      .modal('setting', 'transition', 'vertical flip')
+      .modal({
+        onApprove: function () {
+          UsersModel.createUser();
+        }
+      })
+  ;
+</script>

@@ -1,0 +1,760 @@
+<style media="screen">
+
+.sombra{
+  box-shadow: 0 6px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.5);
+}
+.ui.card.cartaAnuncio{  
+  height: 200px;
+  width: 200px;
+  margin: 20px;
+}
+
+.ui.card  {  
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  text-align: center;
+}
+
+  .grow2 img {
+    height: 290px;
+    width: 290px;
+    -webkit-transition: all 1s ease;
+       -moz-transition: all 1s ease;
+         -o-transition: all 1s ease;
+        -ms-transition: all 1s ease;
+            transition: all 1s ease;
+  }
+
+  .grow2 img:hover {
+    width: 310px;
+    height: 290px;
+  }
+
+  .grow3 img {
+    height: 200px;
+    width: 200px;
+    -webkit-transition: all 1s ease;
+       -moz-transition: all 1s ease;
+         -o-transition: all 1s ease;
+        -ms-transition: all 1s ease;
+            transition: all 1s ease;
+  }
+
+  .grow3 img:hover {
+    width: 220px;
+    height: 200px;
+  }
+
+  /*FOCUS*/
+  .focus2 {
+    margin-top: 10px;
+
+  }
+  
+  #iconoBusqueda1, #iconoBusqueda2, #iconoBusqueda3{
+    display:inline;
+  }
+  #BAPorDepartamento1{
+    display:none;
+  }
+  #BAPorDepartamento2{
+    display:inline;
+  }
+  @media screen and (max-width: 1520px ) {
+    #propositoCatalogo{
+      margin-left:25px;
+    }
+
+    .grow2 img {
+        height: 150px;
+        width: 150px;
+        -webkit-transition: all 1s ease;
+           -moz-transition: all 1s ease;
+             -o-transition: all 1s ease;
+            -ms-transition: all 1s ease;
+                transition: all 1s ease;
+      }
+      .grow3 img {
+        height: 150px;
+        width: 150px;
+        -webkit-transition: all 1s ease;
+           -moz-transition: all 1s ease;
+             -o-transition: all 1s ease;
+            -ms-transition: all 1s ease;
+                transition: all 1s ease;
+      }
+
+      .grow2 img:hover {
+        width: 170px;
+        height: 150px;
+      }
+
+      .grow3 img:hover {
+        width: 150px;
+        height: 150px;
+      }          
+
+    @media screen and (max-width: 1200px ) {
+      #propositoCatalogo{
+        margin-left:0px;
+      }      
+
+      /*FOCUS*/
+      .focus2 {
+        margin-top: 10px;
+      }
+
+      .grow2 img {
+        height: 120px;
+        width: 120px;
+        -webkit-transition: all 1s ease;
+           -moz-transition: all 1s ease;
+             -o-transition: all 1s ease;
+            -ms-transition: all 1s ease;
+                transition: all 1s ease;
+      }
+      .grow3 img {
+        height: 120px;
+        width: 120px;
+        -webkit-transition: all 1s ease;
+           -moz-transition: all 1s ease;
+             -o-transition: all 1s ease;
+            -ms-transition: all 1s ease;
+                transition: all 1s ease;
+      }
+
+      .grow2 img:hover {
+        width: 140px;
+        height: 120px;
+      }
+
+      .grow3 img:hover {
+        width: 120px;
+        height: 120px;
+      }
+
+      @media screen and (max-width: 1120px ) {      
+        .grow2 img {
+          height: 100px;
+          width: 100px;
+          -webkit-transition: all 1s ease;
+             -moz-transition: all 1s ease;
+               -o-transition: all 1s ease;
+              -ms-transition: all 1s ease;
+                  transition: all 1s ease;
+        }
+        .grow3 img {
+          height: 100px;
+          width: 100px;
+          -webkit-transition: all 1s ease;
+             -moz-transition: all 1s ease;
+               -o-transition: all 1s ease;
+              -ms-transition: all 1s ease;
+                  transition: all 1s ease;
+        }
+
+        .grow2 img:hover {
+          width: 120px;
+          height: 100px;
+        }
+
+        .grow3 img:hover {
+          width: 100px;
+          height: 100px;
+        }
+
+        @media screen and (max-width: 500px ) {
+          #iconoBusqueda1, #iconoBusqueda2, #iconoBusqueda3{
+            display:none;
+          }
+          #BAPorDepartamento1{
+            display:inline;
+          }
+          #BAPorDepartamento2{
+            display:none;
+          }
+          @media screen and (max-width: 320px ) {
+            #letraDimmer{
+              font-size: 16px;
+            }
+          }
+        }
+      }
+    }
+    
+  }
+
+/*GROW*/
+.grow img {
+  height: 80px;
+  width: 80px;
+  -webkit-transition: all 1s ease;
+     -moz-transition: all 1s ease;
+       -o-transition: all 1s ease;
+      -ms-transition: all 1s ease;
+          transition: all 1s ease;
+}
+
+.grow img:hover {
+  width: 100px;
+  height: 80px;
+}
+
+/*FOCUS*/
+.focus {
+  border: 1px solid #5ED000;
+  border-radius: 25%;
+}
+
+
+
+</style>
+<div class="ui blurring"><!--Para difuminar el contenido-->
+
+  <!--Contenido-->
+  <div class="ui segment basic fluid">
+    <!--Grid para carrusel y columna-->
+    <div class="ui stackable two column grid center aligned">
+      <!--Carrusel y buscador movil-->
+      <div class="twelve wide column">
+        
+        <!--Buscador-->
+        <div class="ui basic segment center aligned" style="border-style: hidden; margin:-10px">
+          <!--buscar-->
+          <h1 class="ui orange header" style="margin-bottom: -5px;" id="Letrita"><b>Consulta nuestro catálogo</b></h1>
+          <%= form_tag("/search", method: "get") do %>            
+              <div class="ui nine column top attached centered grid">
+                <div class="ui basic left aligned segment" style="margin-bottom: -15px;" id="Letrita">                  
+                    <i class="search icon"></i>
+                      Busqueda avanzada                  
+                </div>
+                <div class="eight wide center floated center aligned column">
+                   <div class="ui labeled icon top right pointing bottom attached dropdown scrolling" id="Letrita">
+                          <input type="hidden" name="letter">
+                          <i class="sort alphabet ascending icon" id="iconoBusqueda1"></i>
+                          <a class="text">Por Letra</a>
+                          <i class="dropdown icon"></i>
+                          <div class="menu">
+                            <div class="item" data-value="A">
+                              <div class="ui red empty circular label"></div>
+                              A
+                            </div>
+                            <div class="item" data-value="B">
+                              <div class="ui red empty circular label"></div>
+                              B
+                            </div>
+                            <div class="item" data-value="C">
+                              <div class="ui red empty circular label"></div>
+                              C
+                            </div>
+                            <div class="item" data-value="D">
+                              <div class="ui red empty circular label"></div>
+                              D
+                            </div>
+                            <div class="item" data-value="E">
+                              <div class="ui red empty circular label"></div>
+                              E
+                            </div>
+                            <div class="item" data-value="F">
+                              <div class="ui red empty circular label"></div>
+                              F
+                            </div>
+                            <div class="item" data-value="G">
+                              <div class="ui red empty circular label"></div>
+                              G
+                            </div>
+                            <a class="item" data-value="H">
+                              <div class="ui red empty circular label"></div>
+                              H
+                            </a>
+                            <div class="item" data-value="I">
+                              <div class="ui red empty circular label"></div>
+                              I
+                            </div>
+                            <div class="item" data-value="J">
+                              <div class="ui yellow empty circular label"></div>
+                              J
+                            </div>
+                            <div class="item" data-value="K">
+                              <div class="ui yellow empty circular label"></div>
+                              K
+                            </div>
+                            <div class="item" data-value="L">
+                              <div class="ui yellow empty circular label"></div>
+                              L
+                            </div>
+                            <div class="item" data-value="M">
+                              <div class="ui yellow empty circular label"></div>
+                              M
+                            </div>
+                            <div class="item" data-value="N">
+                              <div class="ui yellow empty circular label"></div>
+                              N
+                            </div>
+                            <div class="item" data-value="Ñ">
+                              <div class="ui yellow empty circular label"></div>
+                              Ñ
+                            </div>
+                            <div class="item" data-value="O">
+                              <div class="ui yellow empty circular label"></div>
+                              O
+                            </div>
+                            <div class="item" data-value="P">
+                              <div class="ui yellow empty circular label"></div>
+                              P
+                            </div>
+                            <div class="item" data-value="Q">
+                              <div class="ui yellow empty circular label"></div>
+                              Q
+                            </div>
+                            <div class="item" data-value="R">
+                              <div class="ui yellow empty circular label"></div>
+                              R
+                            </div>
+                            <div class="item" data-value="S">
+                              <div class="ui green empty circular label"></div>
+                              S
+                            </div>
+                            <div class="item" data-value="T">
+                              <div class="ui green empty circular label"></div>
+                              T
+                            </div>
+                            <div class="item" data-value="U">
+                              <div class="ui green empty circular label"></div>
+                              U
+                            </div>
+                            <div class="item" data-value="V">
+                              <div class="ui green empty circular label"></div>
+                              V
+                            </div>
+                            <div class="item" data-value="W">
+                              <div class="ui green empty circular label"></div>
+                              W
+                            </div>
+                            <div class="item" data-value="X">
+                              <div class="ui green empty circular label"></div>
+                              X
+                            </div>
+                            <div class="item" data-value="Y">
+                              <div class="ui green empty circular label"></div>
+                              Y
+                            </div>
+                            <div class="item" data-value="Z">
+                              <div class="ui green empty circular label"></div>
+                              Z
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="seven wide left floated center aligned column">
+                        <div class="ui labeled icon top right pointing bottom attached dropdown scrolling" id="Letrita">
+                          <input type="hidden" name="departments">
+                          <i class="map outline icon" id="iconoBusqueda2"></i>
+                          <a class="text">Por Departamento</a>
+                          <i class="dropdown icon" id="BAPorDepartamento2"></i>
+                          <p id="BAPorDepartamento1"><i class="dropdown icon"></i></p>
+                          <div class="menu">
+                            <div class="item" data-value="Cochabamba">
+                              <div class="ui red empty circular label"></div>
+                              Cochabamba
+                            </div>
+                            <div class="item" data-value="La Paz">
+                              <div class="ui red empty circular label"></div>
+                              La Paz
+                            </div>
+                            <div class="item" data-value="Oruro">
+                              <div class="ui red empty circular label"></div>
+                              Oruro
+                            </div>
+                            <div class="item" data-value="Sucre">
+                              <div class="ui yellow empty circular label"></div>
+                              Sucre
+                            </div>
+                            <div class="item" data-value="Pando">
+                              <div class="ui yellow empty circular label"></div>
+                              Pando
+                            </div>
+                            <div class="item" data-value="Beni">
+                              <div class="ui yellow empty circular label"></div>
+                              Beni
+                            </div>
+                            <div class="item" data-value="Santa Cruz">
+                              <div class="ui green empty circular label"></div>
+                              Santa Cruz
+                            </div>
+                            <div class="item" data-value="Potosi">
+                              <div class="ui green empty circular label"></div>
+                              Potosi
+                            </div>
+                            <div class="item" data-value="Tarija">
+                              <div class="ui green empty circular label"></div>
+                              Tarija
+                            </div>
+                          </div>
+                        </div>
+                    </div>                    
+              </div>
+              
+               <div clas="ui  grid">
+                 <div class="left floated right aligned six wide column">
+                    <div class="ui fluid action input">
+                      <%= text_field_tag :search, params[:search], placeholder: "Introduzca un Producto/Servicio a buscar...", id: "Letrita" %>
+                      <div class="center aligned basic segment">
+                        <div class=""><%= submit_tag("Buscar", class: "ui yellow large button") %></div>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+              <div class=" bottom attached basic segment">
+                <i class="list icon" id="iconoBusqueda3"></i>
+                <a class="header" href="/explorar" id="Letrita">Explorar categorías en el catálogo</a>
+              </div> 
+          <% end %>
+        </div>
+        <!--Fin Buscador-->
+      </div>
+
+        <div class="eight wide column container center aligned" id="compu">
+        <div class="ui vertical fluid steps" style="border-style: none;">
+          <div class="ui red completed center aligned  segment">
+          <div class="ui center aligned teal huge header" >Este sitio es un buscador </br> para promover y fortalecer lo
+              nuestro, <p style="color: red; letter-spacing:2pt;"> "<span style="color:red">Hecho</span> <span style="color:#FFE800">en</span> <span style="color:green">Bolivia</span>"</p>
+            </div>
+            <div class="ui container segment basic center aligned">
+              <a href="registrar_empresa">
+                <button class="ui teal huge button" id="Letrita"> Solicita tu Registro</button>
+              </a>
+            </div>
+          </div>
+           
+            <div class="carrusel" style="position: relative; z-index:1;">
+              <div> <%= image_tag("carousel/logoFHB.png", class: "ui image") %></div>
+              <div> <%= image_tag("carousel/agricultor-min.jpg", class: "ui image") %></div>
+              <div> <%= image_tag("carousel/ladrillos.jpg", class: "ui image") %></div>
+              <div> <%= image_tag("carousel/nutri-barrita.jpg", class: "ui image") %></div>
+              <div> <%= image_tag("carousel/pollitos-min.jpg", class: "ui image") %></div>
+              <div> <%= image_tag("carousel/aceite.jpg", class: "ui image") %></div>
+              <div> <%= image_tag("carousel/vacas-min.jpg", class: "ui image") %></div>
+              <div> <%= image_tag("carousel/chanchito-min.jpg", class: "ui image") %></div>
+              <div> <%= image_tag("carousel/teja2.jpg", class: "ui image") %></div>
+              <div> <%= image_tag("carousel/quinua.jpg", class: "ui image") %></div>
+            </div>                         
+
+
+            <% ads = (Advertisement.where(isPublicized: true)) %>
+            <% ads = (ads.where(state: "Aceptada")) %>
+            <% if ((ads.size) > 2) %>                 
+              <div class="ui orange inverted  center aligned segment">
+                <div class="ui center aligned  header" id="propositoCatalogo" >Sección de Anuncios    </div>
+              </div>                                      
+                  <div class="anuncio" style="position: relative; z-index:1;">                
+                    <% for add in ads %>                                                                                        
+                            <div class="announcement">
+                              <div class="focus3 pic">
+                                <div class="grow3 pic">                            
+                                  <a href="/visualize_ads" style="margin:20px;">                              
+                                    <div class="image">
+                                      <%= image_tag('/image_store/announcement_' + add.id.to_s + '.gif', class: " image sombra", title:"Ver mas detalles de los anuncios") %>
+                                    </div>
+                                  </a>
+                                </div>
+                              </div>                        
+                          </div>                      
+                    <% end %>                                
+                  </div>                            
+            <% else %>
+              <div class="ui grid">
+                <div class="column">
+                  <div class="ui centered raised segment">
+                    <div class="ui red inverted top attached label">
+                      <h1 class="ui centered header">
+                        <a class="ui red label" href="/visualize_ads">
+                          <i class="ui inverted yellow big announcement icon"></i>
+                        </a>
+                      </h1>
+                    </div>
+                    </a>
+                    <a href="/visualize_ads">
+                      <div class="ui basic segment">
+                        <h1 class="ui orange midled aligned header"></br>Visita nuestra sección </br> de </br>anuncios</h1>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+        </div>
+      </div>
+
+      <div class="eight wide column container center aligned" id="compu">
+        <div class="ui vertical fluid steps" style="border-style: hidden;">                                
+            
+            <% prods = (Product.where(company_id:'%?')) %>    
+            <% offset = rand(Product.count) %>
+            <% rand_record = Product.order("RANDOM()").take(6) %>                     
+            <% if ((rand_record.size) >= 1) %>  
+               
+            <div class="ui blue inverted  center aligned segment">
+              <div class="ui center aligned  header" id="propositoCatalogo" >Algunos productos registrados    </div>
+            </div>     
+                <div class="ui stackable grid ">
+                  <div class="two column center aligned row">
+                    <% for pro in rand_record %>                  
+                      <div class="five wide column">    
+                        <div class="focus3 pic">
+                          <div class="grow3 pic">                            
+                              <div class="ui card" style="margin: 10px; border: 0px;">
+                                <div class="content">
+                                  <div class="center aligned meta" style="text-transform: uppercase;"><h5><%= pro.commercial_name %></h5></div>
+                                </div>
+                                <div class="fluid image">
+                                  <a href=<%= '/empresa/'+pro.company_id.to_s%>>
+                                    <%= image_tag(''+ pro.image_path, class: " image", title:"Ver empresa") %>                          
+                                  </a>
+                                </div>                                                                
+                              </div>                                                                                   
+                          </div>
+                        </div>
+                      </div>
+                    <% end %> 
+                    </div>     
+                  </div>                           
+              
+            <% else %>
+              <div class="ui grid">
+                <div class="column">
+                  <div class="ui centered raised segment">
+                    <div class="ui blue inverted top attached label">
+                      <h1 class="ui centered header">
+                        <a class="ui blue label">                              
+                          <h3>Productos Registrados</h3>
+                        </a>
+                      </h1>
+                    </div>
+                    
+                    <a>
+                      <div class="ui basic segment">
+                        <h1 class="ui grey midled aligned header"></br>Lo sentimos,<br> por el momento no se tienen productos registrados </h1>
+                        <i class="grey frown icon big"></i>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+            
+            <!--  Servicios registrados -->
+            <% servs = (Service.where(company_id:'%?')) %>    
+            <% offset = rand(Service.count) %>
+            <% service_rand_record = Service.order("RANDOM()").take(6) %>                     
+            <% if ((service_rand_record.size) >= 1) %>  
+               
+            <div class="ui olive inverted center aligned segment">
+              <div class="ui center aligned header" id="propositoCatalogo"> Algunos servicios registrados </div>
+            </div>     
+                <div class="ui stackable grid ">
+                  <div class="two column center aligned row">
+                    <% for serv in service_rand_record %>                  
+                      <div class="five wide column">    
+                        <div class="focus3 pic">
+                          <div class="grow3 pic">                            
+                              <div class="ui card" style="margin: 10px; border: 0px;">
+                                <div class="content">
+                                  <div class="center aligned meta" style="text-transform: uppercase;"><h5><%= serv.commercial_name %></h5></div>
+                                </div>
+                                <div class="fluid image">
+                                  <a href=<%= '/empresa/'+ serv.company_id.to_s%>>
+                                    <%= image_tag(''+ serv.image_path, class: " image", title:"Ver empresa") %>                          
+                                  </a>
+                                </div>                                                                
+                              </div>                                                                                   
+                          </div>
+                        </div>
+                      </div>
+                    <% end %> 
+                    </div>     
+                  </div>                                       
+                
+              
+            <% else %>
+              <div class="ui grid">
+                <div class="column">
+                  <div class="ui centered raised segment">
+                    <div class="ui olive inverted top attached label">
+                      <h1 class="ui centered header">
+                        <a class="ui olive label">                              
+                          <h3>Servicios Registrados</h3>
+                        </a>
+                      </h1>
+                    </div>
+                    </a>
+                    <a>
+                      <div class="ui basic padded segment">                        
+                        <h1 class="ui grey midled aligned header"> <br>Lo sentimos,<br> por el momento no se tienen servicios registrados</h1>
+                        <i class="grey frown icon big"></i>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            <% end %>     
+        </div>
+      </div>
+
+            <!-- ANUNCIOS -->
+         
+          <!-- Fin Anuncios -->
+
+      <!--Fin Carrusel y buscador movil-->
+      <!-- Segunda Columna-->
+ 
+      <!-- Fin Segunda Columna-->
+      <!--Steps para version movil -->
+      <div class="ui vertical fluid steps" id="steps">
+        <div class="ui red completed center step segment">
+          <div class="content">
+            <div id="Letrita" class="ui teal huge header">Este sitio es un buscador para promover y fortalecer lo
+              nuestro, <p style="color: red; letter-spacing:2pt;">"<span style="color:red">Hecho</span> <span style="color:#FFE800">en</span> <span style="color:green">Bolivia</span>"</p>
+            </div>
+          </div>
+        </div>
+        <div class="ui yellow center aligned segment step">
+          <div class="content">
+            <a href="companies/new">
+              <button class="ui teal huge button" id="Letrita"> Solicitar Registro</button>
+            </a>
+          </div>
+        </div>
+        <div class="ui green center aligned segment step">
+          <div class="content">
+            <a href="/visualize_ads">
+              <button class="ui orange huge button" id="Letrita">Anuncios</button>
+            </a>
+          </div>
+        </div>
+      </div>
+      <!--Fin Steps para version movil -->
+    </div>
+    <!--Fin Grid-->
+
+    <!--Patrocinadores-->
+    <div class="ui stackable two column grid">
+      <div class="sixteen wide column">
+        <h2 class="ui teal midled aligned header">Patrocinadores: </h2>
+      </div>
+      <div class="patrocinadores sixteen wide column">
+        <div class="announcement">
+          <div class="focus pic">
+            <div class="grow pic">
+              <a href="http://www.duralit.net">
+                <%= image_tag("Patrocinadores/duralit.jpg", class: "ui image", height: '80', width: '100', title: 'Ir a la página de Duralit', alt: 'Ir a la página de Duralit') %>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="announcement">
+          <div class="focus pic">
+            <div class="grow pic">
+              <a href="http://www.ypfbrefinacion.com.bo">
+                <%= image_tag("Patrocinadores/YPFB.bmp", class: "ui  image", height: '80', width: '80', title: 'Ir a la página de YPFB', alt: 'Ir a la página de YPFB') %>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="announcement">
+          <div class="focus pic">
+            <div class="grow pic">
+              <a href="http://www.unilever.com">
+                <%= image_tag("Patrocinadores/unilever.jpg", class: "ui image", height: '80', width: '80', title: 'Ir a la página de Unilever', alt: 'Ir a la página de Unilever') %>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="announcement">
+          <div class="focus pic">
+            <div class="grow pic">
+                <a href="http://www.copelme.com">
+                  <%= image_tag("Patrocinadores/copelme.jpg", class: "ui image", height: '80', width: '80', title: 'Ir a la página de Copelme', alt: 'Ir a la página de Copelme') %>
+                </a>
+            </div>
+          </div>
+        </div>
+        <div class="announcement">
+          <div class="focus pic">
+            <div class="grow pic">
+              <a href="http://www.coboce.com">
+                <%= image_tag("Patrocinadores/COBOCE.jpg", class: "ui image", height: '80', width: '80', title: 'Ir a la página de Coboce', alt: 'Ir a la página de Coboce') %>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="announcement">
+          <div class="focus pic">
+            <div class="grow pic">
+              <%= image_tag("Patrocinadores/PROALBO.png", class: "ui image", height: '80', width: '80', title: 'Ir a la página de Proalbo', alt: 'Ir a la página de Proalbo') %>
+            </div>
+          </div>
+        </div>
+        <div class="announcement">
+          <div class="focus pic">
+            <div class="grow pic">
+              <a href="http://www.imprentasagitario.com">
+                <%= image_tag("Patrocinadores/sagitario.jpg", class: "ui image", height: '80', width: '80', title: 'Ir a la página de Sagitario', alt: 'Ir a la página de Sagitario') %>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="announcement">
+          <div class="focus pic">
+            <div class="grow pic">
+              <a href="http://www.ceramicacimco.com">
+                <%= image_tag("Patrocinadores/cimco.jpg", class: "ui image", height: '80', width: '80', title: 'Ir a la página de Cimco', alt: 'Ir a la página de Cimco') %>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="announcement">
+          <div class="focus pic">
+            <div class="grow pic">
+              <a href="http://www.facer.com.bo">
+                <%= image_tag("Patrocinadores/FACER.jpg", class: "ui image", height: '80', width: '80', title: 'Ir a la página de Facer', alt: 'Ir a la página de Facer') %>
+                </a>
+            </div>
+          </div>
+        </div>
+        <div class="announcement">
+          <div class="focus pic">
+            <div class="grow pic">
+              <a href="http://www.corinsa-srl.com">
+                <%= image_tag("Patrocinadores/corinsa.gif", class: "ui image", height: '80', width: '80', title: 'Ir a la página de Facer', alt: 'Ir a la página de Facer') %>
+                </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--Fin Patrocinadores-->
+  </div>
+  <!--Fin Contenido-->
+
+
+  <div class="ui page dimmer" style="background-color:rgba(0,125,49,0.9);">
+    <div class="content">
+      <div class="center">
+        <%= image_tag("logo-grande.png", class: "ui centered large image") %>
+
+        <h1 class="ui inverted centered header">Bienvenido a nuestro</h1>
+        <h2 class="ui inverted header" id="letraDimmer">Catálogo de Productos y Servicios "Hecho en Bolivia"</h2>
+        <i class="spinner loading icon big"></i>
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript">
+      $('.ui.page.dimmer').dimmer('show');
+      $('.ui.page.dimmer').dimmer({
+          closable: true
+      });
+      setTimeout(function () {
+          $('.ui.page.dimmer').dimmer('hide');
+      }, 3000)
+  </script>
+</div><!--Fin Para difuminar el contenido-->

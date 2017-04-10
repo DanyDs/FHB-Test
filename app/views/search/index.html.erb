@@ -1,0 +1,345 @@
+
+<style>
+ .counter {
+      margin-left: 5px;
+      border-color: #FFF;
+      border-radius: 2px;      
+      padding: 5px;      
+      background-color: #D5C4B7;
+      color: black;
+    }    
+
+   .active.section {
+     cursor: pointer;
+   }
+</style>
+
+<div div class="ui basic segment">
+ <div class="ui centered container">
+  <div class="ui segment basic fluid">
+    <!--Grid para carrusel y columna-->
+    <div class="ui stackable two column centered grid center aligned">
+	    <!--Buscador compu-->
+ 	    <div class="fourteen wide column">        
+        <!--Buscador-->
+        <div class="ui basic segment center aligned" style="border-style: hidden; margin:-40px; margin-left: 10px">
+          <!--buscar-->          
+          <h2 class="ui orange header" style="margin-bottom: -5px;" id="Letrita"><b>Sigue consultando nuestro catálogo</b></h2>          
+          <%= form_tag("/search", method: "get") do %>                  
+              <div class="ui nine column top attached centered grid">
+                <div class="ui basic left aligned segment" style="margin-bottom: -20px;" id="Letrita">                  
+                    <i class="search icon"></i>
+                      Busqueda avanzada                  
+                </div>
+                <div class="eight wide center floated center aligned  column">
+                  <div class="ui labeled icon top right pointing dropdown scrolling" id="Letrita" >
+                    <input type="hidden" name="letter">
+                    <i class="sort alphabet ascending icon" id="iconoBusqueda1"></i>
+                    <a class="text">Por Letra</a>
+                    <i class="dropdown icon"></i>
+                    <div class="menu">
+                      <div class="item" data-value="A">
+                        <div class="ui red empty circular label"></div>
+                        A
+                      </div>
+                      <div class="item" data-value="B">
+                        <div class="ui red empty circular label"></div>
+                        B
+                      </div>
+                      <div class="item" data-value="C">
+                        <div class="ui red empty circular label"></div>
+                        C
+                      </div>
+                      <div class="item" data-value="D">
+                        <div class="ui red empty circular label"></div>
+                        D
+                      </div>
+                      <div class="item" data-value="E">
+                        <div class="ui red empty circular label"></div>
+                        E
+                      </div>
+                      <div class="item" data-value="F">
+                        <div class="ui red empty circular label"></div>
+                        F
+                      </div>
+                      <div class="item" data-value="G">
+                        <div class="ui red empty circular label"></div>
+                        G
+                      </div>
+                      <a class="item" data-value="H">
+                        <div class="ui red empty circular label"></div>
+                        H
+                      </a>
+                      <div class="item" data-value="I">
+                        <div class="ui red empty circular label"></div>
+                        I
+                      </div>
+                      <div class="item" data-value="J">
+                        <div class="ui yellow empty circular label"></div>
+                        J
+                      </div>
+                      <div class="item" data-value="K">
+                        <div class="ui yellow empty circular label"></div>
+                        K
+                      </div>
+                      <div class="item" data-value="L">
+                        <div class="ui yellow empty circular label"></div>
+                        L
+                      </div>
+                      <div class="item" data-value="M">
+                        <div class="ui yellow empty circular label"></div>
+                        M
+                      </div>
+                      <div class="item" data-value="N">
+                        <div class="ui yellow empty circular label"></div>
+                        N
+                      </div>
+                      <div class="item" data-value="Ñ">
+                        <div class="ui yellow empty circular label"></div>
+                        Ñ
+                      </div>
+                      <div class="item" data-value="O">
+                        <div class="ui yellow empty circular label"></div>
+                        O
+                      </div>
+                      <div class="item" data-value="P">
+                        <div class="ui yellow empty circular label"></div>
+                        P
+                      </div>
+                      <div class="item" data-value="Q">
+                        <div class="ui yellow empty circular label"></div>
+                        Q
+                      </div>
+                      <div class="item" data-value="R">
+                        <div class="ui yellow empty circular label"></div>
+                        R
+                      </div>
+                      <div class="item" data-value="S">
+                        <div class="ui green empty circular label"></div>
+                        S
+                      </div>
+                      <div class="item" data-value="T">
+                        <div class="ui green empty circular label"></div>
+                        T
+                      </div>
+                      <div class="item" data-value="U">
+                        <div class="ui green empty circular label"></div>
+                        U
+                      </div>
+                      <div class="item" data-value="V">
+                        <div class="ui green empty circular label"></div>
+                        V
+                      </div>
+                      <div class="item" data-value="W">
+                        <div class="ui green empty circular label"></div>
+                        W
+                      </div>
+                      <div class="item" data-value="X">
+                        <div class="ui green empty circular label"></div>
+                        X
+                      </div>
+                      <div class="item" data-value="Y">
+                        <div class="ui green empty circular label"></div>
+                        Y
+                      </div>
+                      <div class="item" data-value="Z">
+                        <div class="ui green empty circular label"></div>
+                        Z
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="eight wide left floated center aligned column">
+                  <div class="ui labeled icon top right pointing bottom attached dropdown scrolling" id="Letrita">
+                    <input type="hidden" name="departments">
+                    <i class="map outline icon" id="iconoBusqueda2"></i>
+                    <a class="text">Por Departamento</a>
+                    <i class="dropdown icon" id="BAPorDepartamento2"></i>
+                    <p id="BAPorDepartamento1"></p>
+                    <div class="menu">
+                      <div class="item" data-value="Cochabamba">
+                        <div class="ui red empty circular label"></div>
+                        Cochabamba
+                      </div>
+                      <div class="item" data-value="La Paz">
+                        <div class="ui red empty circular label"></div>
+                        La Paz
+                      </div>
+                      <div class="item" data-value="Oruro">
+                        <div class="ui red empty circular label"></div>
+                        Oruro
+                      </div>
+                      <div class="item" data-value="Sucre">
+                        <div class="ui yellow empty circular label"></div>
+                        Sucre
+                      </div>
+                      <div class="item" data-value="Pando">
+                        <div class="ui yellow empty circular label"></div>
+                        Pando
+                      </div>
+                      <div class="item" data-value="Beni">
+                        <div class="ui yellow empty circular label"></div>
+                        Beni
+                      </div>
+                      <div class="item" data-value="Santa Cruz">
+                        <div class="ui green empty circular label"></div>
+                        Santa Cruz
+                      </div>
+                      <div class="item" data-value="Potosi">
+                        <div class="ui green empty circular label"></div>
+                        Potosi
+                      </div>
+                      <div class="item" data-value="Tarija">
+                        <div class="ui green empty circular label"></div>
+                        Tarija
+                      </div>
+                    </div>
+                  </div>
+                </div>                    
+              </div>
+              
+              <div clas="ui grid">
+                <div class="left floated right aligned column">
+                  <div class="ui fluid action input">
+                    <%= text_field_tag :search, params[:search], placeholder: "Introduzca un Producto/Servicio a buscar...", id: "Letrita" %>
+                    <div class="center aligned basic segment">
+                      <div class=""><%= submit_tag("Buscar", class: "ui yellow large button", id: "Letrita") %></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class=" bottom attached basic segment">
+                <i class="list icon" id="iconoBusqueda3"></i>
+                <a class="header" href="/explorar" id="Letrita">Explorar categorías en el catálogo</a>
+              </div>             
+            <% end %>          
+          </div>
+        </div>
+      </div>
+      <!--Fin Buscador-->
+    </div>
+    <!--Fin buscador compu-->
+
+  <!--======================================================================================================-->
+    <div class="ui container segment basic">
+      <%if params[:letter].size !=0%>
+        <h1 class="ui header" id="Letrita">Con la letra: <%=params[:letter]%></h1>
+      <%end%>
+      <%if params[:departments].size !=0%>
+        <h1  class="ui header" id="Letrita">Departamento: <%=params[:departments]%></h1>
+      <%end%>
+    	<!--<h3 class="ui orange header"><i class="circle icon"></i>-->
+    </div>
+	<!--======================================================================================================-->
+
+    <div div class="ui basic segment basic">
+      <div class="ui container">
+        <div class="ui top attached tabular menu">
+          <a class="red item active" data-tab="empresas">
+            <span style="color: black;">Empresas:</span>
+            <span class="counter"><%=@companies_count%></span>
+          </a>
+          <a class="yellow item" data-tab="productos">
+            <span style="color: black;">Productos:</span>
+            <span class="counter"><%=@products_count%></span>
+          </a>
+          <a class="green item" data-tab="servicios">
+            <span style="color: black;">Servicios:</span>
+            <span class="counter"><%=@services_count%></span>
+          </a>
+        </div>              
+        <div class="ui active simple tab tabs-details" data-tab="empresas">
+          <div class="ui basic container segment">
+            <div class="ui list">
+              <%@companies.each do |company| %>
+                <div class="item">
+                  <div class="ui red raised very padded text container segment">
+                    <div class="ui basic segment" style="margin-top:-30px;">
+                      <h3 class="ui center aligned header" style="text-transform: capitalize"><%=company.name%></h3>
+                    </div>
+                    <div class="ui simple attached tab active tabs-details" data-tab="perfil">
+                      <div class="ui two column doubling stackable grid container">
+                        <div class="column">
+                          <div class="ui left basic container">
+                            <img class="ui image" src="<%=company.logo_file_name%>" width="140" height="140">
+                          </div>
+                        </div>
+                        <div class="column">
+                          <span style="color:#0E6EB8"><b>Actividad: </b></span>
+                          <div class="ui basic segment"><%=company.detail%></div>
+                          <div class="ui center aligned basic container">
+                            <a class="field" href="/empresa/<%=company.id%>">Ver perfil</a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>                
+              <%end%>
+            </div>
+          </div>
+        </div>
+
+        <div class="ui simple tab tabs-details" data-tab="productos">
+          <div class="ui basic container segment">
+            <div class="ui list">
+              <%@products.each do |product| %>
+    						<div class="item">
+    							<div class="ui yellow raised padded text container segment">
+                    <div class="ui basic segment" style="margin-top:-30px;">
+    								  <h3 class="ui center aligned header" style="text-transform: capitalize"><%= product.commercial_name %></h3>
+                    </div>
+    								<div class="ui two column doubling stackable grid container">
+      								<div class="">
+      								  <a href="/products/<%=product.id%>"><img class="ui image" src="<%=product.image_path%>" width="140" height="140"></a>
+      								</div>
+      								<div class="column">
+                          <span style="color:#0E6EB8"><b>Descripción: </b></span>
+                          <p style="text-align: justify; white-space: pre-wrap"><%= product.description %></p>
+                          <div class="ui floated container basic">
+                          <span style="color:#0E6EB8"><b>Empresa: </b></span>
+                          <a href="/empresa/<%=product.company_id%>">
+                            <%=Company.find(product.company_id).name%></a>
+                          </div>
+      								</div>
+      							</div>
+    							</div>
+    						</div>
+      				<% end %>
+            </div>
+          </div>
+        </div>
+
+        <div class="ui simple attached tab tabs-details" data-tab="servicios">
+          <div class="ui basic container segment">
+            <div class="ui list">
+              <%@services.each do |service| %>
+  						  <div class="doubling item">
+    							<div class="ui green raised padded text container segment">
+                    <div class="ui basic segment" style="margin-top:-30px;">
+      								<h3 class="ui center aligned header" style="text-transform: capitalize"><%= service.commercial_name %></h3>
+                    </div>
+    								<div class="ui two column doubling stackable grid container">
+      								<div class="">
+      								  <a href="/services/<%=service.id%>"><img class="ui image" src="<%=service.image_path%>" width="140" height="140"></a>
+      								</div>
+      								<div class="column">
+                        <span style="color:#0E6EB8"><b>Descripción: </b></span>
+      								  <p style="text-align: justify; white-space: pre-wrap"><%= service.description %></p>
+      								  <div class="ui floated container basic">
+                          <span style="color:#0E6EB8"><b>Empresa: </b></span>
+      								    <a href="/empresa/<%=service.company_id%>">
+                          <%=Company.find(service.company_id).name%></a>
+                        </div>
+      								</div>
+    								</div>
+    							</div>
+    						</div>
+  				    <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+	</div>
+</div>

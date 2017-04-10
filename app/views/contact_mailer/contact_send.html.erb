@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+ <title>Email de Contacto</title>
+ <style type="text/css">
+ body, td { color:#000000; font-size:14px; font-family:Verdana,Helvetica,Arial; }
+ .divider { background-color:#555555; height:2px; }
+ #footer { font-size:11px; color:#555555; }
+ #footer a { color:#555555;}
+ </style>
+</head>
+<body>
+
+<p style="margin:20px; border-style: outset; border: 1px solid red;">
+    <div class="ui center aligned basic padded red segment">
+      <h2 style="color: grey; font-size: 24px; text-align: center;">
+        Mensaje del Catálogo de Productos y Servicios "<span style="color:red">Hecho</span> <span style="color:#FFE800">en</span> <span style="color:green">Bolivia</span>"
+      </h2>
+    </div>
+    <p style="margin:20px; border-style: outset; border: 1px solid #FFE800;">
+      <div style="padding-left: 10%; padding-right:10%; padding-bottom:20px; color: #000;">
+        Le informamos que la persona: <span style="color: teal"><%= @parameters[:name]%></span> con email: <span><%= @parameters[:email]%></span> desea comunicarse con su empresa, enviando el siguiente mensaje:
+      </div>
+      <div style="padding-left: 10%; padding-right:10%; padding-bottom:20px; text-align:center; color: #000;">
+        <p style="color:brown ">"<%= @parameters[:content]%>"</p>
+      </div>
+      <div style="padding-left: 10%; padding-right:10%; padding-bottom:20px; text-align:center; color: #000;">
+      	Fecha: <%=Time.now.strftime("%d-%m-%Y")%> Hora: <%=Time.now.strftime("%R")%>
+      </div>
+      <div style="padding-left: 10%; padding-right:10%; padding-bottom:20px; text-align:center; color: #000;">      
+        Si desea contactarse con esta persona puede responderle al email proporcionado.
+      </div>
+      <div style="padding-left: 10%; padding-right:10%; padding-bottom:20px; text-align:center; color: #000;">      
+        	Atentamente,
+      </div>
+      <div style="padding-left: 10%; padding-right:10%; padding-bottom:20px; text-align:center;">
+        <a href='<%= ENV["SITE_URL"] %>'>Catálogo de Productos y Servicios "Hecho en Bolivia"</a>
+      </div>
+    </p>
+    <p style="margin:20px; border-style: outset; border: 1px solid green;">
+    </p>
+</p>
+</body>
+</html>

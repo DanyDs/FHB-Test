@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
+  <style>
+    body{
+      font-family: 'Oswald', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+    }
+
+    p{
+      font-family: 'Oswald', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+    }
+  </style>
+</head>
+<body>
+  <p style="margin:20px; border-style: outset; border: 1px solid red;">
+    <div class="ui center aligned basic padded red segment">
+      <h2 style="color: brown; font-size: 24px; text-align: center;">
+        <b>Malas noticias del Catálogo de Productos y Servicios "<span style="color:red">Hecho</span> <span style="color:#FFE800">en</span> <span style="color:green">Bolivia</span>" para <span style="color: teal"><%= @company.name %></span></b>
+      </h2>
+    </div>
+  </p>
+    <p style="margin:20px; border-style: outset; border: 1px solid #FFE800;">
+      <div style="padding-left: 10%; padding-right:10%; padding-bottom:20px; color: #000;">
+        Lamentamos informarle que su solicitud para formar parte del Catálogo de Productos y Servicios "Hecho en Bolivia"
+        ha sido rechazada por el siguiente motivo:
+      </div>
+      <div style="padding-left: 10%; padding-right:10%; padding-bottom:20px; text-align:center;">
+        <strong><%= @company.reason %></strong>
+      </div>
+      <div style="padding-left: 10%; padding-right:10%; padding-bottom:20px; color: #000;">
+        Si usted considera que hay un error, usted puede enviar una nueva solicitud corrigiendo las observaciones que
+        le han sido indicadas. </br>Atentamente:
+      </div>
+      <div style="padding-left: 10%; padding-right:10%; padding-bottom:20px; text-align:center;">
+        <a href='<%= ENV["SITE_URL"] %>'>Catálogo de Productos y Servicios "Hecho en Bolivia"</a>
+      </div>
+    </p>
+    <p style="margin:20px; border-style: outset; border: 1px solid green;"></p>
+  </p>
+</body>
+</html>

@@ -1,0 +1,284 @@
+<!-- Contenido -->
+<style media="screen">
+#cortar{
+text-overflow:ellipsis;
+white-space:nowrap;
+overflow:hidden;
+}
+#cortar:hover {
+width: auto;
+white-space: initial;
+overflow:visible;
+}
+#image{
+  height:250px;
+}
+</style>
+
+<!-- Breadcrumbs -->
+<div class="ui container segment basic">
+  <div class="ui large breadcrumb">
+    <div class="active section">Anuncios</div>
+  </div>
+  <div class="ui yellow left aligned padded basic segment" style="margin-bottom: -55px;">
+  </div>
+</div>
+
+<div class="ui container basic segment">
+  <div class="ui right aligned grid stackable segment basic">
+    <div class="two ui buttons">
+      <button id="pendentsAnnouncementsButton" class="ui button active item" onclick="mostrarPendientes()">Solicitudes pendientes</button>
+      <button id="acceptedAnnouncementsButton" class="ui button item" onclick="mostrarAceptados()"> Anuncios aceptados</button>
+      <!-- <a class="ui button item" href="/supervisor/acceptDeclineAva" data-tab="Disponibles"> Anuncios disponibles</a> -->
+    </div>
+  </div>
+</div>
+<div class="ui container basic segment">
+  <div class="ui three column grid stackable doubling center aligned" data-bind="foreach: asRegionalAds">
+    <div class="column">
+        <div class="ui centered card" data-bind="style: {backgroundColor: expired ? 'grey' : 'white' }">
+          <div class="ui slide masked reveal image" title="Click para ver perfil de la empresa">
+            <div class="center aligned basic segment " data-bind="click: $parent.openView">
+              <a class="ui red top label" data-bind="style: {display: expired ? 'flex' : 'none'}">Expirado </a>
+              <div class="ui fluid image">
+                <img id="image" data-bind="attr:{ src: '/image_store/announcement_' + id + '.gif' }"  style="cursor:pointer;"/>
+              </div>
+            </div>
+          </div>
+          <div class="content">
+            <div class="ui header teal" data-bind="text: description" id="cortar"></div>
+            <p><b>Empresa:</b><a data-bind="attr:{ href:'/supervisor/companies_profile/'+id_Company+''}">
+               <span title="Click para ver perfil de la empresa" class="ui small blue header" data-bind="text: companyName"/>
+            </a></p>
+            <p ><b>Fecha de inicio: </b><span data-bind="text: publicationDate" style="color:#0E6EB8"/></p>
+            <p ><b>Fecha finalización: </b><span data-bind="text: expirationDate" style="color:#0E6EB8"/></p>
+            <div data-bind="if: state=='Pendiente'" class="ui segment basic">
+              <a id="aceptAnuncio" class="ui green button" data-bind="click: $parent.openSureAceptModal">Aceptar</a>
+              <a class="ui red button" data-bind="click: $parent.openToReject">Rechazar</a>
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
+  <% ads = (Advertisement.where(state: "Pendiente"))
+   if ((ads.size) < 1 ) %>
+    <div class="ui container basic segment center aligned" id='mensajePendientes'>
+      <h3 class="ui red header">"No hay solicitudes de anuncios pendientes."</h3>
+    </div>
+  <%end%>
+</div>
+<script type="text/javascript">
+  function mostrarPendientes(){
+    document.getElementById('mensajePendientes').style.display = 'inline';}
+  function mostrarAceptados(){
+    document.getElementById('mensajePendientes').style.display = 'none';}
+</script>
+
+<!--Modal de visualizacion anuncio-->
+<div id="visualizacionAnuncio" class="ui basic modal">
+  <div class="ui segment">
+    <div id="headerLetra"class="ui center aligned blue header" data-bind="text: editingAd().description"></div>
+    <a class="ui yellow left ribbon label"><h5 class="ui right aligned header" style="font-variant:small-caps" data-bind="text: editingAd().companyName"></h5></a>
+  </div>
+  <div class="ui orange center aligned basic segment">
+    <div class="image content">
+      <div class="ui big image centered fluid">
+        <img data-bind="attr:{ src: '/image_store/announcement_' +  editingAd().id + '.gif' }"/>
+      </div>
+    </div>
+  </div>
+  <div class="actions">
+    <div class="ui segment basic center aligned" style="padding:0px;">
+      <div class="ui blue ok button">
+        <i class="close icon"></i>
+        Cerrar
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Fin del modal de visualizacion  -->
+
+<!--Rechazar solicitud de anuncio (modals)-->
+<div id="rejectDialog" class="ui modal first coupled red segment long" >
+  <i class="close icon"></i>
+  <div class="header ">
+    Rechazando Anuncio de empresa: <span class="ui small header blue" data-bind="text: editingAd().companyName"/>
+  </div>
+
+  <div class="ui form content">
+    <div class="ui two column grid stackable">
+      <div class="column">
+        <div class="ui segment basic center aligned">
+          <div class="field">
+            <img class="ui centered image fluid" data-bind="attr:{ src: '/image_store/announcement_' +  editingAd().id + '.gif' }" style="max-width:500px"/>
+          </div>
+        </div>
+      </div>
+      <div class="column">
+        <div class="ui segment basic center aligned">
+          <div class="ui basic segment">
+            <span class="ui red header" data-bind="text: editingAd().description"/>
+          </div>
+          <p style="color:#0E6EB8"><b>Fecha de inicio: </b><span data-bind="text:editingAd().publicationDate"/></p>
+          <p style="color:#0E6EB8"><b>Fecha de fin: </b><span data-bind="text: editingAd().expirationDate"/></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Motivo:</label>
+      <input id="reason" name="reason" type="text" placeholder="Escriba aqui el motivo..." data-bind="value: editingAd().reason">
+      <!-- <textarea id="reason"  name= "reason" placeholder="Escriba aqui el motivo..." data-bind="value: editingAd().reason"></textarea> -->
+    </div>
+  </div>
+  <div class="actions" style="background-color:#FFF;">
+    <div id="compu">
+      <button id="submitA" class="ui green positive right button">Confirmar Rechazo</button>
+      <div class="ui red deny button">Cancelar</div>
+    </div>
+    <div id="movil">
+      <button id="submitA" class="ui green positive right button">Confirmar Rechazo</button>
+      <div class="ui red deny button">Cancelar</div>
+    </div>
+    <br id="movil">
+  </div>
+</div>
+
+<div id="sinMotivo" class="ui small second modal coupled red segment">
+  <div class="ui header center aligned">
+    Introduzca un motivo
+  </div>
+  <div class="content">
+    <center>Por favor introduzca el motivo por el cual esta rechazando este anuncio</center>
+  </div>
+  <div class="actions" style="background-color:#FFF;">
+    <div class="ui positive button compact">Aceptar</div>
+  </div>
+</div>
+
+<div id="seguroRechazar" class="ui small modal red segment">
+  <div class="ui header center aligned">
+    ¿Seguro?
+  </div>
+  <div class="content">
+    <center>Esta usted seguro que desea rechazar el anuncio: <span class="ui blue header" data-bind="text: editingAd().description"/></center>
+  </div>
+  <div class="actions" style="background-color:#FFF;">
+    <div class="ui positive button">Aceptar</div>
+    <div class="ui red deny button">Cancelar</div>
+  </div>
+</div>
+
+<div id="rechazado" class="ui small modal red segment">
+  <div class="ui header center aligned">
+    Anuncio rechazado
+  </div>
+  <div class="content">
+    <center>El anuncio ha sido rechazado satisfactoriamente</center>
+  </div>
+  <div class="actions" style="background-color:#FFF;">
+    <a href="/supervisor/acceptDecline"class="ui positive button compact">Aceptar</a>
+  </div>
+</div>
+
+<div id="errorReject" class="ui small modal segment red">
+  <div class="ui  huge red header center aligned">
+    Error
+  </div>
+  <div class="content">
+    <center>Se presentó un error rechazando anuncio.</center>
+  </div>
+  <div class="actions" style="background-color:#FFF;">
+    <div class="ui positive button">Aceptar</div>
+  </div>
+</div>
+<!--Fin Modals de rechazo anuncio-->
+
+<!--Modals aceptar anuncio-->
+<div id="seguroAceptar" class="ui small modal green segment">
+  <div class="ui header center aligned">
+    ¿Seguro?
+  </div>
+  <div class="content">
+    <center>Usted esta por aceptar el anuncio: <span class="ui blue header" data-bind="text: editingAd().description"/></center>
+  </div>
+  <div class="actions" style="background-color:#FFF;">
+    <a class="ui positive button">Aceptar</a>
+    <div class="ui red deny button">Cancelar</div>
+  </div>
+</div>
+
+<div id="aceptado" class="ui small modal green segment">
+  <div class="ui header center aligned">
+    Anuncio aceptado
+  </div>
+  <div class="content">
+    <center>El anuncio ha sido aceptado satisfactoriamente</center>
+  </div>
+  <div class="actions" style="background-color:#FFF;">
+    <a href="/supervisor/acceptDecline"class="ui positive button compact">Aceptar</a>
+  </div>
+</div>
+
+<div id="errorAcept" class="ui small modal segment red">
+  <div class="ui  huge red header center aligned">
+    Error
+  </div>
+  <div class="content">
+    <center>Se presentó un error aceptando anuncio.</center>
+  </div>
+  <div class="actions" style="background-color:#FFF;">
+    <div class="ui positive button">Aceptar</div>
+  </div>
+</div>
+<!--Modals aceptar anuncio-->
+
+
+
+
+<!-- Fin contenido -->
+<script>
+// selector cache
+  var isRegionalPage = true;
+    var isCompanyPage = false;
+    var isVisitorPage = false;
+
+var $buttons = $('.ui.buttons .button');
+
+function toogleButton() {
+    $(this)
+        .addClass('active')
+        .siblings()
+        .removeClass('active');
+}
+
+$buttons.on('click', toogleButton);
+$buttons.on('click', function () {
+    var id = $(this).attr("id");
+    advertisementsModel.regionalFilter(id);
+});
+</script>
+
+<style>
+  #movil {
+    display: none;
+  }
+  #headerLetra{
+  font-size: 1.5em;
+  }
+
+  @media screen and (max-width: 995px ) {
+    #compu {
+      display: none;
+    }
+
+    #movil {
+      display: flex;
+    }
+    @media screen and (max-width: 547px){
+      #headerLetra{
+        font-size: 1.2em;
+      }
+    }
+  }
+</style>

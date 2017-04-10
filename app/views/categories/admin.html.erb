@@ -1,0 +1,133 @@
+<!--Contenido-->
+<div class="ui container segment basic">
+<style>
+  .counter {
+    margin-left: 5px;
+    border-radius: 2px;
+    background-color: dodgerblue;
+    padding: 5px;
+  }
+
+  .active.section {
+    cursor: pointer;
+  }
+</style>
+  <div class="ui large breadcrumb">
+    <div class="active section" onclick="javascript:categoriesModel.clearNavigationStack();"><span style="color:orange">Rubros<span></div>
+    <i class="right chevron icon divider"></i>
+    <!-- ko foreach: navigationStack -->
+    <div class="active section" data-bind="text: name, click: $parent.returnToCategory"></div>
+    <i class="right chevron icon divider"></i>
+    <!-- /ko -->
+  </div>
+</div>
+
+
+<div class="ui centered container">
+  <div class="ui yellow left aligned padded basic segment">
+
+    <div class="ui right floated container basic">
+      <div class="ui right floated olive button"><i class="plus icon"></i>Agregar Rubro</div>
+    </div>
+  </div>
+
+  </br>
+
+  <div class="active content" data-bind="foreach: categories">
+    <p>
+    <div class="ui mini circular icon right floated red button" data-bind="click: $parent.removeCategory"><i class="remove icon"></i></div>
+    <div class="ui mini circular icon right floated teal test button" data-bind="click: $parent.openCategoryToEdit"><i class="write icon"></i></div>
+    <a class="active section" data-bind="click: $parent.showCategory"><i class="folder icon"></i><span data-bind="text: name"/></a>
+    </p>
+  </div>
+
+  <div class="content">
+    <p style="margin-left:20px;">
+      <a class="ui left floated mini circular olive icon button"> <i class="plus icon"></i></a>
+    </p>
+    </br></br>
+  </div>
+
+
+</div>
+</div>
+
+
+<div id="createCategoryDialog" class="ui inverted long test modal">
+  <i class="close icon"></i>
+  <div class="header">
+    Agregando Categoria
+  </div>
+  <div class="ui form content">
+    <div class="field">
+      <label>Nombre Categoria</label>
+      <input name="first-name" type="text"  data-bind="value: editingCategoryModel().name" placeholder="Nombre completo...">
+    </div>
+  </div>
+  <div class="actions">
+    <div class="ui inverted red deny button">
+      Cancelar
+    </div>
+    <div class="ui inverted green positive right labeled icon button">
+      Agregar
+      <i class="plus icon"></i>
+    </div>
+  </div>
+</div>
+
+<div id="editCategoryDialog" class="ui inverted first test modal">
+  <div class="header">
+    Editar Categoria
+  </div>
+  <div class="ui form content">
+    <div class="field">
+      <label>Nombre Categoria</label>
+      <input name="first-name" type="text"  data-bind="value: editingCategoryModel().name">
+    </div>
+  </div>
+  <div class="actions">
+    <div class="ui inverted red deny button">
+      Cancelar
+    </div>
+    <div class="ui inverted green positive right labeled icon button">
+      Guardar
+      <i class="save icon"></i>
+    </div>
+  </div>
+</div>
+
+
+<script type="text/javascript">
+  $('.ui.cube')
+      .shape('attach events', 'teal.button', 'flip right');
+  $('.ui.cube')
+      .shape('attach events', 'olive.button', 'flip left');
+  $('.ui.cube')
+      .shape('attach events', 'red.button', 'flip right');
+//  $('.ui.modal')
+//      .modal('attach events', '.field', '.show');
+  $('.ui.accordion')
+      .accordion() ;
+
+  $('#createCategoryDialog')
+      .modal('attach events', '.olive.button', 'show')
+      .modal('setting', 'closable', false)
+      .modal('setting', 'transition', 'vertical flip')
+      .modal({
+        onApprove: function () {
+          categoriesModel.createCategory();
+        }
+      })
+  ;
+
+  $('#editCategoryDialog')
+      .modal('attach events', '.teal.button', 'show')
+      .modal('setting', 'closable', false)
+      .modal('setting', 'transition', 'vertical flip')
+      .modal({
+        onApprove: function () {
+          categoriesModel.updateCategory();
+        }
+      })
+  ;
+</script>

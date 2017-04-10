@@ -1,0 +1,53 @@
+<script>
+    $(document).ready(function () {
+        var token = localStorage.getItem("Token");
+        if (token == null) {
+            alert("Acceso denegado, no tiene autorización para este contenido");
+            location.href = "/logins";
+            return;
+        }
+    })
+</script>
+<div class="ui center aligned container basic segment ">
+  <div class="ui form piled segment">
+    <h3 class="ui center aligned dividing header">Editar datos personales</h3>
+    <div class="form">
+      <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!Editar datos personales!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
+      <div data-bind="visible: hasError" class="ui negative message">
+        <i data-bind="click: noErrors"></i>
+        <div class="header">
+          No puedes modificar los datos de usuario por las siguientes razones:
+        </div>
+        <ul data-bind="foreach:errorMessages">
+          <li><p data-bind="text: $data"></p></li>
+        </ul>
+      </div>
+      <div class="two fields">
+        <div class="field">
+          <label id="user1">Nombre</label>
+          <input maxlength="100" id="user_name" data-bind="value: editableUser().new_name">
+        </div>
+        <div class="field">
+          <label>Apellido:</label>
+          <input maxlength="100" name="last_name" id="last_name" data-bind="value: editableUser().new_last_name">
+        </div>
+      </div>
+      <div class="ui center aligned container basic">
+        <div class="ui green submit button" data-bind="click: updateUser">Guardar</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script type="text/javascript">
+    var department = localStorage.getItem("department");
+    var name = localStorage.getItem("uName");
+    var last = localStorage.getItem("userLast");
+    var rol = localStorage.getItem("UserRole");
+
+    document.getElementById("user_name").placeholder = 'Nombre actual: ' + name;
+    document.getElementById("last_name").placeholder = 'Apellido actual: ' + last;
+
+    
+</script>

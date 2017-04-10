@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  comertial_name: MyString
+  feature: MyString
+  description: MyText
+  image_path: MyString
+  product_type: MyString
+  tariff_position: 1
+  visibility_state: false
+  company: one
+
+two:
+  comertial_name: MyString
+  feature: MyString
+  description: MyText
+  image_path: MyString
+  product_type: MyString
+  tariff_position: 1
+  visibility_state: false
+  company: two

@@ -1,0 +1,4 @@
+No eliminar la carpeta image_store
+sino el sistema no tendra un directorio
+para almacenar las imagenes de las
+empresas

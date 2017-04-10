@@ -1,0 +1,233 @@
+<style >
+	    @media screen and (max-width:1107px) {
+		    #Letrita{
+		        font-size: 15px;
+			}
+		}
+		@media screen and (max-width:700px) {
+		    #Letrita{
+		        font-size: 10px;
+		    }
+		}
+</style>
+
+<!--Contactar -->
+<div class="ui container basic segment">
+	<div class="ui yellow button left floated">Contactar</div>
+</div>
+
+<div class="ui modal compact">
+	<i class="close icon"></i>
+	<div class="header">
+		Contactar Empresa
+	</div>
+	<div class="ui form content">
+		<%= form_tag companies_path,method: :post do %>
+
+		<div class="field">
+			<label>Ingrese su nombre completo</label>
+			<input name="name" type="text" placeholder="Nombre completo..." required/>
+		</div>
+		<div class="field">
+			<label>Ingrese su correo electrónico donde la empresa lo podrá contactar</label>
+			<input type="email" name="email" placeholder="micorreo@mail.com" required/>
+			<input name="companymail" type="hidden" value="<%=@company.email%>" >
+		</div>
+		<div class="field">
+			<label>Mensaje </label>
+			<textarea name="content" maxlength="600" required/></textarea>
+		</div>
+		<div class="ui checkbox segment">
+			<div class="g-recaptcha" data-sitekey="6LdlgREUAAAAAGokqc4CS_ontHuphWt3nE1qQOQZ" ></div>
+		</div>
+	</div>
+	<div class="actions">
+		<div class="ui cancel red inverted button">Cancelar</div>
+			<%= submit_tag "Enviar", class: "ui inverted green button"%>
+	</div>
+	<% end %>
+</div>
+
+<script type="text/javascript">
+	var isCompanyPage=true;
+	var newCompany=false;
+	var companyProfileId= <%=@company.id%>;
+	$('.ui.modal')
+		.modal('attach events', '.yellow.button', 'show')
+		;
+</script>
+
+<!--Fin contactar-->
+
+<!--Contenido-->
+
+<div class="ui container segment basic">
+    <%if !flash[:alert].nil?%>
+
+      	<%if flash[:alert]!= "Debe verificar que no sea un robot antes de enviar el mensaje!"%>
+
+			<div class="ui positive message">
+				<i class="close icon"></i>
+				<div class="header">
+					<font><font>
+					<%=flash[:alert]%>
+					</font></font>
+				</div>
+			</div>
+
+        <%else%>
+
+		<div class="ui red message">
+	    	<i class="close icon"></i>
+		    <div class="header">
+		   		<font><font>
+		   		<%=flash[:alert]%>
+	    		</font></font>
+	    	</div>
+	  	</div>
+
+        <%end%>
+
+    <%end%>
+
+    <script type="text/javascript">
+        $('.message .close')
+            .on('click', function() {
+            $(this).closest('.message')
+                  .transition('fade')
+                ;
+              })
+            ;
+    </script>
+
+
+	<!--Vista central de Empresa-->
+	<h1 class="ui icon center aligned header segment basic container">
+		<div class="content" style="text-transform: uppercase">
+			<%= @company.name %>
+		</div>
+		<div data-bind="openCompanyToEdit(<%=@company.id%>)" class="center">
+			<img data-bind="attr:{ src:'/image_store/logo_'+<%=@company.id%>+'.gif' }"  width="200" height="200"/>
+		</div>				
+	</h1>
+	<div class="ui centered grid">
+		<div class="ui twelve wide column">
+		    <h2 class="ui center aligned header segment basic container">
+		      <% @company.detail.split("\n").each do |line| %>
+		      <%= line %><br>
+		      <% end %>
+		      <a class="title"> <%= @company.webpage %></a>
+		    </h2>
+		</div>
+	</div>
+
+</div>
+
+<!--Fin Vista central de Empresa-->
+
+<!--pestañas-->
+<div class="ui container">
+	<div class="ui pointing secondary menu">
+		<a class="active item" data-tab="perfil">Información</a>
+		<a class="item" data-tab="productos">Productos</a>
+		<a class="item" data-tab="servicios">Servicios</a>
+	</div>
+
+	<!--INFORMACION BASICA DE LA EMPRESA-->
+	<div class="ui simple attached tab active tabs-details" data-tab="perfil">
+		<h2 class="ui teal header center aligned">Datos Básicos</h2>
+		<div class="ui clearing divider"></div>
+
+		<div class="ui justified container basic fluid segment">
+			<h3 id="Letrita">
+	        <table class="ui table">
+	            <tbody>
+	              <tr>
+	                <td>
+	                  <i class="marker icon"></i>
+	                </td>
+	                 <td>Dirección de la empresa:</td>
+	                <td><%= @company.address %></td>
+	              </tr>
+	              <tr>
+	                <td>
+	                  <i class="call square icon"></i>
+	                </td>
+	                 <td>Teléfono:</td>
+	                <td><%= @company.telephone %></td>
+	              </tr>
+	              <tr>
+	                <td>
+	                  <i class="world icon"></i>
+	                </td>
+	                 <td>Departamento: </td>
+	                <td><%= @company.department %></td>
+	              </tr>
+	                </tbody>
+	        </table>
+	      	</h3>
+		</div>
+		<div class="ui container center aligned compact">
+			<a href="http://<%=@company.webpage%>" class="ui center floated tiny teal button">Visítanos</a>
+		</div>
+		<div class="ui basic segment"></div>
+	</div>
+
+	<!--PRODUCTOSSS-->
+	<div class="ui simple tab tabs-details" data-tab="productos">
+			<br><br>
+		<div class="ui stackable inverted divided grid">
+			<%@company.products.each do |product|%>
+				<div class="eight wide column">
+					<div class="ui basic segment">
+
+						<img class="ui right floated image" src="<%=product.image_path%>" width="250" height="250">
+
+						<div class="ui content">
+	    					<div class="ui teal header"><%=product.commercial_name%></div>
+							<div class="ui basic segment">
+								<span style="color:#0E6EB8"><b>Descripción: </b></span>
+							    <div class="ui padded basic segment" style="text-align: justify;">
+									<p style="text-align: justify; white-space: pre-wrap"><%=product.description%></p>
+							    </div>
+							  	<span style="color:#0E6EB8"><b>Certificaciones: </b></span><%=product.certification%><br>
+							   	<span style="color:#0E6EB8"><b>  Posición arancelaria: </b></span><%=product.tariff_position%>
+							</div>
+						</div>
+					</div>
+				</div>
+			<%end%>
+		</div>
+	</div>
+
+	<!--SERVICIOSSS-->
+	<div class="ui simple attached tab tabs-details" data-tab="servicios">
+		<br><br>
+		<div class="ui stackable inverted divided grid">
+			<%@company.services.each do |service|%>
+				<div class="eight wide column">
+					<div class="ui basic segment">
+						<img class="ui right floated image" src="<%=service.image_path%>" width="220" height="220">
+
+						<div class="ui teal header"><%=service.commercial_name%></div>
+
+						<div class="ui padded basic segment" style="text-align: justify;">
+							<span style="color:#0E6EB8"><b>Descripción: </b></span>
+							<div class="ui padded basic segment" style="text-align: justify;">
+								<p style="text-align: justify; white-space: pre-wrap"><%=service.description%></p>
+							</div>
+						</div>
+						<div class="ui basic segment">
+						 	<span style="color:#0E6EB8"><b> Certificaciones: </b></span><%=service.certification%><br>
+						 	<span style="color:#0E6EB8"><b> Posición arancelaria: </b></span><%=service.tariff_position%>
+						</div>
+
+					</div>
+				</div>
+			<%end%>
+		</div>
+	</div>
+</div>				
+<!--fin pestañas-->
+
+				

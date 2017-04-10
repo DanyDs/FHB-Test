@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
+  <style>
+    body{
+      font-family: 'Oswald', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+    }
+
+    p{
+      font-family: 'Oswald', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+    }
+  </style>
+</head>
+<body>
+  <p style="margin:20px; border-style: outset; border: 1px solid red;">
+    <div class="ui center aligned basic padded red segment">
+      <h2 style="color: teal; font-size: 24px; text-align: center;">
+        Bienvenido al Catálogo de Productos y Servicios "Hecho en Bolivia"
+      </h2>
+    </div>
+    <p style="margin:20px; border-style: outset; border: 1px solid #FFE800;">
+      <div style="padding-left: 10%; padding-right:10%; padding-bottom:20px; color: #000;">
+        La información que nos ha proporcionado aún debe pasar por un proceso de revisión que puede tomar algunos
+          días hasta estar completado.
+      </div>
+      <div style="padding-left: 10%; padding-right:10%; padding-bottom:20px; color: #000;">
+        La empresa no será listada en el catálogo hasta que el proceso de verificación finalice, sin embargo, usted
+          puede ir complementando la información de su empresa con los productos y/o servicios que ofrece, para lo cual usted
+          debe autenticarse con la dirección de correo electrónico y la contraseña proporsionadas al momento del registro en
+          la siguiente dirección: <a href='<%= ENV["SITE_URL"] + "/logins" %>'><%= ENV["SITE_URL"] + "/logins" %></a>
+      </div>
+      <div style="padding-left: 10%; padding-right:10%; padding-bottom:20px; color: #000;">
+          A continuación esta el detalle de la información recibida:
+      </div>
+      <div style="padding-left: 20%; padding-right:10%; padding-bottom:20px; color: #000;">
+        <strong>Nombre de la empresa empresa:</strong> <%= @company.name %><br/>
+        <strong>Descripción:</strong> <%= @company.detail %><br/>
+        <strong>Página Web:</strong> <%= @company.webpage %><br/>
+        <strong>NIT:</strong> <%= @company.nit %><br/>
+        <strong>Dirección:</strong> <%= @company.address %><br/>
+        <strong>Teléfono:</strong> <%= @company.telephone %><br/>
+        <strong>Departamento:</strong> <%= @company.department %><br/>
+        <strong>Persona de contacto:</strong> <%= @company.contactName %><br/>
+        <strong>Correo electrónico de contacto:</strong> <%= @company.email %>
+      </div>
+      <div style="padding-left: 10%; padding-right:10%; padding-bottom:20px; text-align:center; color: #000;">
+        Atentamente:
+      </div>
+      <div style="padding-left: 10%; padding-right:10%; padding-bottom:20px; text-align:center;">
+        <a href='<%= ENV["SITE_URL"] %>'>Catálogo de Productos y Servicios "Hecho en Bolivia"</a>
+      </div>
+    </p>
+    <p style="margin:20px; border-style: outset; border: 1px solid green;"> </p>
+  </p>
+</body>
+</html>

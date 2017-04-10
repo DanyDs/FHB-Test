@@ -1,0 +1,272 @@
+<script type="text/javascript">
+    var isCompanyPage = true;
+    var newCompany=false;
+    var companyProfileId= <%=@company.id%>;
+    $('.ui.modal')
+        .modal('attach events', '.yellow.button', 'show');
+  $(document).ready(function(){
+    var string = $('#cortar').text();
+    var str50 = string.substr(0,200);
+    if ( string.length > 200) {
+      verMas();
+      document.getElementById('readless').style.display = 'none';
+      $('#readless').click(function(){
+        verMas();
+        document.getElementById('readless').style.display = 'none';
+      })
+      function verMas(){
+        $('#cortar').html(str50+'...'+'<a id="readmore" style="font-size: 15px; cursor:pointer;">Ver más</a>');
+        $('#cortar').attr('data-text',string);
+        $('#readmore').click(function(e)
+        {
+            e.preventDefault();
+            $(this).parent().html($(this).parent().attr('data-text'))
+            document.getElementById('readless').style.display = 'block';
+        })
+      }
+    }
+});
+</script>
+<style media="screen">
+  #image{height: 275px;}
+  #lol{height: 80px;}
+  .oculto{height: 80px;}
+  .mostrar{display: none;}
+  .bmenos{display: none;}
+  @media screen and (max-width: 767px){
+    #image{
+      height: auto;
+      max-height: 300px;
+    }
+  }
+</style>
+
+<!--Fin contactar-->
+
+<!--Contenido-->
+<div class="ui container segment basic">
+  <!--Vista central de Empresa-->
+  <h1 class="ui header center aligned blue"><%= @company.name %></h1>
+  <div class="ui centered grid segment basic">
+    <div data-bind="openCompanyToEdit(<%= @company.id %>)" class="center">
+      <img class="ui fluid image" data-bind="attr:{ src:'/image_store/logo_'+<%= @company.id %>+'.gif' }" style="max-width: 250px;"/>
+    </div>
+  </div>
+  <h3 class="ui center aligned header" id="cortar" >
+    <% @company.detail.split("\n").each do |line| %>
+        <%= line +'<br>' %>
+    <% end %>
+  </h3>
+  <center id="readless" style="font-size: 15px; cursor:pointer;"><a><strong>Ver menos</strong></a></center>
+</div>
+
+<!--Fin Vista central de Empresa-->
+
+<!--pestañas-->
+<div class="ui container">
+  <div class="ui pointing secondary menu">
+    <a class="item" data-tab="perfil">Información</a>
+    <a class="item" data-tab="productos">Productos</a>
+    <a class="active item" data-tab="servicios">Servicios</a>
+
+  </div>
+
+  <!--INFORMACION BASICA DE LA EMPRESA-->
+  <div class="ui simple attached tab tabs-details" data-tab="perfil">
+    <h2 class="ui teal header center aligned">Información de la empresa</h2>
+    <div class="ui clearing divider"></div>
+
+    <div class="ui justified container basic fluid segment">
+      <div class="ui justified container basic fluid segment">
+
+        <h4>
+          <table class="ui table">
+            <tbody>
+            <tr>
+              <td>
+                <i class="user icon"></i>
+              </td>
+              <td> Persona de contacto:</td>
+              <td><%= @company.contactName %></td>
+            </tr>
+            <tr>
+              <td>
+                <i class="marker icon"></i>
+              </td>
+              <td>Dirección de la empresa:</td>
+              <td><%= @company.address %></td>
+            </tr>
+            <tr>
+              <td>
+                <i class="call square icon"></i>
+              </td>
+              <td>Teléfono:</td>
+              <td><%= @company.telephone %></td>
+            </tr>
+            <tr>
+              <td>
+                <i class="world icon"></i>
+              </td>
+              <td>Direccón web:</td>
+              <td>
+                <% if @company.webpage==nil || @company.webpage=="" ||  @company.webpage=='<span class="ui tiny red header">No fue registrada ninguna página web</span>' %>
+                  <p style="color:red;">No se registró una página web</p>
+                <% else %>
+                  <a href="<%= @company.webpage %>" target="_blank" class="title"> <%= @company.webpage %></a>
+                <% end %>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <i class="map signs icon"></i>
+              </td>
+              <td>Departamento:</td>
+              <td><%= @company.department %></td>
+            </tr>
+            <tr>
+              <td>
+                <i class="mail icon"></i>
+              </td>
+              <td>Correo electrónico:</td>
+              <td><%= @company.email %></td>
+            </tr>
+            <tr>
+              <td>
+                <i class="hashtag icon"></i>
+              </td>
+              <td>NIT:</td>
+              <td><%= @company.nit %></td>
+            </tr>
+            <tr>
+              <td>
+                <i class="building icon"></i>
+              </td>
+              <td>Sucursales:</td>
+              <td>
+                <% if @company.subsidiaries=="" %>
+                  <p style="color:red;">No existen sucursales registradas</p>
+                <% else %>
+                  <% @company.subsidiaries.split("||").each do |local| %>
+                      <span><%= local %><br></span>
+                  <% end %>
+                <% end %>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </h4>
+      </div>
+    </div>
+  </div>
+  <!--PRODUCTOSSS-->
+  <div class="ui simple tab tabs-details" data-tab="productos">
+    <% if @company.products.length < 1 %>
+      <div class="ui basic segment">
+        <h3 class="ui center aligned header red">No existen productos registrados</h3>
+      </div>
+    <% end
+    num = 0%>
+
+    <div class="ui three column grid stackable doubling center aligned">
+    <%  @company.products.each do |product| %>
+        <div class="column">
+          <div class="ui segment card centered" style="max-width: 360px;">
+            <div class="ui slide masked reveal image">
+                <div class="ui fluid image">
+                  <img id="image" src="<%= product.image_path %>" style="cursor:pointer;"/>
+                </div>
+            </div>
+            <div class="content">
+              <div class="ui teal header"><%= product.commercial_name %></div>
+              <% if product.description.length > 110
+                descripcion = product.description[0,110]+"..."%>
+                <p style="text-align: justify; white-space: pre-wrap" id="<%=num%>"class="oculto"><span style="color:#0E6EB8"><b>Descripción: </b></span><br /><%= descripcion %><a id="<%=num%>" class="bmas" style="cursor:pointer;" onclick="more(this.id)">Ver más</a></p>
+                <p style="text-align: justify; white-space: pre-wrap" id="<%=num%>"class="mostrar"><span style="color:#0E6EB8"><b>Descripción: </b></span><br><%= product.description %></p><center id="<%=num%>" class="bmenos" style="cursor:pointer;" onclick="less(this.id)"><a>Ver menos</a></center>
+              <% num = num + 1
+              else %>
+                <p style="text-align: justify; white-space: pre-wrap" id="lol"><span style="color:#0E6EB8"><b>Descripción: </b></span><br><%= product.description %></p>
+              <% end %>
+              <% if product.certification == "" || product.certification == nil %>
+                <p style="color:red;text-align: justify;"><span style="color:#0E6EB8"><b>Certificaciones: </b></span><br/>No poseé certificaciones.</p>
+              <% else %>
+                <p style="text-align: justify;"><span style="color:#0E6EB8"><b>Certificaciones: </b></span><br/><%= product.certification %></p>
+              <% end %>
+              <% if product.tariff_position == "" || product.tariff_position == nil %>
+                <p style="color:red;text-align: justify;"><span style="color:#0E6EB8"><b>Posición arancelaria: </b></span><br/>No poseé posicion arancelaria.</p>
+              <% else %>
+                <p style="text-align: justify;"><span style="color:#0E6EB8"><b>Posición arancelaria: </b></span><br/><%= product.tariff_position %></p>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+  <script type="text/javascript">
+  function more(id){
+  var oculto =  document.getElementsByClassName('oculto');
+  var mostrar =  document.getElementsByClassName('mostrar');
+  var menos =  document.getElementsByClassName('bmenos');
+  oculto[id].style.display = 'none';
+  mostrar[id].style.display = 'block';
+  menos[id].style.display = 'block';
+  }
+  function less(id){
+  var oculto =  document.getElementsByClassName('oculto');
+  var mostrar =   document.getElementsByClassName('mostrar');
+  var menos =  document.getElementsByClassName('bmenos');
+  oculto[id].style.display = 'block';
+  mostrar[id].style.display = 'none';
+  menos[id].style.display = 'none';
+  }
+  </script>
+  <!--SERVICIOSSS-->
+  <div class="ui simple attached tab active tabs-details" data-tab="servicios">
+    <% if @company.services.length < 1 %>
+    <div class="ui segment basic">
+      <h3 class="ui center aligned header red">No existen servicios registrados</h3>
+    </div>
+    <% end %>
+    <div class="ui three column grid stackable doubling center aligned">
+      <% @company.services.each do |service| %>
+      <div class="column">
+        <div class="ui segment card centered" style="max-width: 360px;">
+          <div class="ui slide masked reveal image">
+              <div class="ui fluid image">
+                <img id="image" src="<%= service.image_path %>" style="cursor:pointer;"/>
+              </div>
+          </div>
+          <div class="content">
+            <div class="ui teal header"><%= service.commercial_name %></div>
+            <% if service.description.length > 110
+              descripcion = service.description[0,110]+"..."%>
+              <p style="text-align: justify; white-space: pre-wrap" id="<%=num%>"class="oculto"><span style="color:#0E6EB8"><b>Descripción: </b></span><br /><%= descripcion %><a id="<%=num%>" class="bmas" style="cursor:pointer;" onclick="more(this.id)">Ver más</a></p>
+              <p style="text-align: justify; white-space: pre-wrap" id="<%=num%>"class="mostrar"><span style="color:#0E6EB8"><b>Descripción: </b></span><br><%= service.description %></p><center id="<%=num%>" class="bmenos" style="cursor:pointer;" onclick="less(this.id)"><a>Ver menos</a></center>
+            <% num = num + 1
+            else %>
+              <p style="text-align: justify; white-space: pre-wrap" id="lol"><span style="color:#0E6EB8"><b>Descripción: </b></span><br><%= service.description %></p>
+            <% end %>
+            <% if service.certification == "" || service.certification == nil %>
+              <p style="color:red;text-align: justify;"><span style="color:#0E6EB8"><b>Certificaciones: </b></span><br/>No poseé certificaciones.</p>
+            <% else %>
+              <p style="text-align: justify;"><span style="color:#0E6EB8"><b>Certificaciones: </b></span><br/><%= service.certification %></p>
+            <% end %>
+            <% if service.tariff_position == "" || service.tariff_position == nil %>
+              <p style="color:red;text-align: justify;"><span style="color:#0E6EB8"><b>Posición arancelaria: </b></span><br/>No poseé posicion arancelaria.</p>
+            <% else %>
+              <p style="text-align: justify;"><span style="color:#0E6EB8"><b>Posición arancelaria: </b></span><br/><%= service.tariff_position %></p>
+            <% end %>
+          </div>
+        </div>
+      </div>
+      <% end %>
+    </div>
+  </div>
+
+</div>
+<!--fin pestañas-->
+<% if @company.webpage!=nil and @company.webpage!="" and @company.webpage!='<span class="ui tiny red header">No fue registrada ninguna página web</span>'%>
+<div class="ui center aligned basic segment">
+  <a href="http://<%=@company.webpage%>" class="ui center floated tiny teal button">Visitar empresa</a>
+</div>
+<% end %>

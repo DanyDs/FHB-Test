@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  description: MyText
+  id_Company: 1
+  isAccepted: false
+  isPublicized: false
+  publicationDate: 2016-10-25
+  expirationDate: 2016-10-25
+
+two:
+  description: MyText
+  id_Company: 1
+  isAccepted: false
+  isPublicized: false
+  publicationDate: 2016-10-25
+  expirationDate: 2016-10-25

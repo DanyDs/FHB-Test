@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.4/semantic.min.css" media="screen" title="no title" charset="utf-8">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.4/semantic.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.0/knockout-min.js"></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <title>Catálogo de Productos y Servicios "Hecho en Bolivia"</title>
+</head>
+<style media="screen">
+ #main-header{
+    width: 100%;
+    left:0;
+    top:0;
+    z-index: 100;
+
+    position:fixed;
+  }
+  #boton_menu {
+    display: none;
+  }
+  #main-content{
+    padding-top: 160px;
+  }
+
+  #tituloCatalogo{
+    margin-top: 10px;
+    margin-bottom: 15px;
+    font-size: 30px;
+  }
+  footer {  
+    position:fixed;
+    bottom: 0;
+    width: 100%;    
+  }
+
+  @media screen and (max-width: 1150px ) {
+    #main-content{
+      padding-top: 140px;
+    }
+    #header_menu {
+      display: none;
+    }
+
+    #boton_menu {
+      display: flex;
+    }
+    #tituloCatalogo{
+      font-size: 25px;
+      margin-bottom: 20px;
+    }
+    @media screen and (max-width: 1000px ) {
+      #main-content{
+        padding-top: 165px;
+      }
+
+      @media screen and (max-width: 615px ) {
+        #main-content{
+          padding-top: 135px;
+        }
+        #tituloCatalogo{
+          font-size: 20px;
+          margin-bottom: 5px;
+        }
+
+        @media screen and (max-width: 480px ) {
+          #main-content{
+            padding-top: 140px;
+          }
+
+          @media screen and (max-width: 380px ) {
+            #main-content{
+              padding-top: 170px;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  #opFooter {
+    color: white;
+    font-weight: bold;
+  }
+
+  #masOpFooter {
+    margin-left: 30px;
+    color: white;
+    font-weight: bold;
+  }
+</style>
+<script>
+    $(document).ready(function () {
+        var role = localStorage.getItem("UserRole");
+        if (!role || role != "regional") {
+            alert("Acceso denegado, no tiene autorización para este contenido");
+            location.href = "/logins";
+            return;
+        }
+        $('.ui.accordion').accordion();
+        $('.ui.dropdown').dropdown();
+        $('.ui.menu a.item').on('click', function () {
+            $(this).addClass('active').siblings().removeClass('active');
+        });
+    });
+    $(window).load(function () {
+
+        $('.menu .item').tab();
+    });
+
+</script>
+<body>
+
+<div class="ui blurring"><!--Para difuminar el contenido-->
+  <header id="main-header">
+    <!--header-->
+    <div class="ui container segment fluid" style="padding-left:0; padding-right:0; padding-bottom:0;">
+      <!--inicio título-->
+      <div class="ui internally grid">
+        <div class="row">
+          <div class="three wide column">
+            <h2 class="ui header left aligned">
+              <%= image_tag("empresa.png", class: " image", height: '31.7',  width: '42.3') %>
+            </h2>
+          </div>
+          <div class="ten wide column">
+            <h1 class="ui header center aligned" id="tituloCatalogo">
+              <b>Catálogo de Productos y Servicios "<span style="color:red; font-size: 36px;">Hecho</span> <span style="color:#FFDB00; font-size: 36px;">en</span> <span style="color:green; font-size: 36px;">Bolivia</span>"</b>
+            </h1>
+          </div>
+          <div class="three wide column">
+            <h3 class="ui header right aligned">
+              <%= image_tag("logocato.png", class: "ui image", height: '31.7',  width: '42.3') %>
+            </h3>
+          </div>
+        </div>
+      </div>
+      <!--fin título-->
+      <!--Menu-->
+      <div id="header_menu" class="ui inverted menu" style="margin:auto; background-color:teal;">        
+        <!--<a class="item"><i class="help circle icon"></i>¿Quiénes somos?</a>-->
+        <a class="item" href="/supervisor/companies"><i class="industry icon"></i>Empresas</a>
+        <a class="item" href="/supervisor/acceptDecline"><i class="announcement icon"></i>Anuncios</a>
+        <a class="item" href="/supervisor/statistics_products"><i class="bar chart icon"></i>Estadisticas</a>
+        <div class="right menu">
+          <a class="item" href="/logins" onclick="logOut()"><i class="sign out icon"></i>Cerrar Sesion</a>
+        </div>
+      </div>
+      <div id="header_menu" class="ui text menu" style="margin:auto; ">
+      <div class="item">
+          <i class="travel icon"></i>
+          <div class="content">
+            <h5 class="ui header">
+              <b><p style="text-transform: capitalize;"><span id="userRole" /></p></b>
+            </h5>
+          </div>
+      </div>
+      <div class="right menu">
+        <div class="ui dropdown item">
+          <i class="circular inverted small yellow user icon"></i>
+          <div class="content">
+            <h5 class="ui header">
+              <b>Usuario:</b>
+              <div class="sub header"><h5 class="ui yellow header"><span id="userName" /></h5></div>
+            </h5>
+          </div>
+          <i class="dropdown icon"></i>
+          <div class="menu">
+            <a class="item" href="/supervisor/editUser"><i class="configure icon"></i>Cambiar datos personales</a>
+            <a class="item" href="/supervisor/editPassword"><i class="setting icon"></i>Cambiar contraseña</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+      <!--fin Menu-->
+      <!--boton menu-->
+      <div id="boton_menu" class="ui inverted menu" style="margin:auto; background-color:teal;">
+        <a id="toggle" class="item"><i class="sidebar icon"></i>Menu</a>
+        <div class="right menu">
+          <a class="item" href="/logins" onclick="logOut()"><i class="sign in icon"></i>Cerrar Sesion</a>
+        </div>
+      </div>
+    <script>
+          function logOut() {
+             window.localStorage.clear()
+          }
+    </script>
+      <!--fin boton menu-->
+      <!--Sidebar-->
+      <div class="ui sidebar inverted vertical left menu" style="margin:auto; background-color:teal;">
+        <a class="item" >
+          <h4 class="ui centered header">
+            <i class="circular inverted yellow user icon"></i>
+          </h4>
+          <h5 class="ui centered header">
+            <b>Usuario:</b>
+            <div class="sub header"><h5 class="ui yellow header"><p style="text-transform: capitalize;"><span id="userName2" /></p></h5></div>
+          </h5>
+        </a>
+        <a class="item" href="/"><i class="home icon"></i>Inicio</a>
+        <!--<a class="item"><i class="help circle icon"></i>¿Quiénes somos?</a>-->
+        <a class="item" href="/supervisor/companies"><i class="industry icon"></i>Empresas</a>
+        <a class="item" href="/supervisor/acceptDecline"><i class="announcement icon"></i>Anuncios</a>
+        <a class="item" href="/supervisor/statistics_products"><i class="bar chart icon"></i>Estadisticas</a>
+        <a class="item" href="/supervisor/editUser"><i class="configure icon"></i>Cambiar datos personales</a>
+        <a class="item" href="/supervisor/editPassword"><i class="setting icon"></i>Cambiar contraseña</a>
+      </div>
+      <!--Fin Sidebar-->
+    </div>
+  </header>
+  </div>
+  <!--funcinamiento sticky para el menu Importante-->
+  <script type="text/javascript">
+      $('.ui.sticky').sticky();
+
+      $('#toggle').click(function () {
+          $('.ui.sidebar').sidebar('toggle');
+      });
+  </script>
+  <!--Fin header-->
+<section id="main-content">
+  <%= yield %>
+  <div class="ui basic padded segment"></div>
+</section>
+<footer>
+  <div class="ui center aligned inverted vertical footer segment " style="margin:auto; background-color:teal;">
+    <div class="ui horizontal inverted small divided link list">
+      <a class="item" href="#"><p id="opFooter">Mapa de la Ubicación</p></a>
+      <a class="item" href="#"><p id="opFooter">Contáctanos </p></a>
+      <a class="item" href="/terminosYcondiciones"><p id="opFooter">Términos y condiciones</p></a>
+      <a class="item" href="#"><p id="opFooter">Visita nuestra página</p></a>
+    </div>
+  </div>
+</footer>
+<%= javascript_include_tag "application", params[:controller] %>
+<script>
+  $("#userName").text(localStorage.getItem("UserName"));
+  var role = localStorage.getItem("UserRole");
+  if(role=="general"){role="Administrador";}
+  if(role =="regional"){role="Supervisor";}
+  $("#userRole").text(role);
+  $("#userName2").text(localStorage.getItem("UserName"));
+ </script>
+</body>
+</html>

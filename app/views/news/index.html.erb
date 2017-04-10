@@ -1,0 +1,58 @@
+
+<!-- Breadcrumbs -->
+<div class="ui container segment basic">
+  <div class="ui large breadcrumb">
+    <div class="active section">Noticias</div>
+  </div>
+  <div class="ui yellow left aligned padded basic segment"></div>
+</div>
+
+<!-- Consultar Noticias como Visitante -->
+<div class="ui main text justified container" data-bind="visible: isVisitant()">
+  <div class="ui basic segment">
+    <div class="three ui buttons">
+      <button class="ui olive button" data-bind="click: function() { filter('Nacional') }">Ver Noticias Nacionales</button>
+      <button class="ui teal button" data-bind="click: function() { filter('Internacional') }">Ver Noticias Internacionales
+      </button>
+      <button class="ui orange button" data-bind="click: function() { filter('') }">Ver todas las noticias</button>
+    </div>
+  </div>
+  <div class="ui accordion" data-bind="foreach: filterNationalNews">
+    <div class="ui orange raised segment">
+        <div data-bind="if: location == 'Nacional'">
+          <a class="ui olive left ribbon label"><h5 class="ui right aligned header" style="font-variant:small-caps"data-bind="text: location"></h5></a>
+        </div>
+        <div data-bind="ifnot: location == 'Nacional'">
+          <a class="ui teal left ribbon label"><h5 class="ui right aligned header" style="font-variant:small-caps"data-bind="text: location"></h5></a>
+        </div>
+        <h3 class="ui header" style="font-variant:small-caps" data-bind="text: title"></h3>
+        <a class="ui yellow right ribbon label"><h5 class="ui right aligned header" style="font-variant:small-caps"data-bind="text: date "></h5></a>
+        </br>
+        <div data-bind="visible: hasImage">
+          <img data-bind="attr:{src:'/image_store/notice_'+id+'.gif'}" class="ui centered spaced small image" style="float:left;" border=10>
+          <br>
+        </div>
+        <p data-bind="lineBreaks: description"></p>
+      </br>
+        <div data-bind="visible: link">
+          </br>
+          <strong>Dirección web de la noticia: </strong>
+          <a  target="_blank" data-bind="attr:{href: link}"><font data-bind="text: link " color="blue"></font></a>
+        </div>
+      </div>
+    </div>
+  </div>
+    <div class="ui basic segment"> </div>
+
+<script>
+    $('#editNoticeDialog')
+        .modal('attach events', '.teal.button', 'show')
+        .modal('setting', 'closable', false)
+        .modal('setting', 'transition', 'vertical flip')
+        .modal({
+            onApprove: function () {
+                newsModel.updateNotice();
+            }
+        })
+    ;
+</script>

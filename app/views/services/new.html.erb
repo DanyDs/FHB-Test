@@ -1,0 +1,366 @@
+<!DOCTYPE HTML>
+<html>
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.4/semantic.min.css" media="screen" title="no title" charset="utf-8">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.4/semantic.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.0/knockout-min.js"></script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<head>
+		<title>Registro de Productos</title>
+</head>
+<style>
+					#boton_menu{
+						display: none;
+					}
+					@media screen and (max-width:1107px ){
+						#header_menu{
+						display: none;
+						}
+						#boton_menu{
+							display: flex;
+						}
+					}
+         #fondoFooter{
+          background-color:olive;
+         }
+        #opFooter{
+          color: white;
+          font: bold;
+        }
+</style>
+<script>
+	$(document).ready(function() {
+				$('.ui.dropdown').dropdown();
+
+			  $('.ui.menu .ui.dropdown').dropdown({
+					on: 'hover'
+			  });
+			  $('.ui.menu a.item').on('click', function() {
+				  $(this).addClass('active').siblings().removeClass('active');
+				});
+			});
+	$(window).load(function(){
+			$('.menu .item').tab();
+		});
+	</script>
+
+<body>
+
+	<!--header-->
+	<%= render "menus/menu_empresa" %>
+	<!--Fin header-->
+
+
+		<div class="ui container segment basic">
+			<h1 class="ui center aligned teal header">
+					<img src="images/pil.jpg" class="ui circular image">
+					Pil Andina S.A.
+			</h1>
+			<!--Pestañas-->
+			<div class="three ui buttons">
+				<a class="ui button  item" href="productos.html" data-tab="productos">Productos</a>
+				<a class="ui button active item" href="servicios.html" data-tab="servicios">Servicios</a>
+				<a class="ui button item" href="novedades.html" data-tab="novedades">Novedades</a>
+			</div>
+			 <!--fin Pestañas-->
+
+			<div class="ui three column centered grid segment basic">
+				<div class="ui twelve wide column segment basic form">
+  					<h4 class="ui dividing header">Formulario de Registro</h4>
+
+
+							<div class="two fields">
+						    <div class="field">
+						      <label>Servicio</label>
+						      <input name = "commercial_name" type="text" data-bind = "value: editingServiceModel().service.commercial_name" placeholder="Nombre Comercial" required>
+						    </div>
+								<div class="field">
+		      				<label>Tipo de Producto</label>
+		      				<div class="ui selection dropdown">
+										<input type="hidden" name="type">
+										<i class="dropdown icon"></i>
+										<div class="default text">Tipo de producto</div>
+										<div class="menu">
+											<div class="item" data-value="0">aseguradora</div>
+			    						<div class="item" data-value="1">Entidad fianaciera</div>
+			    						<div class="item" data-value="2">Entidad Academica</div>
+			    						<div class="item" data-value="3">Otro</div>
+										</div>
+	    						</div>
+	    					</div>
+						  </div>
+							<div class="two fields">
+								<div class="field">
+									<label>Certificaciones</label>
+										<div class="field">
+											<input type="text"  data-bind = "value: editingServiceModel().service.certification" name="shipping[address]" placeholder="Separe con comas" required>
+										</div>
+								</div>
+								<div class="field">
+									<label>Posición arancelaria</label>
+										<div class="field">
+											<input type="text"  data-bind = "value: editingServiceModel().service.tariff_position" name="shipping[address]" placeholder="0123XXXXXXXX" required>
+										</div>
+								</div>
+							</div>
+
+
+	  					<div class="field">
+	    					<label>Descripción</label>
+	    						<textarea rows="2"  data-bind = "value: editingServiceModel().service.description"required></textarea>
+	  					</div>
+
+
+							<%= form_for(@service, html: {multipart: true}) do |a| %>
+								<label>Imagen	</label>
+									<%= a.file_field :image, class:"ui icon button"%>
+
+
+
+									<div class="ui accordion fluid container segment basic">
+										<div class="field">
+											<label>Seleccione la categoría de su Servicios</label>
+										</div>
+										<div class="title">
+											<i class="dropdown icon"></i>
+											<div class="ui checkbox">
+												<input type="checkbox" name="example">
+													<label><h4>Industria Manufacturera</h4></label>
+											</div>
+										</div>
+										<div class="ui content bulleted list">
+											<div class="content">
+												<div class="accordion transition visible">
+													<div class="title">
+															<i class="dropdown icon"></i>
+															<div class="ui checkbox">
+																<input type="checkbox" name="example">
+																	<label><strong>Elaboración de Productos Alimenticios</strong></label>
+															</div>
+													</div>
+													<div class="ui content bulleted list">
+														<li>
+															<div class="ui checkbox">
+															<input type="checkbox" name="sub1">
+																<label>Explotación de mataderos, producción, procesamiento y conservación de carne y productos cárnicos.</label>
+															</div>
+														</li>
+														<li>
+															<div class="ui checkbox">
+																<input type="checkbox" name="sub2">
+																	<label>Matanza de ganado bovino y procesamiento de su carne.</label>
+															</div>
+														</li>
+														<li>
+															<div class="ui checkbox">
+																<input type="checkbox" name="sub3">
+																	<label>Matanza de ganado porcino y procesamiento de su carne.</label>
+															</div>
+														</li>
+														<li>
+															<div class="ui checkbox">
+																<input type="checkbox" name="sub4">
+																	<label>Matanza de ganado camélido y procesamiento de su carne.</label>
+															</div>
+														</li>
+														<li>
+															<div class="ui checkbox">
+																<input type="checkbox" name="sub5">
+																	<label>Matanza, producción y procesamiento de carne de aves.</label>
+															</div>
+														</li>
+														<li>
+															<div class="ui checkbox">
+																<input type="checkbox" name="sub6">
+																	<label>Elaboración de embutidos.</label>
+															</div>
+														</li>
+														<li>
+															<div class="ui checkbox">
+																<input type="checkbox" name="sub7">
+																	<label>Elaboración de helado.</label>
+															</div>
+														</li>
+														<li>
+															<div class="ui checkbox">
+																<input type="checkbox" name="sub8">
+																	<label>Elaboración de productos lácteos.</label>
+															</div>
+														</li>
+													</div>
+													<div class="title">
+															<i class="dropdown icon"></i>
+															<div class="ui checkbox">
+																<input type="checkbox" name="example">
+																	<label><strong>Elaboración de Bebidas</strong></label>
+															</div>
+													</div>
+													<div class="ui content bulleted list">
+														<li>
+															<div class="ui checkbox">
+															<input type="checkbox" name="sub9">
+																<label>Elaboración de bebidas alcohólicas destiladas.</label>
+															</div>
+														</li>
+														<li>
+															<div class="ui checkbox">
+																<input type="checkbox" name="sub10">
+																	<label>Elaboración de vinos.</label>
+															</div>
+														</li>
+														<li>
+															<div class="ui checkbox">
+																<input type="checkbox" name="sub11">
+																	<label>Elaboración de aguas minerales, tónicas y otras aguas envasadas.</label>
+															</div>
+														</li>
+													</div>
+												</div>
+											</div>
+										</div>
+
+										<div class="title">
+											<i class="dropdown icon"></i>
+											<div class="ui checkbox">
+												<input type="checkbox" name="example">
+													<label><h4>Actividades de Alojamiento y Servicio de Comida</h4></label>
+											</div>
+										</div>
+										<div class="ui content bulleted list">
+												<div class="accordion transition visible">
+												<div class="title">
+													<i class="dropdown icon"></i>
+													<div class="ui checkbox">
+														<input type="checkbox" name="example">
+															<label><strong>Actividades de Alojamiento</strong></label>
+													</div>
+												</div>
+												<div class="ui content bulleted list">
+													<li>
+														<div class="ui checkbox">
+															<input type="checkbox" name="sub12">
+																<label>Servicio de hoteles.</label>
+														</div>
+													</li>
+													<li>
+														<div class="ui checkbox">
+															<input type="checkbox" name="sub13">
+																<label>Servicio de hostales.</label>
+														</div>
+													</li>
+												</div>
+												<div class="title">
+														<i class="dropdown icon"></i>
+														<div class="ui checkbox">
+															<input type="checkbox" name="example">
+																<label><strong>Actividades de Expendio de comidas y bebidas</strong></label>
+														</div>
+												</div>
+												<div class="ui content bulleted list">
+													<li>
+														<div class="ui checkbox">
+															<input type="checkbox" name="sub14">
+																<label>Expendio de comidas en restaurantes, churrasquerías, chifas, fricaserías y otros locales. </label>
+														</div>
+													</li>
+													<li>
+														<div class="ui checkbox">
+															<input type="checkbox" name="sub15">
+																<label>Expendio de comidas en cafeterías, confi terías, snack, heladerías y otros locales de comida rápida.</label>
+														</div>
+													</li>
+												</div>
+											</div>
+										</div>
+
+										<div class="title">
+											<i class="dropdown icon"></i>
+											<div class="ui checkbox">
+												<input type="checkbox" name="example">
+													<label><h4>Servicios de Educación</h4></label>
+											</div>
+										</div>
+										<div class="ui content bulleted list">
+												<div class="accordion transition visible">
+												<div class="title" >
+													<i class="dropdown icon"></i>
+													<div class="ui checkbox">
+														<input type="checkbox" name="example">
+															<label><strong>Servicios de Educación</strong></label>
+													</div>
+												</div>
+												<div class="ui content bulleted list">
+													<li>
+														<div class="ui checkbox">
+															<input type="checkbox" name="sub12">
+																<label>Educación pre-escolar</label>
+														</div>
+													</li>
+													<li>
+														<div class="ui checkbox">
+															<input type="checkbox" name="sub13">
+																<label>Educación primaria</label>
+														</div>
+													</li>
+												</div>
+											</div>
+										</div>
+
+									</div>
+									<script type="text/javascript">
+									$(document).ready(function(){
+															 $('.ui.accordion').accordion();
+														});
+									</script>
+				<!--Fin Acordion Sectores-->
+
+
+
+
+
+
+
+									<div class="actions">
+										<%= a.submit "Guardar", class:"ui blue button" %>
+										<a class="ui red button" href="/services">Cancelar</a>
+									</div>
+								</div>
+								</div>
+							<% end %>
+
+
+					<div class="ui modal">
+
+							<div class="header">Exito!</div>
+							<div class="content">
+								<p>Registro de nuevo servicio</p>
+							</div>
+							<div class="actions">
+								<a class="ui inverted green positive right button">Aceptar</a>
+							</div>
+
+					</div>
+
+				<script type="text/javascript">
+				$('.ui.modal')
+				.modal('setting', 'closable', false)
+				.modal('attach events', '.blue.button', 'show')
+				.modal({
+						onApprove: function(){
+							servicesModel.createService();
+						}
+					})
+				;
+				</script>
+    </div>
+	</div>
+
+
+
+			<!--Footer-->
+			<%= render "footers/footer_simple_empresa" %>
+			<!--Footer-->
+			<%= javascript_include_tag "application", params[:controller] %>
+	</body>
+</html>

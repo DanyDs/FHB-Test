@@ -1,0 +1,161 @@
+<style media="screen">
+  #name:hover{
+    color: #0E6EB8;
+  }
+  #cortar{
+    width: auto;
+    height:auto;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+    overflow:hidden;
+  }
+</style>
+<script type="text/javascript">
+$('.ui.search')
+.search({
+  source: content
+})
+;
+</script>
+<!-- Breadcrumbs -->
+<div class="ui container segment basic">
+  <div class="ui large breadcrumb">
+    <div class="active section">Empresas</div>
+  </div>
+  <div class="ui yellow left aligned padded basic segment" style="margin-bottom: -55px;">
+  </div>
+</div>
+
+<!--Contenido gestionar Empresa-->
+<div class="ui container basic segment">
+        <!--Bloque título y solicitudes-->
+      <div class="ui center aligned basic segment">
+        <div class="ui labeled button" tabindex="0" >
+          <a class="ui  button active" href="/companies" ><i class="industry  icon"></i>Empresas registradas </a>
+          <a class="ui  left  label active" data-bind="text: registeredCompanies().length"> </a>
+        </div>
+        <div class="ui labeled button" tabindex="0" >
+          <a class="ui  button" href="/supervisor/requests"><i class="plus icon"></i>Nuevas solicitudes de registro</a>
+          <a class="ui  left label"data-bind="text: requestedCompaniesCounter().length"></a>
+        </div>
+        <div class="ui labeled button" tabindex="0">
+          <a class="ui  button" href="/supervisor/getDowned"><i class="remove icon"></i>Nuevas solicitudes de baja</a>
+          <a class="ui  left   label "data-bind="text: downedCompaniesCounter().length"></a></br>
+        </div>
+      </br>
+      </div>
+</br>
+      <div class="ui action input">
+        <input type="text" placeholder="Buscar..." data-bind="value: companySearched">
+        <button class="ui icon button" data-bind="click: function(){filter(companySearched())}">
+          <i class="search icon"></i>
+        </button>
+      </div>
+
+    </br>
+    <div data-bind="visible: registeredCompanies().length==0">
+      <div class="ui container basic segment center aligned" >
+        <h3 class="ui red header">"No hay empresas registradas"</h3>
+      </div>
+    </div>
+  </br>
+
+        <!--Lista de Empresas-->
+        <div data-bind="visible: registeredCompanies">
+        <div id="listaCompu">
+
+            <table class="ui compact celled table" >
+                <!--Tabla Empresas-->
+                <thead>
+                  <tr>
+                    <th class="single line">Empresa</th>
+                    <th>Logotipo</th>
+                    <th>Detalle</th>
+                    <th class="center aligned">Departamento</th>
+                    <th class="center aligned">NIT</th>
+                    <th class="center aligned">Fecha de ingreso</th>
+                  </tr>
+                </thead>
+                  <tbody data-bind="foreach: registeredCompanies">
+                    <tr>
+                      <td><a data-bind="attr:{ href:'/supervisor/companies_profile/'+id+''}"> <p class="ui image header"  data-bind="text: name" id="name"> <=% company.name => </p> </a></td>
+                      <td><a data-bind="attr:{ href:'/supervisor/companies_profile/'+id+''}"><img data-bind="attr:{ src:'/image_store/logo_'+id+'.gif'}"  width="50" height="50"/> </a></td>
+                      <td class="left aligned" data-bind="text: detail" style="max-width:550px;" id="cortar">  </td>
+                      <td class="center aligned" data-bind="text: department"></td>
+                      <td class="center aligned" data-bind="text: nit"> </td>
+                      <td class="center aligned" data-bind="text: created_at"></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+          </div>
+            <!--Fin tabla empresas-->
+
+
+        <!-- Tabla empresas Movil-->
+        <div data-bind="foreach: registeredCompanies" class="ui cards centered basic segment container" id="listaMovil">
+          <div class="ui card">
+            <div class="content">
+              <div class="header" data-bind="text: name"></div>
+            </div>
+            <div class="ui content center aligned" id="imageMovil">
+             <img class="image" data-bind="attr:{ src:'/image_store/logo_'+id+'.gif'}" width="240" height="240"/>
+           </div>
+           <div class="ui content center aligned" id="lessMovil">
+            <img class="ui image fluid" data-bind="attr:{ src:'/image_store/logo_'+id+'.gif'}" style="max-height:200px;"/>
+          </div>
+            <div class="content">
+              <a data-bind="attr:{ href:'/supervisor/companies_profile/'+id+''}"><center>Visitar Empresa</center></a>
+              <div class="description" id="cortar"><strong>Detalle:</strong> <span data-bind="text: detail"></span></div>
+              <div class="description"><strong>Departamento:</strong> <span data-bind="text: department"></span></div>
+              <div class="description"><strong>NIT:</strong> <span data-bind="text: nit"></span></div>
+            </div>
+            <div class="extra content">
+              <div class="meta">
+                <strong>Miembro desde:</strong> <span class="date" data-bind="text: created_at"></span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Tabla empresas Movil-->
+<script>
+  var isCompanyPage=false;
+  var newCompany=false;
+</script>
+
+
+</div>
+
+<style>
+  #listaMovil {
+    display: none;
+  }
+
+  @media screen and (max-width: 995px ) {
+    #listaCompu {
+      display: none;
+    }
+
+    #listaMovil {
+      display: flex;
+    }
+
+  }
+  #lessMovil{
+    display: none;
+  }
+  @media screen and (max-width: 415px ) {
+
+      #imageMovil{
+        display: none;
+      }
+      #lessMovil{
+        display:flex;
+      }
+
+
+  }
+</style>

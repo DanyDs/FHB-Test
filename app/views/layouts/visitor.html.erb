@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.4/semantic.min.css" media="screen" title="no title" charset="utf-8">
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/jquery.slick/1.6.0/slick.css"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.4/semantic.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.0/knockout-min.js"></script>
+  <script src="https://cdn.rawgit.com/faulknercs/Knockstrap/v1.2.0/build/knockstrap.min.js"></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+
+    <title>Catálogo de Productos y Servicios "Hecho en Bolivia"</title>
+    <script src='https://www.google.com/recaptcha/api.js'></script>
+  </head>
+  <style media="screen">
+    
+    #main-header{
+      width: 100%;
+      left:0;
+      top:0;
+      z-index: 100;
+
+      position:fixed;
+    }
+    #boton_menu{
+      display: none;
+    }
+    #main-content{
+      padding-top: 135px;
+    }
+    #tituloCatalogo{
+      margin-top: 10px;
+      margin-bottom: 15px;
+      font-size: 30px;
+    }
+    
+    @media screen and (max-width: 1150px ) {
+       #main-content{
+        padding-top: 125px;
+      }
+      #header_menu{
+        display: none;
+      }
+      #boton_menu{
+        display: flex;
+      }
+      #tituloCatalogo{
+        font-size: 25px;
+        margin-bottom: 20px;
+      }
+        @media screen and (max-width: 960px ) {
+          #main-content{
+           padding-top: 155px;
+         }
+
+          @media screen and (max-width: 615px ) {
+
+           #main-content{
+            padding-top: 130px;
+          }
+          #tituloCatalogo{
+            font-size: 20px;
+            margin-bottom: 5px;
+          }
+
+          @media screen and (max-width: 480px ) {
+             #main-content{
+              padding-top: 140px;
+            }
+
+            @media screen and (max-width: 380px ) {
+               #main-content{
+                padding-top: 165px;
+              }
+            }
+          }
+        }
+      }
+    }
+    #fondoFooter{
+      background-color: #216521;
+    }
+    #opFooter{
+      color: white;
+      font-weight: bold;
+    }
+    #masOpFooter{
+      margin-left: 30px;
+      color: white;
+      font-weight: bold;
+    }
+    .announcement {
+      padding: 4px;
+      min-width: 120px;
+      margin:auto;
+    }
+    .announcement img {
+      margin:auto;
+    }
+  </style>
+  <script>
+    $(document).ready(function(){
+      $('.ui.accordion').accordion();
+      $('.ui.dropdown').dropdown();
+      $('.ui.menu a.item').on('click', function() {
+        $(this).addClass('active').siblings().removeClass('active');
+      });
+    });
+    $(window).load(function(){
+      $('.menu .item').tab();
+    });
+  </script>
+<body>
+   <header id="main-header">
+
+<!--header-->
+<div class="ui container segment fluid" style="padding-left:0; padding-right:0; padding-bottom:0;">
+  <!--inicio título-->
+  <div class="ui internally grid">
+    <div class="row">
+      <div class="three wide column">
+        <h2 class="ui header left aligned">
+          <%= image_tag("empresa.png", class: " image", height: '31.7',  width: '42.3') %>
+        </h2>
+      </div>
+      <div class="ten wide column">
+        <h1 class="ui header center aligned" id="tituloCatalogo">
+          <b>Catálogo de Productos y Servicios "<span style="color:red">Hecho</span> <span style="color:#FFDB00">en</span> <span style="color:green">Bolivia</span>"</b>
+        </h1>
+      </div>
+      <div class="three wide column">
+        <h3 class="ui header right aligned">
+          <%= image_tag("logocato.png", class: "ui image", height: '31.7',  width: '42.3') %>
+        </h3>
+      </div>
+    </div>
+  </div>
+  <!--fin título-->
+  <!--header-->
+  <!--Menu-->
+  <div id="header_menu" class="ui inverted menu" style="margin:auto; background-color:rgb(0,125,49);">
+    <a class="item" href="/"><i class="home icon"></i>Inicio</a>
+    <a class="item" href="/quienes_somos"><i class="help circle icon"></i>¿Quiénes somos?</a>
+    <a class="item" href="/emprender"><i class="info circle icon"></i>Informacion </br> para emprendedores</a>
+    <a class="item" href="#"><i class="warning circle icon"></i>Legislación  Empresarial</a>
+    <a class="item" href="/noticias"><i class="newspaper icon"></i>Noticias</a>
+    <a class="item" href="/terminosYcondiciones"><i class="write square icon"></i>Términos y condiciones</a>
+    <div class="right menu">
+      <a class="item" href="/logins"><i class="sign in icon"></i>Ingresar como usuario</a>
+    </div>
+  </div>
+  <!--fin Menu-->
+  <!--boton menu-->
+  <div id="boton_menu" class="ui inverted menu" style="margin:auto; background-color:rgb(0,125,49);">
+    <a id="toggle" class="item"><i class="sidebar icon"></i>Menu</a>
+    <div class="right menu">
+      <a class="item" href="/logins"><i class="sign in icon"></i>Ingresar como usuario</a>
+    </div>
+  </div>
+  <!--fin boton menu-->
+  <!--Sidebar-->
+  <div class="ui sidebar inverted vertical left menu" style="margin:auto; background-color:rgb(0,125,49);">
+    <a class="item" >
+      <h2 class="ui header center aligned">
+        <%= image_tag("empresa.png", class: " image", height: '31.7',  width: '42.3') %>
+      </h2>          
+    </a>
+    <a class="item" href="/"><i class="home icon"></i>Inicio</a>
+    <a class="item" href="/quienes_somos"><i class="help circle icon"></i>¿Quiénes somos?</a>
+    <a class="item" href="/emprender"><i class="info circle icon"></i>Informacion  para emprendedores</a>
+    <a class="item" href="#"><i class="warning circle icon"></i>Legislación  Empresarial</a>
+    <a class="item" href="/noticias"><i class="newspaper icon"></i>Noticias</a>
+    <a class="item" href="/terminosYcondiciones"><i class="write square icon"></i>Términos y condiciones</a>
+  </div>
+  <!--Fin Sidebar-->
+</div>
+
+</header>
+<!--funcinamiento sticky para el menu Importante-->
+<script type="text/javascript">
+  $('.ui.sticky').sticky();
+
+  $('#toggle').click(function(){
+    $('.ui.sidebar').sidebar('toggle');
+  });
+</script>
+<!--Fin header-->
+
+<section id="main-content">
+  <%= yield %>
+</section>
+  <!--footer-->
+
+  <div class="ui sticky fluid segment inverted darkgreen vertical footer" style="background-color: #216521" >
+    <div class="ui aligned container">
+      <div class="ui stackable inverted divided grid">
+        <div class="four wide column">
+          <ul class="ui inverted link list">
+            <h4 class="ui center aligned inverted teal header"> Nuestras Áreas</h4>
+            <a href="#" class="item" id="opFooter"><i class="plane icon" id="opFooter"></i>Turismo</a>
+            <div class="ui center aligned accordion" style=" width: 100%;">
+              <div class="active title" id="opFooter">
+                <i class="diamond brush icon"></i>
+                Cultura
+                <i class="dropdown icon"></i>
+              </div>
+              <div class="ui content">
+                <a href="#" class="item" id="masOpFooter"><i class="paint brush icon" id="opFooter"></i>Arte</a></br>
+                <a href="#" class="item" id="masOpFooter"><i class="pied piper alternate icon" id="opFooter"></i>Folklore</a>
+              </div>
+            </div>
+            <a href="#" class="item" id="opFooter"><i class="active soccer icon" id="opFooter"></i>Deporte</a>
+            <div class="ui center aligned accordion" style=" width: 100%;">
+              <div class="active title" id="opFooter">
+                <i class="world icon"></i>
+                Medio Ambiente
+                <i class="dropdown icon"></i>
+              </div>
+              <div class="ui content">
+                <div class="ui list">
+                  <a href="#" class="item" id="masOpFooter"><i class="leaf icon" id="opFooter"></i>Ecosistema</a>
+                  <a href="#" class="item" id="masOpFooter"><i class="paw icon" id="opFooter"></i>Biodiversidad</a>
+                </div>
+              </div>
+            </div>
+            <a href="#" class="item" id="opFooter"><i class="legal icon" id="opFooter"></i>Solicite el sello Hecho en Bolivia</a>
+            <a href="#" class="item" id="opFooter"><i class="idea icon" id="opFooter"></i>Innovacion</a>
+            <a href="#" class="item" id="opFooter"><i class="cloud download icon" id="opFooter"></i>Descarga App</a>
+          </ul>
+        </div>
+
+        <div class="six wide column">
+          <div class="ui inverted link list">
+            <h4 class="ui center aligned inverted teal header">Fundacion Hecho en Bolivia</h4>
+            <div class="ui red basic segment" style="background-color: #216521" id="opFooter">Dirección: </br>Calle Jordan Nº S - 522 Av. San Martin, </br>Edif. Comboni Center, 5to. Piso, Of. 505 </div>
+            <div class="ui yellow justified basic segment" style="background-color: #216521" id="opFooter">Teléfono:</br> +591 - 4255263</div>
+            <div class="ui green justified basic segment" style="background-color: #216521" id="opFooter"></div>
+          </div>
+        </div>
+
+        <div class="five wide column">
+          <div class="ui inverted link list">
+            <h4 class="ui center aligned inverted teal header">Para mas información escribenos a:</h4>
+            <a href="https://info@fundacionhechoenbolivia.org" style="color:skyblue; padding-left:10px;">info@fundacionhechoenbolivia.org</a>
+          </div>
+          <div class="ui segment basic">
+            <h4 class="ui inverted header">Siguenos en: </h4>
+            <div class="ui center aligned segment basic">
+              <button class="ui circular facebook icon button"><i class="facebook icon"></i></button>
+              <button class="ui circular twitter icon button"><i class="twitter icon"></i></button>
+              <button class="ui circular google plus icon button"><i class="google plus icon"></i></button>
+              </br></br>
+              <button class="ui circular instagram icon button"><i class="instagram icon"></i></button>
+              <button class="ui circular youtube icon button"><i class="youtube icon"></i></button></br>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ui inverted section divider"></div>
+
+      <div class="ui center aligned inverted darkgreen vertical footer segment" id="fondoFooter">
+        <div class="ui horizontal inverted small divided link list">
+          <a class="item" href="#"><p id="opFooter">Mapa de la Ubicación</p></a>
+          <a class="item" href="#"><p id="opFooter">Contáctanos </p></a>
+          <a class="item" href="/terminosYcondiciones"><p id="opFooter">Términos y condiciones</p></a>
+          <a class="item" href="#"><p id="opFooter">Visita nuestra página</p></a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!--fin de footer-->
+
+
+    <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.min.js"></script>
+   <%= javascript_include_tag "application", params[:controller] %>
+</body>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    $('.carrusel').slick({
+      arrows: false,
+      slidesToShow: 1,
+      slidesToScroll: 1,
+      autoplay: true,
+      autoplaySpeed: 3000,
+      speed: 1500,
+      pauseOnHover: false,
+      draggable: false,
+      touchMove: false,
+      infinite: true
+    });
+    $('.anuncio').slick({
+      arrows: false,
+      slidesToShow: 2,
+      slidesToScroll: 1,
+      autoplay: true,
+      autoplaySpeed: 2000,
+      speed: 1500,
+      pauseOnHover: true,
+      draggable: true,
+      touchMove: false,
+      infinite: true,      
+      responsive: [      
+        {
+          breakpoint: 1260,
+          settings: {
+            slidesToShow: 2,
+            slidesToScroll: 1
+          }
+        },
+        {
+          breakpoint: 1200,
+          settings: {
+            slidesToShow: 2,
+            slidesToScroll: 1
+          }
+        },
+        {
+          breakpoint: 900,
+          settings: {
+            slidesToShow: 2,
+            slidesToScroll: 1
+          }
+        },
+        {
+          breakpoint: 767,
+          settings: {
+            slidesToShow: 3,
+            slidesToScroll: 1
+          }
+        },
+        {
+          breakpoint: 480,
+          settings: {
+            slidesToShow: 1,
+            slidesToScroll: 1
+          }
+        }]
+    });
+    $('.patrocinadores').slick({
+      arrows: false,
+      slidesToShow: 8,
+      slidesToScroll: 1,
+      autoplay: true,
+      autoplaySpeed: 0,
+      speed: 4000,
+      pauseOnHover: true,
+      pauseOnFocus: true,
+      touchMove: true,
+      swipe: true,
+      infinite: true,
+      responsive: [
+        {
+          breakpoint: 1300,
+          settings: {
+            slidesToShow: 7,
+            slidesToScroll: 1,
+          }
+        },
+        {
+          breakpoint: 1024,
+          settings: {
+            slidesToShow: 6,
+            slidesToScroll: 1,
+          }
+        },
+        {
+          breakpoint: 800,
+          settings: {
+            slidesToShow: 4,
+            slidesToScroll: 1,
+          }
+        },
+        {
+          breakpoint: 600,
+          settings: {
+            slidesToShow: 3,
+            slidesToScroll: 1
+          }
+        },
+        {
+          breakpoint: 500,
+          settings: {
+            slidesToShow: 3,
+            slidesToScroll: 1
+          }
+        },
+        {
+          breakpoint: 480,
+          settings: {
+            slidesToShow: 2,
+            slidesToScroll: 1
+          }
+        }]
+    });
+  });
+</script>
+<style media="screen">
+  #steps{
+    display: none;
+  }
+  #compu{
+    display: flex;
+  }
+  #buscador{
+    display: flex;
+  }
+  #buscadorMovil{
+    display: none;
+  }
+  @media screen and (max-width:1150px) {
+    #buscador{
+      display: none;
+    }
+    #buscadorMovil{
+      display: block;
+    }
+  }
+  @media screen and (max-width:1107px) {
+    #Letrita{
+      font-size: 15px;
+    }
+  }
+  @media screen and (max-width:700px) {
+    #Letrita{
+      font-size: 10px;
+    }
+    #steps
+    {
+      display: flex;
+    }
+    #compu
+    {
+      display: none;
+    }
+  }
+</style>
+</html>

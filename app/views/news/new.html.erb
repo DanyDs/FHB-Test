@@ -1,0 +1,104 @@
+	<div class="ui container">
+		<!-- Agregar NOTICIAS -->
+		<!-- Menu para gestionar nticias nacionales e internacionales -->
+
+		<div class="ui container basic segment">
+			<a class="yellow ui button" href="/admin/news" ><i class="reply icon"></i>Volver a Gestion de Noticias</a>
+		</div>
+
+    <div class="ui container">
+      <div class="ui basic segment ">
+          <h2 class="ui center aligned header">Agregar Noticia </h2>
+            <form novalidate>
+              <!-- ELEGIR NACIONAL O INTERNACIONL-->
+            <div class="ui container">
+              <div class="ui form">
+                <h4 class="ui left aligned header">Ambito de noticia: </h4>
+            		<select class="ui dropdown" data-bind="value: editingNoticeC().new.location" >
+            			<option value="Nacional">Nacional</option>
+            			<option value="Internacional">Internacional</option>
+            		</select>
+                <h4 class="ui left aligned header" >Fecha: </h4>
+                <div class="field">
+                  <input type="date" name="fecha" id="theDate" data-bind="value: editingNoticeC().new.date" ></input>
+                </div>
+          		  <div class="field">
+                  <h4 class="ui left aligned header">Título: </h4>
+          		    <input type="text" placeholder="Título" data-bind="value: editingNoticeC().new.title">
+          		  </div>
+        			  <div class="field">
+        			    <h4 class="ui left aligned header">Detalle: </h4>
+									<textarea name="description" type="text" data-bind="value: editingNoticeC().new.description"></textarea>
+        			  </div>
+								<div class="field">
+									<h4 class="ui left aligned header">Dirección web de noticia: </h4>
+									<input type="text" placeholder="Enlace..." data-bind="value: editingNoticeC().new.link">
+								</div>
+		            <!-- SUBIR IMAGEN-->
+                <div class="ui field container segment center basic">
+                  <img class="ui medium image bordered centered">
+                  <div class="ui container center aligned">
+                    <div id="image_preview" style="display:none"><img id="imagePreview" src="" /></div>
+          					<label>Imagen</label><br/>
+          				  <input data-bind="value:noticeImage" type="file" name="announcementFile" id="imageFile" required />
+          					<h4 id='loading' style="display:none" >Subiendo..</h4>
+          					<div id="message"></div>
+                  </div>
+                </div>
+            		<!-- SUBIR ENLACE-->
+
+                <!-- SUBIR ARCHIVO-->
+
+              </div>
+							<div data-bind="visible: hasError" class="ui negative message">
+					      <i data-bind="click: noErrors"></i>
+					      <div class="header">
+					        La noticia no puede ser creada por problemas con los siguientes campos:
+					      </div>
+					      <ul data-bind="foreach:errorMessages">
+					        <li><p data-bind="text: $data"></p></li>
+					      </ul>
+					    </div>
+              <div class="ui center aligned container">
+            		<button class="ui green button" id="submitAnnouncment" data-bind="click: createNotice"> Agregar </button>
+                <a class="active button" href="/news" ><button class="ui red button"> Cancelar </button></a>
+              </div>
+            </div>
+            </form>
+		<!-- MOSTRAR NOTICIAS -->
+		<!-- final container -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+        <script>
+				$(document).ready(function (e) {
+						$("#imageFile").change(function () {
+								$("#message").empty();
+								var file = this.files[0];
+								var imagefile = file.type;
+								var match = ["image/jpeg", "image/png", "image/jpg", "image/gif"];
+								if (!((imagefile == match[0]) || (imagefile == match[1]) || (imagefile == match[2]) || (imagefile == match[3]))) {
+										$('#previewing').attr('src', 'noimage.png');
+										$("#message").html("<p id='error'>Por favor seleccione un archivo de imagen válido.</p><span id='error_message'> Los tipos soportados son: jpg, gif y png.</span>");
+										return false;
+								}
+								else {
+										var reader = new FileReader();
+										reader.onload = imageIsLoaded;
+										reader.readAsDataURL(this.files[0]);
+								}
+						});
+						function imageIsLoaded(e) {
+								$("#imageFile").css("color", "green");
+								$('#image_preview').css("display", "block");
+								$('#imagePreview').attr('src', e.target.result);
+								$('#imagePreview').attr('width', '230px');
+								$('#imagePreview').attr('height', '210px');
+						};
+
+
+				});
+        </script>

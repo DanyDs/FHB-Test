@@ -1,0 +1,127 @@
+<!-- Breadcrumbs -->
+<div class="ui container segment basic">
+  <div class="ui large breadcrumb">
+    <div class="active section">Empresas</div>
+  </div>
+  <div class="ui yellow left aligned padded basic segment">
+    <div class="ui right floated container basic">
+    </div>
+  </div>
+</div>
+
+<!--Contenido gestionar Empresa-->
+<div class="ui basic container segment">
+        <!--Bloque título y solicitudes-->
+      <div class="ui center aligned basic segment">
+        <h1 class="ui teal center aligned header">Empresas </h1>
+        <div class="ui labeled button" tabindex="0" >
+          <a class="ui blue button"  disabled><i class="announcement  icon"></i>Compañias </a>
+          <a class="ui basic left pointing blue label"><%=Company.where(status: true).size%></a>
+        </div>
+        <div class="ui labeled button" tabindex="0" >
+          <a class="ui green button" href="/supervisor/requests"><i class="plus icon"></i>Ingreso</a>
+          <a class="ui basic left pointing green label"><%=Company.where(requested: true).size%></a>
+        </div>
+        <div class="ui labeled button" tabindex="0">
+          <a class="ui red button" href="/supervisor/getDowned"><i class="remove icon"></i>Bajas</a>
+          <a class="ui basic red left pointing label"><%=Company.where(downed: true).size%></a></br>
+        </div>
+      </div>
+
+
+        <!--Fin Bloque título y solicitudes-->
+        <!--Busqueda y filtros-->
+
+
+
+
+      <div class="ui action input">
+        <input type="text" placeholder="Buscar..." data-bind="value: companySearched">
+        <button class="ui icon button" data-bind="click: function(){filter(companySearched())}">
+          <i class="search icon"></i>
+        </button>
+      </div>
+
+    </br>
+  </br>
+
+        <!--Fin filtro-->
+        <!--Fin Busqueda y filtros-->
+
+        <!--Lista de Empresas-->
+        <div id="listaCompu">
+        <table class="ui compact celled table" >
+            <!--Tabla Empresas-->
+            <thead>
+              <tr>
+                <th class="single line">Empresa</th>
+                <th>Logotipo</th>
+                <th>Detalle</th>
+                <th class="center aligned">Departamento</th>
+                <th class="center aligned">NIT</th>
+                <th class="center aligned">Fecha de ingreso</th>
+              </tr>
+            </thead>
+              <tbody data-bind="foreach: registeredCompanies">
+                <tr>
+                  <td><a data-bind="attr:{ href:'/supervisor/companies_profile/'+id+''}"> <p class="ui image header"  data-bind="text: name"> </p> </a></td>
+                  <td><img data-bind="attr:{ src:'/image_store/logo_'+id+'.gif'}"  width="50" height="50"/> </td>
+                  <td class="left aligned" data-bind="text: detail">  </td>
+                  <td class="center aligned" data-bind="text: department"></td>
+                  <td class="center aligned" data-bind="text: nit"> </td>
+                  <td class="center aligned" data-bind="text: created_at"></td>
+                </tr>
+              </tbody>
+            </table>
+            <!--Fin tabla empresas-->
+            </div>
+
+
+                <!-- Tabla empresas Movil-->
+                <div data-bind="foreach: registeredCompanies" class="ui cards centered basic segment container" id="listaMovil">
+                  <div class="ui card">
+                    <div class="content">
+                      <div class="header" data-bind="text: name"></div>
+                    </div>
+                    <div class="image">
+                      <img data-bind="attr:{ src:'/image_store/logo_'+id+'.gif'}">
+                    </div>
+                    <div class="content">
+                      <div class="description"><strong>Detalle:</strong> <span data-bind="text: detail"></span></div>
+                      <div class="description"><strong>Departamento:</strong> <span data-bind="text: department"></span></div>
+                      <div class="description"><strong>NIT:</strong> <span data-bind="text: nit"></span></div>
+                    </div>
+                    <div class="extra content">
+                      <div class="meta">
+                        <strong>Miembro desde:</strong> <span class="date" data-bind="text: created_at"></span>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+
+                <!-- Tabla empresas Movil-->
+<script>
+  var isCompanyPage=false;
+  var newCompany=false;
+</script>
+
+
+</div>
+
+<style>
+  #listaMovil {
+    display: none;
+  }
+
+  @media screen and (max-width: 995px ) {
+    #listaCompu {
+      display: none;
+    }
+
+    #listaMovil {
+      display: flex;
+    }
+
+  }
+</style>

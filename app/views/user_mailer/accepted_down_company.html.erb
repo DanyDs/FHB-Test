@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
+  <style>
+    body{
+      font-family: 'Oswald', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+    }
+
+    p{
+      font-family: 'Oswald', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+    }
+  </style>
+</head>
+<body>
+  <p style="margin:20px; border-style: outset; border: 1px solid red;">
+    <div class="ui center aligned basic padded red segment">
+      <h2 style="color: teal; font-size: 24px; text-align: center;">
+        Catálogo de Productos y Servicios "<span style="color:red">Hecho</span> <span style="color:#FFE800">en</span> <span style="color:green">Bolivia</span>"
+      </h2>
+    </div>
+    <p style="margin:20px; border-style: outset; border: 1px solid #FFE800;">
+      <div style="padding-left: 10%; padding-right:10%; padding-bottom:20px; color: #000;">
+        Le informamos que la petición de baja de su empresa <span style="color: teal"><%= @company.name %></span>
+        , con el motivo:<br>
+         <center>
+          <span style="color: red"><%= @company.downed_reason %></span>
+        </center> <br> Ha sido aceptada. Y a partir de la fecha
+        su empresa dejará de ser visible para nuestros visitantes.
+      </div>
+      <div style="padding-left: 10%; padding-right:10%; padding-bottom:20px; text-align:center; color: #000;">
+        Le mandamos un cordial saludo y le deseamos mucho exito. <br>Atentamente:</div>
+      <div style="padding-left: 10%; padding-right:10%; padding-bottom:20px; text-align:center;">
+        <a href='<%= ENV["SITE_URL"] %>'>Catálogo de Productos y Servicios "Hecho en Bolivia"</a>
+      </div>
+    </p>
+    <p style="margin:20px; border-style: outset; border: 1px solid green;">
+
+    </p>
+
+  </p>
+
+</body>
+</html>

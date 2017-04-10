@@ -1,0 +1,66 @@
+<style>
+.ui.card{
+  height: 400px;
+}
+.ui.fluid.image{  
+  height:250px;
+}
+</style>
+<!--Contenido-->
+<div class="ui container segment basic">
+  <!-- Breadcrumbs -->
+  <div class="ui large breadcrumb">
+    <div class="active section">Anuncios</div>
+    <i class="right chevron icon divider"></i>
+    <!-- ko foreach: navigationStack -->
+    <!-- <div class="active section" data-bind="text: name, click: $parent.returnToAdvertisement"></div> -->
+    <!-- /ko -->
+  </div>
+	<div class="ui yellow left aligned padded basic segment"></div>
+</div>
+<div class="ui container segment basic">
+  <div class="ui three column stackable center aligned doubling grid" data-bind="foreach: { data: asVisitorAds, as: 'ad'}">
+    <div class="column">    
+        <div class="ui centered card">
+          <div class="ui slide masked reveal image">
+            <div class="center aligned basic segment " data-bind="click: $parent.openView">            
+              <img class="ui fluid image" data-bind="attr:{ src: '/image_store/announcement_' + ad.id + '.gif' }" width="200" height="250" style="cursor:pointer;"/>
+            </div>
+          </div>
+          <div class="content">
+            <a class="header"><h3 data-bind="text: ad.description"></h3></a>
+            <div class="meta">
+              <span class="date"><p data-bind="text: ad.companyName"></p></span>
+            </div>
+          </div>
+          <div class="extra content">      
+            <a data-bind="attr:{ href: '/empresa/' + ad.id_Company  }"><b>Visitar empresa...</b></a>      
+          </div>
+        </div>      
+    </div>
+  </div>
+</div>
+
+<div id="visualizacionAnuncio" class="ui basic modal">  
+  <i class="close red icon"></i>
+  <div class="ui segment">    
+    <div class="ui center aligned large blue header" data-bind="text: editingAd().description"></div>
+    <a class="ui yellow left ribbon label"><h5 class="ui right aligned header" style="font-variant:small-caps" data-bind="text: editingAd().companyName"></h5></a>    
+    
+  </div>
+  <div class="ui orange center aligned basic segment">           
+    <div class="image content">
+      <img class="ui centered big image" data-bind="attr:{ src: '/image_store/announcement_' +  editingAd().id + '.gif' }"/>
+    </div>
+    </div>
+      
+    
+</div>
+
+<div class="ui basic padded segment"></div>
+
+<script>
+    var isRegionalPage = false;
+    var isCompanyPage = false;
+    var isVisitorPage = true;
+</script>

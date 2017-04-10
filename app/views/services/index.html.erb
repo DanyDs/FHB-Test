@@ -1,0 +1,374 @@
+<!-- Breadcrumbs -->
+<div class="ui container segment basic">
+  <div class="ui large breadcrumb">
+    <div class="active section">Productos y Servicios</div>
+  </div>
+  <div class="ui yellow left aligned padded basic segment">
+    <div class="ui right floated container basic">
+    </div>
+  </div>
+</div>
+
+<div class="ui container segment basic">
+
+  <!--Pestañas-->
+  <div class="three ui buttons">
+    <a class="ui button item" href="/company/products" data-tab="productos">Productos</a>
+    <a class="ui button active item" href="/company/services" data-tab="servicios">Servicios</a>
+  </div>
+  <!--fin Pestañas-->
+
+  <!--Agregar boton-->
+  <div class="ui container basic segment">
+    <a id="createButton" class="green ui button">
+      <i class="add icon"></i> Agregar Servicio
+    </a>
+  </div>
+  <!--fin Agregar boton-->
+
+  <!--Lista de Servicios -->
+  <div class="ui stackable inverted divided grid" data-bind="foreach: services">
+    <div class="eight wide column">
+      <div class="ui basic segment">
+        <img data-bind="attr:{ src: '/image_store/service' + id + '.gif' }" width="250" height="250"/>
+        <div class="ui content">
+          <div class="ui teal header" data-bind="text: commercial_name"></div>
+          <div class="ui padded basic segment" style="text-align: justify; white-space: pre-wrap" data-bind="text: description">
+          </div>
+          <div class="ui basic segment">
+            <span style="color:#0E6EB8"><b>Certificaciones: </b></span><span data-bind="text: certification" style="text-align: justify; "></span>
+            <br>
+            <span style="color:#0E6EB8"><b>Posición arancelaria: </b></span><span data-bind="text: tariff_position" style="text-align: justify;"></span>
+          </div>
+          <a class="ui left attached blue button" data-bind="click: $parent.openServiceToEdit">Editar</a>
+          <div class="right attached ui red button" data-bind="click: $parent.removeService">Eliminar</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<div id="createServiceDialog" class="ui modal fullscreen">
+  <div class="ui two column centered grid segment basic">
+    <div class="ui twelve wide column segment basic form">
+      <h4 class="ui dividing header">Formulario de Registro</h4>
+
+
+      <div class="two fields">
+        <div class="field">
+          <label>Servicio</label>
+          <div class="divided grid">
+            <div class="row">
+
+              <input id="nameEdit" maxlength="120" name="commercial_name" type="text" data-bind="value: editingServiceModel().commercial_name" required>
+            </div>
+            <div class="field">
+              <br>
+              <label>Rubro de Servicio</label>
+              <!-- <div class="ui selection dropdown" data-bind = "value: editingServiceModel().category_id">
+                <input type="hidden" name="type">
+                <i class="dropdown icon"></i>
+                <div class="default text">Tipo de producto</div>
+                <div class="menu" data-bind="foreach: $root.serviceTypes">
+                  <div class="item" data-bind="value: id, text: name.replace(' ', '&nbsp;')"></div>
+                </div>
+              </div> -->
+
+              <select id="cateogyEdit" class="ui search selection dropdown" data-bind="options: $root.serviceTypes,
+					                      optionsText: 'name',
+					                      optionsValue: 'id',
+					                      value: editingServiceModel().category_id"></select>
+
+            </div>
+          </div>
+          <div class="two fields">
+            <div class="field">
+              <br>
+              <label>Certificaciones (Opcional)</label>
+              <div class="field">
+                <input id="certificationEdit" maxlength="100" type="text" data-bind="value: editingServiceModel().certification" name="shipping[address]" placeholder="Separe con comas" required>
+              </div>
+            </div>
+            <div class="field">
+              <br>
+              <label>Posición arancelaria (Opcional)</label>
+              <div class="field">
+                <input id="tariff_positionEdit" maxlength="100" type="text" data-bind="value: editingServiceModel().tariff_position" name="shipping[address]" placeholder="0123XXXXXXXX" required>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="field">
+            <label>Descripción</label>
+            <textarea id ="descriptionEdit" maxlength="240" rows="2" data-bind="value: editingServiceModel().description" required></textarea>
+          </div>
+
+        </div>
+        <div class="row">
+
+          <div id="image_preview" style="display:none"><img id="announcementPreview" src=""/></div>
+
+          <label>Elija la imagen de su servicio</label><br/>
+          <input data-bind="value: serviceImage" type="file" name="announcementFile" id="announcementFile" required/>
+          <!-- <button id="submitAnnouncment">Subir</button> -->
+          <h4 id='loading' style="display:none">Subiendo..</h4>
+          <div id="message"></div>
+
+          <script type="text/javascript">
+              $(document).ready(function () {
+                  $('.ui.accordion').accordion();
+              });
+          </script>
+          <!--Fin Acordion Sectores-->
+          <div data-bind="visible: hasError" class="ui negative message">
+            <i class="close icon" data-bind="click: noErrors"></i>
+            <div class="header">
+              Tu servicio no puede ser creado por los siguientes campos:
+            </div>
+            <ul data-bind="foreach:errorMessages">
+              <li><p data-bind="text: $data"></p></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="actions">
+        <a id="submitAnnouncment" class="ui blue right button" data-bind="click: createService">Aceptar</a>
+        <a class="ui red deny button">Cancelar</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<div id="editServiceDialog" class="ui modal fullscreen">
+  <div class="ui two column centered grid segment basic">
+    <form class="ui twelve wide column segment basic form">
+
+      <h4 class="ui dividing header">Formulario de Edicion</h4>
+      <div class="two fields">
+        <div class="field">
+          <label>Servicio</label>
+          <div class="divided grid">
+            <div class="row">
+              <input maxlength="120" name="commercial_name" type="text" data-bind="value: editingServiceModel().commercial_name" placeholder="Nombre Comercial" required>
+            </div>
+            <div class="field">
+              <br>
+              <label>Rubro de Servicio</label>
+
+              <select class="ui fluid search selection" data-bind="options: $root.serviceTypes,
+															optionsText: 'name',
+															optionsValue: 'id',
+															value: editingServiceModel().category_id"></select>
+            </div>
+          </div>
+          <div class="two fields">
+            <div class="field">
+              <br>
+              <label>Certificaciones (Opcional)</label>
+              <div class="field">
+                <input maxlength="100" type="text" data-bind="value: editingServiceModel().certification" name="shipping[address]" placeholder="Separe con comas" required>
+              </div>
+            </div>
+            <div class="field">
+              <br>
+              <label>Posición arancelaria (Opcional)</label>
+              <div class="field">
+                <input maxlength="100" type="text" data-bind="value: editingServiceModel().tariff_position" name="shipping[address]" placeholder="0123XXXXXXXX" required>
+              </div>
+            </div>
+          </div>
+          <div class="field">
+            <label>Descripción</label>
+            <textarea maxlength="240" rows="2" data-bind="value: editingServiceModel().description" required></textarea>
+          </div>
+        </div>
+        <div class="row">
+
+          <div id="edit_image_preview" style="display:none"><img id="edit_announcementPreview" src=""/></div>
+
+          <label>Elija la nueva imagen de su servicio</label><br/>
+          <input type="file" name="edit_announcementFile" id="edit_announcementFile" required/>
+          <!-- <button id="submitAnnouncment">Subir</button> -->
+          <h4 id='edit_loading' style="display:none">Subiendo..</h4>
+
+          <script type="text/javascript">
+              $(document).ready(function () {
+                  $('.ui.accordion').accordion();
+              });
+          </script>
+
+          <!--Fin Acordion Sectores-->
+          <div data-bind="visible: hasError" class="ui negative message">
+            <i class="close icon" data-bind="click: noErrors"></i>
+            <div class="header">
+              Tu producto no puede ser editado por los siguientes campos:
+            </div>
+            <ul data-bind="foreach:errorMessages">
+              <li><p data-bind="text: $data"></p></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="actions">
+        <div class="ui bottom attached buttons">
+          <div class="ui green positive right labeled icon button">
+            Guardar
+            <i class="save icon"></i>
+          </div>
+          <a class="ui red deny button" onclick="resetForm()">Cancelar</a>
+
+        </div>
+      </div>
+    </form>
+  </div>
+  <div id="successMessage" class="ui modal">
+
+    <div class="header">Exito!</div>
+    <div class="content">
+      <p>Registro de nuevo servicio</p>
+    </div>
+    <div class="actions">
+      <a href="/company/services" class="ui inverted green positive right button">Aceptar</a>
+    </div>
+  </div>
+</div>
+</div>
+<script type="text/javascript">
+    function resetForm() {
+      document.getElementById("nameEdit").value = "";
+      document.getElementById("cateogyEdit").value = "";
+      document.getElementById("certificationEdit").value = "";
+      document.getElementById("tariff_positionEdit").value = "";
+      document.getElementById("descriptionEdit").value = "";
+    }
+    $('#editServiceDialog').keyup(function(e) {
+       if (e.keyCode == 27) {
+         resetForm();
+       }
+    });
+    $('#editServiceDialog')
+        .modal('setting', 'closable', false)
+        .modal('attach events', '.teal.button', 'show')
+        .modal( {observeChanges: true})
+        .modal({
+            onApprove: function () {
+                servicesModel.updateService();
+            }
+        })
+    ;
+    $('#createServiceDialog')
+        .modal('setting', 'closable', false)
+        .modal('attach events', '#createButton', 'show')
+        .modal( {observeChanges: true})
+    ;
+</script>
+
+<script type="text/javascript">
+    $('#successMessage')
+        .modal('setting', 'closable', false)
+        .modal('attach events', '.teal.button', 'show')
+    ;
+</script>
+
+<script>
+    $(document).ready(function (e) {
+        $("#submitAnnouncment").on('click', (function (e) {
+            var products_data = null;
+            e.preventDefault();
+            $("#message").empty();
+            $.ajax({
+                type: "GET",
+                url: "api/v1/services",
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                success: function (result) {
+                    var str = "" + result;
+                    var temp = new Array();
+                    temp = str.split(",");
+                    id = (temp.length) + 1;
+                    var imageData = $("#announcementPreview").attr("src");
+
+                    var data = {
+                        name: "public/image_store/service" + id,
+                        image: imageData
+                    }
+
+                    $.ajax({
+                        url: "/api/v1/phones",
+                        type: "POST",
+                        data: JSON.stringify(data),
+                        contentType: "application/json",
+                        cache: false,
+                        processData: false,
+                        success: function (data) {
+                            $("#message").html(data);
+                        }
+                    });
+                }
+            });
+
+
+        }));
+
+        $(function () {
+            $("#announcementFile").change(function () {
+                $("#message").empty();
+                var file = this.files[0];
+                var imagefile = file.type;
+                var match = ["image/jpeg", "image/png", "image/jpg", "image/gif"];
+                if (!((imagefile == match[0]) || (imagefile == match[1]) || (imagefile == match[2]) || (imagefile == match[3]))) {
+                    $('#previewing').attr('src', 'noimage.png');
+                    $("#message").html("<p id='error'>Por favor seleccione un archivo de imagen válido.</p><span id='error_message'> Los tipos soportados son: jpg, gif y png.</span>");
+                    return false;
+                }
+                else {
+                    var reader = new FileReader();
+                    reader.onload = imageIsLoaded;
+                    reader.readAsDataURL(this.files[0]);
+                }
+            });
+        });
+        function imageIsLoaded(e) {
+            $("#file").css("color", "green");
+            $('#image_preview').css("display", "block");
+            $('#announcementPreview').attr('src', e.target.result);
+            $('#announcementPreview').attr('width', '150px');
+            $('#announcementPreview').attr('height', '130px');
+        };
+    });
+    $(document).ready(function (e) {
+        $("#edit_announcementFile").change(function () {
+            $("#message").empty();
+            var file = this.files[0];
+            var imagefile = file.type;
+            var match = ["image/jpeg", "image/png", "image/jpg", "image/gif"];
+            if (!((imagefile == match[0]) || (imagefile == match[1]) || (imagefile == match[2]) || (imagefile == match[3]))) {
+                $('#previewing').attr('src', 'noimage.png');
+                $("#message").html("<p id='error'>Por favor seleccione un archivo de imagen válido.</p><span id='error_message'> Los tipos soportados son: jpg, gif y png.</span>");
+                return false;
+            }
+            else {
+                var reader = new FileReader();
+                reader.onload = imageIsLoaded;
+                reader.readAsDataURL(this.files[0]);
+            }
+        });
+
+        function imageIsLoaded(e) {
+            $("#file").css("color", "green");
+            $('#edit_image_preview').css("display", "block");
+            $('#edit_announcementPreview').attr('src', e.target.result);
+            $('#edit_announcementPreview').attr('width', '150px');
+            $('#edit_announcementPreview').attr('height', '130px');
+        };
+    });
+</script>

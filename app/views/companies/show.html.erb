@@ -1,0 +1,386 @@
+<div>
+  <!-- Breadcrumbs -->
+  <div class="ui container segment basic">
+    <div class="ui large breadcrumb">
+      <div class="active section">Perfil</div>
+    </div>
+    <div class="ui yellow left aligned padded basic segment">
+      <div class="ui right floated container basic">
+      </div>
+    </div>
+  </div>
+
+  <% if (@company.downed===true and @company.status===true) %>
+      <div class="ui warning message">
+        <div class="header ui center aligned">
+          Su empresa tiene una solicitud de baja pendiente de revisión.
+        </div>
+        <span class="center">Los administradores están revisando su solicitud, por favor espere la repuesta. Hasta entonces su empresa sigue siendo visible para los usuarios del catálogo.</span>
+      </div>
+  <% end %>
+
+  <% if (@company.status===false and @company.requested===true) %>
+      <div class="ui warning message">
+        <div class="header ui center aligned">
+          <h4>Solicitud pendiente</h4>
+        </div>
+        <span class="center">Su solicitud para la creación de la empresa aun esta en proceso de revisión el cual puede tomar algunos días. Durante este tiempo, su empresa no es visible en nuestro catálogo, pero usted ya puede introducir los datos de sus productos y/o servicios. </span>
+      </div>
+  <% end %>
+  <% if (@company.status===false and @company.downed===true) %>
+      <div class="ui warning message">
+        <div class="header ui center aligned">
+          Esta empresa ha sido dada de baja, y su información ya no es visible en el catálogo.
+        </div>
+        <span class="center">Los administradores han aceptado la solicitud de baja y la empresa ya no es visible al público.</span>
+      </div>
+  <% else %>
+
+      <div class="ui container basic segment">
+        <% if (@company.downed===false and @company.requested != true) %>
+            <a class="ui red button right floated" id="botonBaja" data-bind="visible: bajaRequest">Solicitar Baja</a>
+        <% end %>
+        <a class="ui blue button right floated" data-bind="click: openCompanyToEdit">Editar</a>
+      </div>
+
+
+      <div class="ui modal compact first coupled" id="bajaModal">
+        <div class="header">
+          Solicitud de baja
+        </div>
+        <div class="ui form content">
+          <div class="field">
+            <label>Motivo</label>
+            <textarea id="text" rows="2" placeholder="Escriba aqui..." data-bind="value: downReason"></textarea>
+          </div>
+        </div>
+        <div data-bind="visible: noBajaR" class="ui negative message">
+          <i data-bind="click: noBaja"></i>
+          <div class="header">
+            Tu solicitud no puede ser completada, debes tener un motivo
+          </div>
+        </div>
+        <div class="actions">
+          <div class="ui cancel red button">Cancelar</div>
+          <div class="ui ok green button">Aceptar</div>
+        </div>
+      </div>
+
+      <div class="ui second modal small coupled">
+        <div class="ui header center aligned">
+          Solicitud de baja vacia
+        </div>
+        <div class="content">
+          <center>Por favor introduzca el motivo por el cual desea dar de baja su empresa</center>
+        </div>
+        <div class="actions">
+          <div class="ui positive button compact">Aceptar</div>
+        </div>
+      </div>
+
+      <!--Fin Editar boton-->
+
+      <!--Informacion-->
+      <div class="ui container segment basic">
+        <!--Vista central de Empresa-->
+        <h1 class="ui icon center aligned header segment basic container">
+          <div data-bind="openCompanyToEdit(<%= @company.id %>)" class="center">
+            <img data-bind="attr:{ src:'/image_store/logo_'+<%= @company.id %>+'.gif' }" width="200" height="200"/>
+          </div>
+          <!--img class="ui centered medium image" src="images/perfilPil.pn"/>-->
+          <div class="content"><%= @company.name %>
+          </div>
+        </h1>
+
+        <div class="ui justified container basic fluid segment">
+
+          <h3 id="Letrita">
+            <table class="ui table">
+              <tbody>
+              <tr>
+                <td>
+                  <i class="user icon"></i>
+                </td>
+                <td>Persona de contacto:</td>
+                <td><%= @company.contactName %></td>
+              </tr>
+              <tr>
+                <td>
+                  <i class="marker icon"></i>
+                </td>
+                <td>Dirección de la empresa:</td>
+                <td><%= @company.address %></td>
+              </tr>
+              <tr>
+                <td>
+                  <i class="call square icon"></i>
+                </td>
+                <td>Teléfono:</td>
+                <td><%= @company.telephone %></td>
+              </tr>
+              <tr>
+                <td>
+                  <i class="world icon"></i>
+                </td>
+                <td>Departamento:</td>
+                <td><%= @company.department %></td>
+              </tr>
+              <tr>
+                <td>
+                  <i class="mail icon"></i>
+                </td>
+                <td>Correo electrónico:</td>
+                <td><%= @company.email %></td>
+              </tr>
+              <tr>
+                <td>
+                  <i class="desktop icon"></i>
+                </td>
+                <td>Pagina Web:</td>
+                <td><%= @company.webpage %></td>
+              </tr>
+              <tr>
+                <td>
+                  <i class="file text outline icon"></i>
+                </td>
+                <td>Descripción:</td>
+                <td>
+                  <% @company.detail.split("\n").each do |line| %>
+                      <%= line %><br>
+                  <% end %>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <i class="hashtag icon"></i>
+                </td>
+                <td>NIT:</td>
+                <td><%= @company.nit %></td>
+              </tr>
+              <tr>
+                <td>
+                  <i class="building icon"></i>
+                </td>
+                <td>Sucursales:</td>
+                <td>
+                  <% @company.subsidiaries.split("||").each do |local| %>
+                      <span><%= local %><br></span>
+                  <% end %></td>
+              </tr>
+
+              </tbody>
+            </table>
+          </h3>
+        </div>
+      </div>
+      <!--Fin Informacion-->
+
+
+      <div id="editCompanyDialog" class="ui inverted  modal">
+        <div class="header">
+          Editar información general de la empresa
+        </div>
+        <div class="ui form content">
+          <div class="ui twelve wide column segment basic form">
+            <div class="field">
+              <label>Nombre de la Empresa</label>
+              <input type="text" placeholder="Nombre de la empresa" id="nombre" data-bind="value: editableCompany().name">
+            </div>
+            <div class="field">
+              <label>Persona de Contacto</label>
+              <div class="field">
+                <input type="text" placeholder="Nombres y Apellidos" data-bind="value: editableCompany().contactName">
+              </div>
+            </div>
+            <div class="field">
+              <label>Correo electrónico de contacto</label>
+              <div class="field">
+                <input type="text" placeholder="correo@gmail.com" data-bind="value: editableCompany().email">
+              </div>
+            </div>
+            <div class="field">
+              <label>Descripción de la empresa</label>
+              <div class="field">
+                <textarea rows="4" placeholder="Detalle" data-bind="value: editableCompany().detail"></textarea>
+              </div>
+            </div>
+            <div class="field">
+              <label>Dirección de la empresa</label>
+              <div class="field">
+                <input type="text" placeholder="Dirección" data-bind="value: editableCompany().address">
+              </div>
+            </div>
+            <div class="field">
+              <label>Teléfono</label>
+              <div class="field">
+                <input type="number" placeholder="Teléfono" data-bind="value: editableCompany().telephone">
+              </div>
+            </div>
+            <div class="field">
+              <label>Página Web</label>
+              <div class="field">
+                <input type="text" placeholder="https://www.DirecciónWeb.com" data-bind="value: editableCompany().webpage">
+              </div>
+            </div>
+            <div class="field">
+              <label>Departamento</label>
+              <select class="ui search dropdown" data-bind="option: editableCompany().company.department, value: editableCompany().department">
+                <option value="">Departamento</option>
+                <option value="Beni">Beni</option>
+                <option value="Cochabamba">Cochabamba</option>
+                <option value="Chuquisaca">Chuquisaca</option>
+                <option value="La Paz">La Paz</option>
+                <option value="Oruro">Oruro</option>
+                <option value="Pando">Pando</option>
+                <option value="Potosi">Potosi</option>
+                <option value="Santa Cruz">Santa Cruz</option>
+                <option value="Tarija">Tarija</option>
+              </select>
+            </div>
+            <div class="field" data-bind="foreach: categoriesSubsidiaries">
+              <p>
+              <div data-bind=text:direccion>
+              </div>
+              </p>
+            </div>
+            <a class="ui olive button"><i class="plus icon"></i>Agregar Sucursal</a>
+            <div id="createAddressDialog" class="ui inverted long test modal">
+              <i class="close icon"></i>
+              <div class="header">
+                Agregando Sucursal
+              </div>
+              <div class="ui form content">
+                <div class="field">
+                  <p>Si desea agregar más de una dirección, por favor separelas con "||" gracias</p>
+                  <label>Dirección de Sucursal</label>
+                  <input name="first-name" type="text" placeholder="Dirección Completa..." data-bind="value: editableCompany().subsidiaries" maxlength="500">
+                </div>
+              </div>
+              <div class="actions">
+                <div class="ui inverted red deny button">
+                  Cancelar
+                </div>
+                <div class="ui inverted green positive right labeled icon button">
+                  Agregar
+                  <i class="plus icon"></i>
+                </div>
+              </div>
+            </div>
+            <div class="ui field container segment center basic">
+              <img class="ui medium image bordered centered">
+              <div class="ui container center aligned">
+                <div id="logo_preview" style="display:none"><img id="logoPreview" src=""/></div>
+                <label>Logo </label><br/>
+                <input type="file" name="logoFile" id="logoFile" required/>
+                <h4 id='loading' style="display:none">Subiendo..</h4>
+                <div id="message"></div>
+              </div>
+            </div>
+            <!--Sucursales-->
+
+            <br/>
+            <br>
+
+            <div class="actions">
+              <button id="submitAnnouncment" class="ui positive button">Guardar</button>
+              <a class="ui cancel red button">Cancelar</a>
+
+            </div>
+
+          </div>
+        </div>
+
+
+      </div>
+      <script>
+          var isCompanyPage = true;
+          var newCompany=false;
+          $('#createAddressDialog')
+              .modal('attach events', '.olive.button', 'show')
+              .modal('setting', 'closable', false)
+              .modal('setting', 'transition', 'vertical flip')
+              .modal({
+                  onApprove: function () {
+                      companiesModel.createSubsidiary();
+                  }
+              })
+          ;
+          $('#editCompanyDialog')
+              .modal('attach events', '.blue.button', 'show')
+              .modal('setting', 'closable', false)
+              .modal('setting', 'transition', 'vertical flip')
+              .modal({
+                  onApprove: function () {
+                      companiesModel.updateCompany();
+                  }
+              })
+          ;
+
+
+          $('.coupled.modal')
+              .modal({
+                  allowMultiple: true
+              })
+          ;
+
+          function second() {
+              $('.second.modal')
+                  .modal('show')
+              ;
+          }
+          $('#bajaModal')
+              .modal('attach events', '#botonBaja', 'show')
+              .modal('setting', 'closable', false)
+              .modal('setting', 'transition', 'vertical flip')
+              .modal({
+                  onApprove: function () {
+                      var n = document.getElementById('text').value;
+                      if (n.length < 1) {
+                          second();
+                          return false;
+                      }
+                      companiesModel.downCompany();
+                  }
+              })
+          ;
+          $("#logoFile").change(function () {
+              $("#message").empty();
+              var file = this.files[0];
+              var imagefile = file.type;
+              var match = ["image/jpeg", "image/png", "image/jpg", "image/gif"];
+              if (!((imagefile == match[0]) || (imagefile == match[1]) || (imagefile == match[2]) || (imagefile == match[3]))) {
+                  $('#previewing').attr('src', 'noimage.png');
+                  $("#message").html("<p id='error'>Por favor seleccione un archivo de imagen válido.</p><span id='error_message'> Los tipos soportados son: jpg, gif y png.</span>");
+                  return false;
+              }
+              else {
+                  var reader = new FileReader();
+                  reader.onload = imageIsLoaded;
+                  reader.readAsDataURL(this.files[0]);
+              }
+          });
+
+          function imageIsLoaded(e) {
+              $("#logoFile").css("color", "green");
+              $('#logo_preview').css("display", "block");
+              $('#logoPreview').attr('src', e.target.result);
+              $('#logoPreview').attr('width', '230px');
+              $('#logoPreview').attr('height', '210px');
+          }
+          ;
+      </script>
+  <% end %>
+  <style type="text/css">
+    @media screen and (max-width: 1107px) {
+      #Letrita {
+        font-size: 15px;
+      }
+    }
+
+    @media screen and (max-width: 700px) {
+      #Letrita {
+        font-size: 10px;
+      }
+    }
+  </style>
+</div>

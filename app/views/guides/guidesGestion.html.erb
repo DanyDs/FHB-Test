@@ -1,0 +1,236 @@
+
+<div class="ui segment basic">
+  <!-- Breadcrumbs -->
+  <div class="ui container segment basic">
+    <div class="ui large breadcrumb">
+      <div class="active section">Información para emprendedores</div>
+    </div>
+    <div class="ui yellow left aligned padded basic segment">
+      <div class="ui right floated container basic">
+        <!-- ko if: localStorage.getItem("UserRole")!= "visitor" -->
+        <!-- ko if: localStorage.getItem("UserRole")!= "empresa" -->
+        <div class="ui left floated olive button"><i class="plus icon"></i>Agregar Título</div>
+        <div class="ui left floated teal button"><i class="plus icon"></i>Agregar Contenido</div>
+        <!-- /ko -->
+        <!-- /ko -->
+      </div>
+    </div>
+  </div>
+  <br>
+
+  <div class="ui main text justified container segment basic">
+    <div class="ui main text fixed justified container">
+      <div data-bind="foreach: guides">
+        <div class="inline">
+          <div class="ui grid">
+            <div class="ten wide column">
+              <h1 data-bind="text: title"></h1>
+            </div>
+            <div class="six wide column">
+              <!-- ko if: name == null-->
+              <!-- ko if: localStorage.getItem("UserRole")!= "visitor" -->
+              <!-- ko if: localStorage.getItem("UserRole")!= "empresa" -->
+              <a class="ui button orange" data-bind="click: $parent.openTitleGuideToEdit">Editar</a><a href="#" class="ui button red" data-bind="click: $parent.removeGuide">Eliminar</a>
+              <!-- /ko -->
+              <!-- /ko -->
+              <!-- /ko -->
+            </div>
+          </div>
+        </div>
+
+        <div class="ui grid">
+          <div class="wide column"></div>
+          <div class="fourteen wide column">
+            <h2 data-bind="text: name"></h2>
+            <p data-bind="html: content"></p>
+            <!-- ko if: name != null -->
+            <!-- ko if: localStorage.getItem("UserRole")!= "visitor" -->
+            <!-- ko if: localStorage.getItem("UserRole")!= "empresa" -->
+            <a class="ui button yellow" data-bind="click: $parent.openGuideToEdit">Editar</a><a href="#" class="ui button red" data-bind="click: $parent.removeGuide">Eliminar</a>
+            <!-- /ko -->
+            <!-- /ko -->
+            <!-- /ko -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div id="editTitleGuideDialog" class="ui inverted first test modal">
+  <div class="header">
+    Editar Segmento
+  </div>
+  <div class="ui form content">
+    <div class="field">
+      <label>Título</label>
+      <input name="first-name" type="text" data-bind="value: editableGuide().title">
+    </div>
+  </div>
+  <div class="actions">
+    <div class="ui inverted red deny button">
+      Cancelar
+    </div>
+    <div class="ui inverted green positive right labeled icon button">
+      Guardar
+      <i class="save icon"></i>
+    </div>
+  </div>
+</div>
+
+<div id="createContentGuideDialog" class="ui inverted long test modal">
+  <i class="close icon"></i>
+  <div class="header">
+    Agregando Guia
+  </div>
+  <div class="ui form content">
+    <div class="field">
+      <label>Subtítulo de la Guia</label>
+      <input name="first-name" type="text" data-bind="value: editingGuideModel().name" placeholder="Subtítulo....">
+    </div>
+    <div class="field">
+      <label>Contenido de la Guia</label>
+      <textarea name="first-name" type="text" data-bind="value: editingGuideModel().content" placeholder="Aqui va el contenido" rows="8" cols="80"></textarea>
+    </div>
+  </div>
+  <div class="actions">
+    <div class="ui inverted red deny button">
+      Cancelar
+    </div>
+    <div class="ui inverted green positive right labeled icon button">
+      Agregar
+      <i class="plus icon"></i>
+    </div>
+  </div>
+</div>
+
+<div id="createGuideDialog" class="ui inverted long test modal">
+  <i class="close icon"></i>
+  <div class="header">
+    Agregando Guia
+  </div>
+  <div class="ui form content">
+    <div class="field">
+      <label>Título de la Guia</label>
+      <input name="first-name" type="text" data-bind="value: editingGuideModel().title" placeholder="Título....">
+    </div>
+  </div>
+  <div class="actions">
+    <div class="ui inverted red deny button">
+      Cancelar
+    </div>
+    <div class="ui inverted green positive right labeled icon button">
+      Agregar
+      <i class="plus icon"></i>
+    </div>
+  </div>
+</div>
+
+<div id="editGuideDialog" class="ui inverted first test modal">
+  <div class="header">
+    Editar Segmento
+  </div>
+  <div class="ui form content">
+    <div class="field">
+      <label>Subtítulo</label>
+      <input name="first-name" type="text" data-bind="value: editableGuide().name">
+    </div>
+    <div class="field">
+      <label>Contenido</label>
+      <textarea name="first-name" type="text" data-bind="value: editableGuide().content" placeholder="Aqui va el contenido" rows="8" cols="80"></textarea>
+    </div>
+  </div>
+  <div class="actions">
+    <div class="ui inverted red deny button">
+      Cancelar
+    </div>
+    <div class="ui inverted green positive right labeled icon button">
+      Guardar
+      <i class="save icon"></i>
+    </div>
+  </div>
+</div>
+
+<script>
+
+    $('.ui.cube')
+        .shape('attach events', 'teal.button', 'flip right');
+    $('.ui.cube')
+        .shape('attach events', 'olive.button', 'flip left');
+    $('.ui.cube')
+        .shape('attach events', 'red.button', 'flip right');
+    $('.ui.dropdown')
+        .dropdown()
+    ;
+
+    $('#editGuideDialog')
+        .modal('attach events', '.yellow.button', 'show')
+        .modal('setting', 'closable', false)
+        .modal('setting', 'transition', 'vertical flip')
+        .modal({
+            onApprove: function () {
+                guidesModel.updateGuide();
+            }
+        })
+    ;
+
+    $('#editTitleGuideDialog')
+        .modal('attach events', '.orange.button', 'show')
+        .modal('setting', 'closable', false)
+        .modal('setting', 'transition', 'vertical flip')
+        .modal({
+            onApprove: function () {
+                guidesModel.updateGuide();
+            }
+        })
+    ;
+
+    $('#createGuideDialog')
+        .modal('attach events', '.olive.button', 'show')
+        .modal('setting', 'closable', false)
+        .modal('setting', 'transition', 'vertical flip')
+        .modal({
+            onApprove: function () {
+                guidesModel.createGuide();
+            }
+        })
+    ;
+
+    $('#createContentGuideDialog')
+        .modal('attach events', '.teal.button', 'show')
+        .modal('setting', 'closable', false)
+        .modal('setting', 'transition', 'vertical flip')
+        .modal({
+            onApprove: function () {
+                guidesModel.createGuide();
+            }
+        })
+    ;
+
+    $('.ui.accordion')
+        .accordion()
+    ;
+    $('.ui.accordion').accordion('refresh');
+    $('.trigger.example .accordion')
+        .accordion({
+            selector: {
+                trigger: '.title .icon'
+            }
+        })
+    ;
+    function SiguientePagina() {
+        document.getElementById("2daPagina").style.display = "inline";
+        document.getElementById("1raPagina").style.display = "none";
+        document.getElementById("siguientePagina").style.display = "none";
+        document.getElementById("anteriorPagina").style.display = "inline";
+    }
+    function AnteriorPagina() {
+        document.getElementById("2daPagina").style.display = "none";
+        document.getElementById("1raPagina").style.display = "inline";
+        document.getElementById("anteriorPagina").style.display = "none";
+        document.getElementById("siguientePagina").style.display = "inline";
+    }
+
+
+</script>

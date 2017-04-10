@@ -1,0 +1,405 @@
+<style media="screen">
+#cortar{
+  height:auto;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  overflow:hidden;
+}
+
+#cortarMovil{
+  width:auto;
+  height:auto;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  overflow:hidden;
+}
+</style>
+<!-- Breadcrumbs -->
+<div class="ui container segment basic">
+  <div class="ui large breadcrumb">
+    <div class="active section">Empresas</div>
+  </div>
+  <div class="ui yellow left aligned padded basic segment" style="margin-bottom: -55px;">
+  </div>
+</div>
+
+<div class="ui basic container segment">
+
+<div class="ui center aligned basic segment">
+  <div class="ui labeled button" tabindex="0" >
+    <a class="ui  button " href="/companies" ><i class="industry  icon"></i>Empresas registradas </a>
+    <a class="ui  left  label" data-bind="text: registeredCompanies().length"> </a>
+  </div>
+  <div class="ui labeled button" tabindex="0" >
+    <a class="ui  button" href="/supervisor/requests"><i class="plus icon"></i>Nuevas solicitudes de registro</a>
+    <a class="ui  left label" data-bind="text: requestedCompaniesCounter().length"></a>
+  </div>
+  <div class="ui labeled button" tabindex="0">
+    <a class="ui  button active" href="/supervisor/getDowned"><i class="remove icon"></i>Nuevas solicitudes de baja</a>
+    <a class="ui  left label active "data-bind="text: downedCompaniesCounter().length"></a></br>
+  </div>
+</br>
+</div>
+<div data-bind="visible: downedCompaniesCounter().length==0">
+  <div class="ui container basic segment center aligned" >
+    <h3 class="ui red header">"No hay nuevas solicitudes de baja"</h3>
+  </div>
+</div>
+</br id="listaCompu">
+  <!--nuevo listado inicio-->
+  <table class="ui compact celled table" id="listaCompu">
+    <thead>
+    <tr>
+      <th>Empresa</th>
+      <th>Motivo</th>
+      <th class="center aligned">Acciones</th>
+    </tr>
+    </thead>
+    <tbody data-bind="foreach: downedCompanies().sort(function(company){return company.status ? -1 : 1})">
+    <tr data-bind="style: {backgroundColor: status ? 'white' : 'grey' }">
+      <td>
+        <h2 class="ui medium header">
+          <img data-bind="attr:{ src:'/image_store/logo_'+id+'.gif'}" width="200" height="200"/>
+          <div class="content">
+            <span data-bind="text: name"></span>
+            <span class="sub header"><a data-bind="if: status, click: $parent.openDetail" style="cursor:pointer;">Ver detalle</a></span>
+            <span class="sub header"><a data-bind="if: !status, click: $parent.openDetail" style="cursor:pointer; color: red;">Ver detalle</a></span>
+          </div>
+        </h2>
+      </td>
+      <td class="justified aligned " data-bind="text:downed_reason" style="max-width:350px;" id="cortar"></td>
+      <td class="center aligned">
+        <div data-bind="visible: status" class="ui mini buttons">
+          <i class="ui mini green button" data-bind="click: $parent.openSureAceptModal">Aceptar</i>
+          <div class="or" data-text="O"></div>
+          <div class="ui mini red button" data-bind="click: $parent.openDownToReject">Rechazar</div>
+        </div>
+        <div class="ui label red" data-bind="visible: !status">Dado de Baja</div>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+  <!--nuevo listado fin-->
+  <!-- Tabla empresas Movil-->
+  <div data-bind="foreach: downedCompanies" class="ui cards centered basic segment container" id="listaMovil">
+    <div class="ui card" data-bind="style: {backgroundColor: status ? 'white' : 'grey' }">
+      <div class="ui label red" data-bind="visible: !status">Dado de Baja</div>
+      <div class="content">
+        <div class="header"><span data-bind="text: name"></span></div>
+      </div>
+      <div class="ui image fluid">
+        <img data-bind="attr:{ src:'/image_store/logo_'+id+'.gif'}">
+      </div>
+      <div class="content">
+        <a data-bind="if: status, click: $parent.openDetail" style="cursor:pointer;"><center>Ver detalle</center></a>
+        <a data-bind="if: !status, click: $parent.openDetail" style="cursor:pointer; color:red;"><center>Ver detalle</center></a>
+        <div class="description" id="cortarMovil"><strong>Motivo:</strong> <span data-bind="text: downed_reason"></span></div> <br>
+      </div>
+      <div class="extra content">
+        <div data-bind="visible: status" class="ui mini buttons fluid">
+          <i class="ui mini green button " data-bind="click: $parent.openSureAceptModal">Aceptar</i>
+          <div class="or" data-text="O"></div>
+          <div class="ui mini red button" data-bind="click: $parent.openDownToReject">Rechazar</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Fin Tabla empresas Movil-->
+</div>
+<div id="modalFull" class="ui inverted long modal" data-bind='foreach: showingCompany'>
+  <i class="close icon"></i>
+  <div class="header">
+    Detalle de empresa
+  </div>
+  <div class="ui form content">
+    <div class="ui negative message container center aligned">
+      <div class="header">
+        Motivo
+      </div>
+      <p data-bind="text: downed_reason"></p>
+    </div>
+    <div class="ui two columns grid centered stackable">
+      <div class="column" id="imageCompu">
+        <div class="ui segment center aligned">
+          <div class="ui small header dividing">Logo Empresa</div>
+          <img data-bind="attr:{ src: '/image_store/logo_'+ id + '.gif' }" width="275" height="275"/>
+        </div>
+      </div>
+      <div class="column" id="imageCompu">
+        <div class="ui segment center aligned">
+          <div class="ui small header dividing">NIT Empresa</div>
+          <img data-bind="attr:{ src: '/image_store/nit_'+ id + '.gif' }" width="275" height="275"/>
+        </div>
+      </div>
+    </div>
+    <div class="ui two columns grid stackable center aligned" id="imageMovil">
+      <div class="column" id="imageMovil">
+        <div class="ui segment center aligned">
+          <div class="ui small header dividing">Logo Empresa</div>
+          <img class="image" data-bind="attr:{ src: '/image_store/logo_'+ id + '.gif' }" width="250" />
+        </div>
+      </div>
+      <div class="column" id="imageMovil">
+        <div class="ui segment center aligned">
+          <div class="ui small header dividing">NIT Empresa</div>
+          <img class="image" data-bind="attr:{ src: '/image_store/nit_'+ id + '.gif' }" width="250"/>
+        </div>
+      </div>
+    </div>
+    <div class="ui two columns grid stackable center aligned" id="lessMovil">
+      <div class="column">
+        <div class="ui segment center aligned">
+          <div class="ui small header dividing">Logo Empresa</div>
+          <img class="ui image fluid" data-bind="attr:{ src: '/image_store/logo_'+ id + '.gif' }" />
+        </div>
+      </div>
+      <div class="column">
+        <div class="ui segment center aligned">
+          <div class="ui small header dividing">NIT Empresa</div>
+          <img class="ui image fluid" data-bind="attr:{ src: '/image_store/nit_'+ id + '.gif' }" />
+        </div>
+      </div>
+    </div>
+
+    <div class="ui four column grid stackable">
+      <div class="column">
+        <div class="ui segment  basic">
+          <div class="ui small header">Nombre</div>
+          <p data-bind="text: name"></p>
+        </div>
+      </div>
+      <div class="column">
+        <div class="ui segment  basic">
+          <div class="ui small header">Persona de contacto</div>
+          <p data-bind="text: contactName"></p>
+        </div>
+      </div>
+      <div class="column">
+        <div class="ui segment  basic">
+          <div class="ui small header">Email</div>
+          <p data-bind="text: email"></p>
+        </div>
+      </div>
+      <div class="column">
+        <div class="ui segment  basic">
+          <div class="ui small header">NIT</div>
+          <p data-bind="text: nit"></p>
+        </div>
+      </div>
+
+    </div>
+    <div class="ui three column grid stackable centered">
+      <div class="column">
+        <div class="ui segment basic">
+          <div class="ui small header">Página Web</div>
+          <p data-bind="html: webpage"></p>
+        </div>
+      </div>
+      <div class="column">
+        <div class="ui segment basic">
+          <div class="ui small header">Teléfono</div>
+          <p data-bind="text: telephone"></p>
+        </div>
+      </div>
+      <div class="column">
+        <div class="ui segment basic">
+          <div class="ui small header">Departamento</div>
+          <p data-bind="text: department"></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="ui grid stackable segment basic">
+      <div class="column">
+        <div class="ui small header">Dirección</div>
+        <p data-bind="text: address"></p>
+      </div>
+    </div>
+    <div class="ui grid stackable segment basic">
+      <div class="column">
+        <div class="ui small header">Detalle</div>
+        <p data-bind="text: detail"></p>
+      </div>
+    </div>
+    <div class="ui grid stackable segment basic">
+      <div class="column">
+        <div class="ui small header">Sucursales</div>
+        <p data-bind="html: subsidiaries"></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Aceptando baja-->
+<div id="seguroAceptar" class="ui small modal green segment" data-bind='foreach: showingCompany'>
+  <div class="ui header center aligned">
+    ¿Seguro?
+  </div>
+  <div class="content">
+    <center>Usted esta por dar de baja a la empresa: <span style="color:#0E6EB8; font-weight: bold;" data-bind="text: name"></span></center>
+  </div>
+  <div class="actions" style="background-color:#FFF;">
+    <a class="ui positive button" data-bind="click: $parent.acceptDown">Aceptar</a>
+    <div class="ui red deny button">Cancelar</div>
+  </div>
+</div>
+<div id="aceptado" class="ui small modal green segment" data-bind='foreach: showingCompany'>
+  <div class="ui header center aligned">
+    Baja aceptada
+  </div>
+  <div class="content">
+    <center>La empresa <span style="color:#0E6EB8; font-weight: bold;" data-bind="text: name"></span>
+      ha sido dada de baja del catalogo "Hecho en Bolivia".</center>
+  </div>
+  <div class="actions" style="background-color:#FFF;">
+    <a href="./getDowned" class="ui positive button compact">Aceptar</a>
+  </div>
+</div>
+<div id="errorReject" class="ui small modal segment red">
+  <div class="ui  huge red header center aligned">
+    Error
+  </div>
+  <div class="content">
+    <center>Hubo un error rechazando la solicitud de baja de la empresa.</center>
+  </div>
+  <div class="actions" style="background-color:#FFF;">
+    <div class="ui positive button">Aceptar</div>
+  </div>
+</div>
+<!-- Fin Aceptando baja-->
+
+<!--Rechazando baja-->
+<div id="rejectingCompanyDialog" class="ui modal first coupled red segment" >
+  <div class="header" data-bind='foreach: showingCompany'>
+    Rechazando solicitud de baja de la empresa <span style="color:#0E6EB8; font-weight: bold;" data-bind="text: name"></span>
+  </div>
+  <div class="ui form content">
+    <div class="field">
+      <label>Motivo</label>
+      <textarea  id="reason" rows="2" placeholder="Escriba aqui su motivo de rechazo..." required="Llene este campo" data-bind="value: editingCompany().reason"></textarea>
+    </div>
+  </div>
+  <div class="actions" style="background-color:#FFF;">
+    <div class="ui positive button">Aceptar</div>
+    <div class="ui red deny button">Cancelar</div>
+  </div>
+</div>
+
+<div id="sinMotivo" class="ui small second modal coupled red segment">
+  <div class="ui header center aligned">
+    Introduzca un motivo
+  </div>
+  <div class="content">
+    <center>Por favor introduzca el motivo por el cual esta rechazando esta empresa</center>
+  </div>
+  <div class="actions" style="background-color:#FFF;">
+    <div class="ui positive button compact">Aceptar</div>
+  </div>
+</div>
+
+<div id="seguroRechazar" class="ui small modal red segment" data-bind='foreach: showingCompany'>
+  <div class="ui header center aligned">
+    ¿Seguro?
+  </div>
+  <div class="content">
+    <center>¿Está usted seguro qué desea rechazar la solicitud de baja de la empresa <span style="color:#0E6EB8; font-weight: bold;" data-bind="text: name"></span>?</center>
+  </div>
+  <div class="actions" style="background-color:#FFF;">
+    <div class="ui positive button" data-bind="click: $parent.rejectDown">Aceptar</div>
+    <div class="ui red deny button">Cancelar</div>
+  </div>
+</div>
+
+
+<div id="rechazado" class="ui small modal red segment" data-bind='foreach: showingCompany'>
+  <div class="ui header center aligned">
+    Solicitud rechazada
+  </div>
+  <div class="content">
+    <center>Se rechazó la solicitud de baja de la empresa <span style="color:#0E6EB8; font-weight: bold;" data-bind="text: name"></span>.</center>
+  </div>
+  <div class="actions" style="background-color:#FFF;">
+    <a href="./getDowned" class="ui positive button compact">Aceptar</a>
+  </div>
+</div>
+<!--Fin Rechazando baja-->
+
+<!--Error modals-->
+<div id="errorReject" class="ui small modal segment red">
+  <div class="ui  huge red header center aligned">
+    Error
+  </div>
+  <div class="content">
+    <center>Hubo un error rechazando la baja de la empresa. Vuelva a intentarlo mas tarde.</center>
+  </div>
+  <div class="actions" style="background-color:#FFF;">
+    <div class="ui positive button">Aceptar</div>
+  </div>
+</div>
+
+<div id="errorAcept" class="ui small modal segment red">
+  <div class="ui  huge red header center aligned">
+    Error
+  </div>
+  <div class="content">
+    <center>Hubo un error aceptando la baja de la empresa. Vuelva a intentarlo mas tarde.</center>
+  </div>
+  <div class="actions" style="background-color:#FFF;">
+    <div class="ui positive button">Aceptar</div>
+  </div>
+</div>
+<!--Fin Error modals-->
+<div class="ui page dimmer" id="cargando">
+  <div class="ui indeterminate big text loader">Procesando su solicitud</div>
+</div>
+
+<script>
+  var isCompanyPage=false;
+  var newCompany=false;
+</script>
+
+
+<style>
+  #listaMovil {
+    display: none;
+  }
+
+  @media screen and (max-width: 995px ) {
+    #listaCompu {
+      display: none;
+    }
+
+    #listaMovil {
+      display: flex;
+      margin-top: -45px;
+    }
+
+  }
+
+  #imageMovil {
+    display: none;
+  }
+  #lessMovil{
+    display: none;
+  }
+  @media screen and (max-width: 415px ) {
+    #imageCompu {
+      display: none;
+    }
+
+    #imageMovil {
+      display: flex;
+    }
+    @media screen {
+      #imageMovil{
+        display: none;
+      }
+      #lessMovil{
+        display:flex;
+      }
+    }
+
+  }
+</style>

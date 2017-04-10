@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.4/semantic.min.css" media="screen" title="no title" charset="utf-8">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.4/semantic.min.js"></script>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <style>
+    #main-content{
+      padding-top: 20px;
+    }
+    #fondoFooter{
+      background-color: #216521;
+    }
+    #opFooter{
+      color: white;
+      font-weight: bold;
+    }
+    #masOpFooter{
+      margin-left: 30px;
+      color: white;
+      font-weight: bold;
+    }/* Email styles need to be inline */
+    </style>
+  </head>
+
+  <body>
+    <section id="main-content">
+      <%= yield %>
+    </section>
+  </body>
+</html>

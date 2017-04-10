@@ -1,0 +1,25 @@
+<div class="ui container">
+  <div class="ui basic padded segment">
+    <h1 class="ui green centered header">Ingreso de usuarios</h1>
+  </div>
+  <form class="ui form">
+    <div class="field">
+      <label><b>Usuario:</b></label>
+      <input type="text" name = "email" maxlength="120" placeholder="correo electrónico" data-bind="value: editingLoginModel().email">
+    </div>
+    <div class="field">
+      <label><b>Contraseña:</b></label>
+      <input type="password" name="rol" placeholder="Contraseña" id="rol" data-bind="value: editingLoginModel().password">
+    </div>
+    <div>
+      <h3 class="ui red center aligned header"><span data-bind="text:errorMessage"/></h3>
+    </div>
+    <div class="ui segment center aligned  basic">
+      <button class="ui green submit button" data-bind="click: signIn">Ingresar</button>
+    </div>
+  </form>
+  <div class="ui basic padded center aligned segment">
+    <h4 class="ui header">¿No tiene cuenta?
+      <a href="/registrar_empresa" style="color:rgb(33, 186, 69)">Registre su empresa</a></h4>
+  </div>
+</div>

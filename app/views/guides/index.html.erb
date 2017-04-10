@@ -1,0 +1,66 @@
+<!-- Breadcrumbs -->
+<div class="ui container segment basic">
+  <div class="ui large breadcrumb">
+    <div class="active section">Información para emprendedores</div>
+  </div>
+  <div class="ui yellow left aligned padded basic segment">
+    <div class="ui right floated container basic">
+    </div>
+  </div>
+</div>
+
+<!-- THE MAIN TEXT -->
+<div class="ui main text justified container">
+  <div class="ui main text fixed justified container">
+    <div data-bind="foreach: guides">
+      <br><br>
+      <div class="inline">
+        <div class="ui grid">
+          <div class="ten wide colum">
+
+            <h2 data-bind="text: title"></h2>
+
+          </div>
+
+
+        </div>
+      </div>
+
+      <div class="ui grid">
+
+        <div class="wide column"></div>
+
+        <div class="fourteen wide column">
+          <h2 data-bind="text: name"></h2>
+          <p data-bind="html: content"></p>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+<div class="ui segment basic"></div>
+
+<script>
+    $('.ui.cube')
+        .shape('attach events', 'teal.button', 'flip right');
+    $('.ui.cube')
+        .shape('attach events', 'olive.button', 'flip left');
+    $('.ui.cube')
+        .shape('attach events', 'red.button', 'flip right');
+    $('.ui.dropdown')
+        .dropdown();
+    $('.ui.accordion')
+        .accordion();
+    $('.ui.accordion').accordion('refresh');
+    $('.trigger.example .accordion')
+        .accordion({
+            selector: {
+                trigger: '.title .icon'
+            }
+        });
+</script>

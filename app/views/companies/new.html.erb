@@ -1,0 +1,315 @@
+<h1 class="ui center aligned teal header">
+  Solicitud de registro de empresa
+</h1>
+<div class="ui three column centered grid segment basic">
+  <div class="ui twelve wide column segment basic form">
+    <div class="field">
+      <label>Nombre de la empresa</label>
+      <input type="text" placeholder="Nombre de la empresa" data-bind="value: editingCompany().company.name" id="nombre" maxlength="200">
+    </div>
+    <div class="field">
+      <label>Persona de contacto</label>
+      <div class="field">
+        <input type="text" placeholder="Nombres y Apellidos" data-bind="value: editingCompany().company.contactName" maxlength="100">
+      </div>
+    </div>
+    <div class="field">
+      <label>Correo electrónico del contacto</label>
+      <div class="field">
+        <input type="text" placeholder="correo@gmail.com" data-bind="value: editingCompany().company.email" maxlength="100">
+      </div>
+    </div>
+    <div class="field">
+      <label>Ingrese correo electrónico nuevamente</label>
+      <div class="field">
+        <input type="text" placeholder="correo@gmail.com" data-bind="value: confirmEmail" maxlength="100">
+      </div>
+    </div>
+    <div class="field">
+      <label>Contraseña</label>
+      <div class="field">
+        <input type="password" placeholder="Contraseña" data-bind="value: editingCompany().company.password" minlength="100">
+      </div>
+    </div>
+    <div class="field">
+      <label>Confirmación de contraseña</label>
+      <div class="field">
+        <input type="password" placeholder="Confirmacion de contraseña" data-bind="value: confirmPassword" minlength="100">
+      </div>
+    </div>
+    <div class="field">
+      <label>NIT</label>
+      <div class="field">
+        <input type="text" placeholder="Numero de nit" data-bind="value: editingCompany().company.nit">
+      </div>
+    </div>
+    <div class="field">
+      <label>Descripción de la empresa</label>
+      <div class="field">
+        <textarea rows="4" placeholder="Detalle" data-bind="value: editingCompany().company.detail"></textarea>
+      </div>
+    </div>
+    <div class="field">
+      <label>Dirección de la empresa</label>
+      <div class="field">
+        <input type="text" placeholder="Dirección" data-bind="value: editingCompany().company.address" maxlength="200">
+      </div>
+    </div>
+    <div class="field">
+      <label>Teléfono</label>
+      <div class="field">
+        <input type="number" placeholder="Teléfono" data-bind="value: editingCompany().company.telephone">
+      </div>
+    </div>
+    <div class="field">
+      <label>Página Web (opcional)</label>
+      <div class="field">
+        <input type="text" placeholder="https://www.DireccionWeb.com" data-bind="value: editingCompany().company.webpage" maxlength="50">
+      </div>
+    </div>
+    <div class="field">
+      <label>Departamento</label>
+      <select class="ui search dropdown" data-bind="value: editingCompany().company.department">
+        <option value="">Departamento</option>
+        <option value="Beni">Beni</option>
+        <option value="Cochabamba">Cochabamba</option>
+        <option value="Chuquisaca">Chuquisaca</option>
+        <option value="La Paz">La Paz</option>
+        <option value="Oruro">Oruro</option>
+        <option value="Pando">Pando</option>
+        <option value="Potosi">Potosi</option>
+        <option value="Santa Cruz">Santa Cruz</option>
+        <option value="Tarija">Tarija</option>
+      </select>
+    </div>
+    <!--Sucursales-->
+    <div class="field" data-bind="foreach: categoriesSubsidiaries">
+      <p>
+      <div data-bind="text:direccion">
+      </div>
+      </p>
+    </div>
+
+    </br>
+    <br>
+    <script type="text/javascript">
+        var newCompany=true;
+        $('.ui.cube')
+            .shape('attach events', 'teal.button', 'flip right');
+        $('.ui.cube')
+            .shape('attach events', 'olive.button', 'flip left');
+        $('.ui.cube')
+            .shape('attach events', 'red.button', 'flip right');
+        //  $('.ui.modal')
+        //      .modal('attach events', '.field', '.show');
+        $('.ui.accordion')
+            .accordion();
+        $('#createAddressDialog')
+            .modal('attach events', '.olive.button', 'show')
+            .modal('setting', 'closable', false)
+            .modal('setting', 'transition', 'vertical flip')
+            .modal({
+                onApprove: function () {
+                    companiesModel.createSubsidiary();
+                }
+            })
+        ;
+        $('.ui.first.test.modal')
+            .modal('attach events', '.teal.button', 'show')
+            .modal('setting', 'transition', 'vertical flip')
+        ;
+        $('#removeAddressDialog')
+            .modal('attach events', '.red.button', 'show')
+            .modal('setting', 'transition', 'vertical flip')
+            .modal({
+                onApprove: function () {
+                    addressesModel.removeAddress();
+                }
+            })
+        ;
+    </script>
+    <div class="two fields">
+      <div class="ui field container segment center basic">
+        <div class="ui container center aligned">
+          <div id="logo_preview" style="display:none">
+            <img id="logoPreview" src="" style="width:210px;height: 230px;">
+          </div>
+          <label>Logo </label><br/>
+          <input data-bind="value:loguito" type="file" name="logoFile" id="logoFile" required/>
+          <h4 id='loading' style="display:none">Subiendo..</h4>
+          <div id="message"></div>
+        </div>
+      </div>
+      <div class="ui field container segment center basic ">
+        <div class="ui container center aligned">
+          <div id="nit_preview" style="display:none">
+            <img id="nitPreview" src="" style="width:210px;height: 230px;">
+          </div>
+          <label>NIT</label><br/>
+          <input data-bind="value:fotonit" type="file" name="nitFile" id="nitFile" required/>
+          <h4 id='loading' style="display:none">Subiendo..</h4>
+          <div id="message"></div>
+        </div>
+      </div>
+    </div>
+    <div class="field">
+      <div class="ui read-only checkbox">
+        <input type="checkbox" id="checkbox" data-bind="checked: checkbox">
+        <label>Acepto los <a data-bind="click: termsAndConditions" href="#"> términos y condiciones</a> del Catálogo de
+          Productos y Servicios "Hecho en Bolivia"</label>
+      </div>
+
+    </div>
+    <div data-bind="visible: hasError" class="ui negative message">
+      <i data-bind="click: noErrors"></i>
+      <div class="header">
+        Tu empresa no puede ser creada por problemas con los siguientes campos:
+      </div>
+      <ul data-bind="foreach:errorMessages">
+        <li><p data-bind="text: $data"></p></li>
+      </ul>
+    </div>
+    <div class="actions">
+      <div data-bind="visible: checkbox" class="">
+        <button id="submitRequestButton" class="ui positive button" data-bind="click: createCompany">Enviar solicitud</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="viewTermsAndConditions" class="ui inverted modal">
+  <div class="ui sticky">
+    <div class="ui container">
+      <div class="ui center aligned grid">
+        <div class="thirteen wide column">
+          <div class="ui basic segment ">
+            <h1 class="ui center aligned red header" style="font-variant:small-caps">Condiciones de uso</h1>
+
+            <div class="ui segment">
+              <div class="ui yellow segment">
+                <h2 class="ui header">1. Presentación </h2>
+                <div class="sub header">
+                  Somos una página web diseñada para ayudar a pequeños y grandes emprendedores bolivianos.
+                </div>
+                </h2>
+              </div>
+              <div>
+                Nuestras finalidades son:<br>
+                <div class="ui left aligned basic segment">
+                  <p style="margin-left:5%; text-align:justify;">
+                    <i class="right triangle icon"></i>
+                    Que se conozcan los productos hechos en Bolivia.
+                  </p>
+                  <p style="margin-left:5%; text-align:justify;">
+                    <i class="right triangle icon"></i>
+                    Se valorice el esfuerzo nacional.
+                  </p>
+                  <p style="margin-left:5%; text-align:justify;">
+                    <i class="right triangle icon"></i>
+                    Que exista prosperidad empresarial en Bolivia.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="ui segment">
+              <div class="ui yellow segment">
+                <h2 class="ui header">2. Derechos y limites </h2>
+                <div class="sub header">
+                  Te comprometes a suministrarnos únicamente la información </br>y</br> el contenido sobre los que
+                  tengas derecho y a que la información será veraz.
+                </div>
+                </h2>
+              </div>
+              <div class="ui left aligned basic segment">
+                <p style="margin-left:5%; text-align:justify;">
+                  <i class="right triangle icon"></i>
+                  Eres el propietario de todo el contenido, los comentarios y los datos personales y empresariales que
+                  proporciones.
+                </p>
+                <p style="margin-left:5%; text-align:justify;">
+                  <i class="right triangle icon"></i>Cuando ves o utilizas el contenido y la información de terceros
+                  publicados en nuestros Servicios, lo haces por tu propia cuenta y riesgo.
+                </p>
+              </div>
+            </div>
+            </br>
+            <div class="actions">
+              <div class="ui ok green button">Aceptar terminos y condiciones</div>
+              <a class="ui cancel red  button" data-bind="click: rejectTermsAndConditions">Cancelar</a>
+            </div>
+          </div>
+        </div>
+      </div><!--Grid end-->
+    </div>
+  </div>
+</div>
+<script>
+    var isCompanyPage=false;
+    $('#checkbox').click(function () {
+        if (document.getElementById('checkbox').checked) {
+            companiesModel.acceptTermsAndCondtions();
+        } else {
+            companiesModel.rejectTermsAndConditions();
+        }
+
+    });
+
+    $('#viewTermsAndConditions')
+        .modal({
+            onApprove: function () {
+                companiesModel.acceptTermsAndCondtions();
+            }
+        })
+    ;
+    $(document).ready(function (e) {
+        $("#logoFile").change(function () {
+            $("#message").empty();
+            var file = this.files[0];
+            var imagefile = file.type;
+            var match = ["image/jpeg", "image/png", "image/jpg", "image/gif"];
+            if (!((imagefile == match[0]) || (imagefile == match[1]) || (imagefile == match[2]) || (imagefile == match[3]))) {
+                $('#previewing').attr('src', 'noimage.png');
+                $("#message").html("<p id='error'>Por favor seleccione un archivo de imagen válido.</p><span id='error_message'> Los tipos soportados son: jpg, gif y png.</span>");
+                return false;
+            }
+            else {
+                var reader = new FileReader();
+                reader.onload = imageIsLoaded;
+                reader.readAsDataURL(this.files[0]);
+            }
+        });
+
+        function imageIsLoaded(e) {
+            $("#logoFile").css("color", "green");
+            $('#logo_preview').css("display", "block");
+            $('#logoPreview').attr('src', e.target.result);
+        }
+
+        $("#nitFile").change(function () {
+            $("#message").empty();
+            var file = this.files[0];
+            var imagefile = file.type;
+            var match = ["image/jpeg", "image/png", "image/jpg", "image/gif"];
+            if (!((imagefile == match[0]) || (imagefile == match[1]) || (imagefile == match[2]) || (imagefile == match[3]))) {
+                $('#previewing').attr('src', 'noimage.png');
+                $("#message").html("<p id='error'>Por favor seleccione un archivo de imagen válido.</p><span id='error_message'> Los tipos soportados son: jpg, gif y png.</span>");
+                return false;
+            }
+            else {
+                var reader = new FileReader();
+                reader.onload = imageIsLoaded1;
+                reader.readAsDataURL(this.files[0]);
+            }
+        });
+
+        function imageIsLoaded1(e) {
+            $("#nitFile").css("color", "green");
+            $('#nit_preview').css("display", "block");
+            $('#nitPreview').attr('src', e.target.result);
+        }
+    });
+
+</script>
+
+<!--fin de footer-->

@@ -1,0 +1,151 @@
+<!-- Breadcrumbs -->
+<style >
+.astext {
+  background:none;
+  border:none;
+  margin:0;
+  padding:0;
+}
+</style>
+<div class="ui container segment basic">
+  <div class="ui large breadcrumb">
+    <div class="active section">Noticias</div>
+  </div>
+  <div class="ui yellow left aligned padded basic segment">
+    <div class="ui right floated container basic">
+    </div>
+  </div>
+</div>
+
+<div class="ui container" data-bind="visible: isVisitant()">
+  <!-- Agregar NOTICIAS -->
+
+  <!-- Menu para gestionar nticias nacionales e internacionales -->
+  <div class="ui two item menu">
+    <a class="item" data-bind="click: function() { filter('Nacional') }">Gestionar Noticias Nacionales</a>
+    <a class="active item" data-bind="click: function() { filter('Internacional') }">Gestionar Noticias
+      Internacionales</a>
+  </div>
+
+  <div class="ui container basic segment">
+    <a href="/news/new" class="green ui button">
+      <i class="add icon"></i> Agregar Noticia
+    </a>
+  </div>
+
+  <!-- MOSTRAR NOTICIAS -->
+
+  <div class="ui items" data-bind="foreach: filterNationalNews">
+    <div class=" item">
+      <div class="ui yellow padded segment basic">
+
+        <div class="ui container">
+
+          <h3 class="ui header" style="font-variant:small-caps" data-bind="text: title"></h3>
+
+
+          <a class="ui orange right ribbon label"><h5 class="ui header" data-bind="text: date "></h5></a>
+          <p>
+          <br>
+          <div data-bind="visible: hasImage">
+            <img id="img"data-bind="attr:{ src:'/image_store/notice_'+id+'.gif'}"  style="margin-right:10px; float:left;" width="300" height="210">
+          </div>
+          <div class="meta">
+            <p data-bind="lineBreaks: description"></p>
+            <p data-bind="text: full"></p>
+          </br>
+            <strong>Dirección web de la noticia: </strong>
+            <a  target="_blank" data-bind="attr:{href: link}"><font data-bind="text: link " color="blue"></font></a>
+          </div>
+
+          <button class="ui red button" data-bind="click: $parent.removeNew"> Eliminar</button>
+          <button class="ui yellow button" data-bind="click: $parent.openNoticeToEdit"> Editar</button>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+<div id="editNoticeDialog" class="ui inverted first test modal">
+  <div class="header">
+    Editar Noticia
+  </div>
+  <div class="ui form content">
+    <div class="field">
+      <label>Título</label>
+      <input name="first-name" type="text" data-bind="value: editingNotice().title">
+    </div>
+    <div class="field">
+      <label>Detalle</label>
+      <textarea name="description" type="text" data-bind="value: editingNotice().description"></textarea>
+    </div>
+    <div class="field">
+      <label>Fecha</label>
+      <input name="date" type="date" data-bind="value: editingNotice().date">
+    </div>
+    <div class="field">
+      <label>Dirección web de noticia</label>
+      <input name="description" type="text" data-bind="value: editingNotice().link"></input>
+    </div>
+    <div class="ui field container segment center basic">
+      <img class="ui medium image bordered centered">
+      <div class="ui container center aligned">
+        <div id="image_preview" style="display:none"><img id="imagePreview" src="" /></div>
+        <label>Imagen</label><br/>
+        <input type="file" name="announcementFile" id="imageFile" required />
+        <h4 id='loading' style="display:none" >Subiendo..</h4>
+        <div id="message"></div>
+      </div>
+    </div>
+  </div>
+  <div class="actions">
+    <div class="ui inverted red deny button">
+      Cancelar
+    </div>
+    <div class="ui inverted green positive right labeled icon button">
+      Guardar
+      <i class="save icon"></i>
+    </div>
+  </div>
+</div>
+
+<script>
+    $('#editNoticeDialog')
+        .modal('setting', 'closable', false)
+        .modal('setting', 'transition', 'vertical flip')
+        .modal({
+            onApprove: function () {
+                newsModel.updateNotice();
+            }
+        })
+    ;
+    $(document).ready(function (e) {
+        $("#imageFile").change(function () {
+            $("#message").empty();
+            var file = this.files[0];
+            var imagefile = file.type;
+            var match = ["image/jpeg", "image/png", "image/jpg", "image/gif"];
+            if (!((imagefile == match[0]) || (imagefile == match[1]) || (imagefile == match[2]) || (imagefile == match[3]))) {
+                $('#previewing').attr('src', 'noimage.png');
+                $("#message").html("<p id='error'>Por favor seleccione un archivo de imagen válido.</p><span id='error_message'> Los tipos soportados son: jpg, gif y png.</span>");
+                return false;
+            }
+            else {
+                var reader = new FileReader();
+                reader.onload = imageIsLoaded;
+                reader.readAsDataURL(this.files[0]);
+            }
+        });
+        function imageIsLoaded(e) {
+            $("#imageFile").css("color", "green");
+            $('#image_preview').css("display", "block");
+            $('#imagePreview').attr('src', e.target.result);
+            $('#imagePreview').attr('width', '230px');
+            $('#imagePreview').attr('height', '210px');
+        };
+
+
+    });
+
+</script>

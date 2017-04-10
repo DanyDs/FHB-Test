@@ -1,0 +1,163 @@
+<!--Contenido-->
+<div class="ui container segment basic">
+
+  <style>
+    .counter {
+      margin-left: 5px;
+      border-color: #FFF;
+      border-radius: 2px;      
+      padding: 5px;      
+      background-color: #D5C4B7;
+      color: black;
+    }
+
+    .active.section {
+      cursor: pointer;
+    }
+  </style>
+  <!-- Breadcrumbs -->
+  <div class="ui large breadcrumb">
+    <div class="active section" onclick="javascript:explorerModel.clearNavigationStack();"><span style="color:orange">Rubros<span></div>
+    <i class="right chevron icon divider"></i>
+    <!-- ko foreach: navigationStack -->
+    <div class="active section" data-bind="text: name, click: $parent.returnToCategory"></div>
+    <i class="right chevron icon divider"></i>
+    <!-- /ko -->
+  </div>
+
+  <div class="ui centered container">
+    <div class="ui yellow left aligned padded basic segment">            
+      <div class="ui relaxed divided list" data-bind="foreach: categories">        
+        <div class="item">
+          <div class="active title" style="margin-left:20px">
+            <a data-bind="click: $parent.showCategory" style="cursor:pointer;"><i class=" brown file icon"></i><span data-bind="text: name"/></a>
+          </div>
+        </div>
+      </div>      
+    </div>
+  </div>
+  <div div class="ui basic segment">
+    <div class="ui container">
+      <div class="ui top attached tabular menu">
+        <a class="red item active" data-tab="empresas">
+          <span style="color: black;">Empresas:</span>
+          <span class="counter" data-bind="text: filteredCompanies().length"/>
+        </a>
+        <a class="yellow item" data-tab="productos">
+          <span style="color: black;">Productos:</span>
+          <span class="counter" data-bind="text: filteredProducts().length"/>
+        </a>
+        <a class="green item" data-tab="servicios">
+          <span style="color: black;">Servicios:</span>
+          <span class="counter" data-bind="text: filteredServices().length"/>
+        </a>
+      </div>      
+      
+      <div class="ui active simple tab tabs-details" data-tab="empresas">
+        <div class="ui basic container segment">
+          <div class="ui list" data-bind="foreach: filteredCompanies">
+            <div class="item">
+              <div class="ui red raised very padded text container segment">
+                <div class="ui basic segment" style="margin-top:-30px;">
+                  <h3 class="ui center aligned header" style="text-transform: capitalize" data-bind="text: name"></h3>
+                </div>
+                <div class="ui simple attached tab active tabs-details" data-tab="perfil">
+                  <div class="ui two column doubling stackable grid container">
+                    <div class="column">
+                      <div class="ui left basic container">
+                        <img data-bind="attr:{ src:'/image_store/logo_'+ id +'.gif' }" width="150" height="150"/>
+                      </div>
+                    </div>
+                    <div class="column">
+                      <span style="color:#0E6EB8"><b>Actividad: </b></span>
+                      <p data-bind="text: detail"></p>
+                      <div class="ui center aligned basic container">
+                        <a class="field" data-bind="attr:{ href: '/empresa/' + id }">Ver perfil</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ui simple tab tabs-details" data-tab="productos">
+        <div class="ui container segment basic">
+          <div class="ui list" data-bind="foreach: filteredProducts">
+            <div class="item">
+              <div class="ui yellow raised very padded text container segment">
+                <div class="ui basic segment" style="margin-top:-30px;">
+                  <h3 class="ui center aligned header" style="text-transform: capitalize" data-bind="text: commercial_name"></h3>
+                </div>
+                <div class="ui two column doubling stackable grid container">
+                  <div class="column">
+                    <img data-bind="attr:{ src: '/image_store/product' + id + '.gif' }" width="150" height="150"/>
+                  </div>
+                  <div class="column">
+                    <span style="color:#0E6EB8"><b>Descripción: </b></span>
+                    <p data-bind="text: description"/>
+                    <div class="ui floated container basic">
+                      <span style="color:#0E6EB8"><b>Empresa: </b></span>
+                      <a class="field" data-bind="attr:{ href: '/empresa/' + company_id }">
+                        <span data-bind="text: company_name"></span></a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ui simple attached tab tabs-details" data-tab="servicios">
+        <div class="ui container segment basic">
+          <div class="ui list" data-bind="foreach: filteredServices">
+            <div class="item">
+              <div class="ui green raised very padded text container segment">
+                <div class="ui basic segment" style="margin-top:-30px;">
+                  <h3 class="ui center aligned header" style="text-transform: capitalize" data-bind="text: commercial_name"></h3>
+                </div>
+                <div class="ui two column doubling stackable grid container">
+                  <div class="column">
+                    <img class="ui image" data-bind="attr:{ src: '/image_store/service' + id + '.gif' }" width="150" height="150"/>
+                  </div>
+                  <div class="column">
+                    <span style="color:#0E6EB8"><b>Descripción: </b></span>
+                    <p data-bind="text: description"></p>
+                    <div class="ui floated container basic">
+                      <span style="color:#0E6EB8"><b>Empresa: </b></span>
+                      <a class="field" data-bind="attr:{ href: '/empresa/' + company_id }">
+                        <span data-bind="text: company_name"></span></a>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--pestañas-->
+
+
+  <!--fin pestañas-->
+  <script type="text/javascript">
+      $(window).load(function () {
+          $('.menu .item').tab();
+      });
+      $('.ui.cube')
+          .shape('attach events', 'blue.button', 'flip right');
+      $('.ui.cube')
+          .shape('attach events', 'olive.button', 'flip left');
+      $('.ui.modal')
+          .modal('attach events', '.field', '.show');
+      $('.ui.accordion')
+          .accordion();
+
+  </script>
+</div>

@@ -1,0 +1,2 @@
+module StatisticsCompaniesHelper
+end

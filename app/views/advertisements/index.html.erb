@@ -1,0 +1,330 @@
+<div class="ui container segment basic">
+
+  <!--Contenido-->
+  <div class="ui container segment basic">
+
+    <!-- Breadcrumbs -->
+    <div class="ui large breadcrumb">
+      <div class="active section">Anuncios</div>
+    </div>
+  </div>
+  <div class="ui centered container">
+    <div class="ui yellow left aligned padded basic segment">
+      <div class="ui right floated container basic">
+        <a id="createButton" class="ui right floated green button">
+          <i class="plus icon"></i>Agregar Anuncio
+        </a>
+      </div>
+    </div>
+    <br>
+
+
+    </br>
+
+    <div class="ui four buttons">
+      <button id="allAnnouncementsButton" class="ui button active">Todos los anuncios</button>
+      <button id="requestedAnnouncementsButton" class="ui button">Solicitudes pendientes</button>
+      <button id="acceptedAnnouncementsButton" class="ui button">Anuncios aceptados</button>
+      <button id="rejectedAnnouncementsButton" class="ui button">Anuncios rechazados</button>
+    </div>
+
+    <div class="ui stackable inverted divided grid" data-bind="foreach: asCompanyAds">
+      <div class="eight wide column">
+        <div class="ui basic segment">
+          <div class="ui teal header">
+            <span data-bind="text: description"/>
+          </div>
+
+          <img data-bind="attr:{ src: '/image_store/announcement_' + id + '.gif' }" width="200" height="250"/>
+          <div id="simpleFormat" class="ui content">
+            <div class="ui basic segment">
+              <p style="color:#0E6EB8"><b>Fecha de inicio: </b><span data-bind="text: publicationDate"/></p>
+              <p style="color:#0E6EB8"><b>Fecha de fin: </b><span data-bind="text: expirationDate"/></p>
+
+              <div data-bind="if: state=='Pendiente'"/>
+              <p style="color:#0E6EB8"><b>Estado: </b>
+                <span class="ui yellow label" data-bind="text: state"/>
+            </div>
+            <div data-bind="if: state=='Aceptada'"/>
+            <p style="color:#0E6EB8"><b>Estado: </b>
+              <span class="ui green label" data-bind="text: state"/>
+          </div>
+          <div data-bind="if: state=='Rechazada'"/>
+          <p style="color:#0E6EB8"><b>Estado: </b>
+            <!-- <a  class="ui red lab0el" data-bind="click: $parent.openDetail">Rechazada</a> -->
+            <a class="ui red label">Rechazada</a>
+            <!-- <div id="modalFull" class="ui inverted first test modal"> -->
+            <div class="ui dropdown">
+              <div class="header">
+          <p style="color:#0E6EB8"><b>Motivo del rechazo:</b></p>
+        </div>
+        <div class="ui form content ui center aligned ui tertiary inverted red segment">
+          <div class="field ">
+            <!-- <img class="ui centered medium image"  data-bind="attr:{ src: '/image_store/announcement_' + id + '.gif' }"  width="75%" height="50%"/> -->
+            <!-- <h1 style="text-align: center; " data-bind="text: reason"></h1> -->
+            <p style="text-align: center; " data-bind="text: reason"></p>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <a class="ui red circular label" data-bind="click: $parent.removeAdvertisement">Eliminar</a>
+  <a  class="ui blue circular label"  data-bind="click: $parent.openAdvertisementToEdit" >Editar</a>
+
+
+</div>
+</div>
+
+</div>
+</div>
+</div>
+<!--Exito creando! (modal)-->
+
+<div id="successMessage" class="ui modal">
+
+  <div class="header">Exito!</div>
+  <div class="content">
+    <p>Registro de nuevo anuncio</p>
+  </div>
+  <div class="actions">
+    <a class="ui inverted green positive right button" href="/company/advertisements">Aceptar</a>
+  </div>
+
+</div>
+
+<!--Crear solicitud de anuncio (modal)-->
+<div id="createAdvertisementDialog" class="ui inverted long test modal">
+  <!-- <i class="close icon"></i> -->
+  <div class="header">
+    Crear Anuncio
+  </div>
+  <div class="ui form content">
+    <div class="field">
+      <table style=" width: 100%;">
+        <tr>
+          <td>
+            <label>Descripción</label>
+            <input name="description" type="text" data-bind="value: editingAdvertisementModel().description" maxlength="150">
+
+            <label>Fecha inicial de la publicación</label>
+            <input name="publicationDate" type="date" data-bind="value: editingAdvertisementModel().publicationDate">
+
+            <label>Fecha final de la publicación</label>
+            <input name="expirationDate" type="date" data-bind="value: editingAdvertisementModel().expirationDate">
+
+          </td>
+          <td>
+          </td>
+
+          <td>
+            <label>Imagen</label>
+            <div id="image_preview" style="display:none">
+              <img class="ui centered medium image" id="announcementPreview" src=""/></div>
+            <input data-bind="value: adImage" type="file" name="announcementFile" id="announcementFile" required/>
+            <h4 id='loading' style="display:none">Subiendo..</h4>
+            <div id="message"></div>
+          </td>
+        </tr>
+      </table>
+      <!-- -->
+      <div data-bind="visible: hasError" class="ui negative message">
+        <!-- <i class="close icon" data-bind="click: noErrors"></i> -->
+        <div class="header">
+          Tu Anuncio no pudo ser creado debido a que:
+        </div>
+        <ul data-bind="foreach:errorMessages">
+          <li><p data-bind="text: $data"></p></li>
+        </ul>
+
+      </div>
+    </div>
+  </div>
+  <div class="actions">
+    <div class="ui inverted red deny button"  onclick="resetForm()">Cancelar</div>
+    <button id="submitA" class="ui inverted blue positive right labeled icon button">Aceptar<i class="plus icon"></i>
+    </button>
+  </div>
+</div>
+
+<!--Editando solicitud de anuncio (modal)-->
+
+<div id="editAdvertisementDialog" class="ui inverted long test modal">
+  <i class="close icon"></i>
+  <div class="header">
+    Editando Anuncio
+  </div>
+  <div class="ui form content">
+    <div class="field">
+      <table style=" width: 100%;">
+        <tr>
+          <td>
+            <label>Descripción</label>
+            <input id="description" name="description" type="text" data-bind="value: editingAd().description" maxlength="150">
+
+            <label>Fecha inicial de la publicación</label>
+            <input id="publicationDate" name="publicationDate" type="date" data-bind="value: editingAd().publicationDate">
+
+            <label>Fecha final de la publicación</label>
+            <input id="expirationDate" name="expirationDate" type="date" data-bind="value: editingAd().expirationDate">
+
+          </td>
+          <td>
+            <div id="edit_image_preview" style="display:none"><img id="edit_announcementPreview" src=""/></div>
+            <label>Elija la imagen de su producto</label><br/>
+            <input type="file" name="edit_announcementFile" id="edit_announcementFile" required/>
+            <!-- <button id="submitAnnouncment">Subir</button> -->
+            <h4 id='loading' style="display:none">Subiendo..</h4>
+
+          </td>
+
+
+        </tr>
+      </table>
+      <!-- -->
+      <div data-bind="visible: hasError" class="ui negative message">
+        <!-- <i class="close icon" data-bind="click: noErrors"></i> -->
+        <div class="header">
+          Tu Anuncio no pudo ser creado debido a que:
+        </div>
+        <ul data-bind="foreach:errorMessages">
+          <li><p data-bind="text: $data"></p></li>
+        </ul>
+
+      </div>
+    </div>
+  </div>
+  <div class="actions">
+    <div class="ui inverted red deny button"  onclick="resetForm()">
+      Cancelar
+    </div>
+    <button class="ui inverted green positive right labeled icon button" data-bind="click: editAd">
+      Guardar
+      <i class="save icon"></i>
+    </button>
+  </div>
+
+</div>
+
+
+    <!--  -->
+
+
+<script type="text/javascript">
+    $('.ui.accordion')
+        .accordion();
+
+    $('#createAdvertisementDialog')
+        .modal('setting', 'closable', false)
+        .modal('attach events', '#createButton', 'show')
+        // .modal('setting', 'transition', 'vertical flip')
+        .modal({
+            onApprove: function () {
+                return advertisementsModel.createAdvertisement();
+            }
+        })
+    ;
+
+    // selector cache
+    var $buttons = $('.ui.buttons .button');
+
+    function toogleButton() {
+        $(this)
+            .addClass('active')
+            .siblings()
+            .removeClass('active');
+    }
+
+    $buttons.on('click', toogleButton);
+    $buttons.on('click', function () {
+        var id = $(this).attr("id");
+        advertisementsModel.companyFilter(id);
+    });
+
+</script>
+<script>
+    var isCompanyPage = true;
+    var isRegionalPage = false;
+    var isVisitorPage = false;
+// IMAGEN PARA NUEVO ANUNCIO
+    $(document).ready(function (e) {
+        $("#announcementFile").change(function () {
+            $("#message").empty();
+            var file = this.files[0];
+            var imagefile = file.type;
+            var match = ["image/jpeg", "image/png", "image/jpg", "image/gif"];
+            if (!((imagefile == match[0]) || (imagefile == match[1]) || (imagefile == match[2]) || (imagefile == match[3]))) {
+                $('#previewing').attr('src', 'noimage.png');
+                $("#message").html("<p id='error'>Por favor seleccione un archivo de imagen válido.</p><span id='error_message'> Los tipos soportados son: jpg, gif y png.</span>");
+                return false;
+            }
+            else {
+                var reader = new FileReader();
+                reader.onload = imageIsLoaded;
+                reader.readAsDataURL(this.files[0]);
+            }
+        });
+
+        function imageIsLoaded(e) {
+            $("#file").css("color", "green");
+            $('#image_preview').css("display", "block");
+            $('#announcementPreview').attr('src', e.target.result);
+            $('#announcementPreview').attr('width', '150px');
+            $('#announcementPreview').attr('height', '130px');
+        };
+    });
+
+    // IMAGEN PARA EDITAR ANUNCIO
+
+    $(document).ready(function (e) {
+        $("#edit_announcementFile").change(function () {
+            $("#message").empty();
+            var file = this.files[0];
+            var imagefile = file.type;
+            var match = ["image/jpeg", "image/png", "image/jpg", "image/gif"];
+            if (!((imagefile == match[0]) || (imagefile == match[1]) || (imagefile == match[2]) || (imagefile == match[3]))) {
+                $('#previewing').attr('src', 'noimage.png');
+                $("#message").html("<p id='error'>Por favor seleccione un archivo de imagen válido.</p><span id='error_message'> Los tipos soportados son: jpg, gif y png.</span>");
+                return false;
+            }
+            else {
+                var reader = new FileReader();
+                reader.onload = imageIsLoaded;
+                reader.readAsDataURL(this.files[0]);
+            }
+        });
+
+        function imageIsLoaded(e) {
+            $("#file").css("color", "green");
+            $('#edit_image_preview').css("display", "block");
+            $('#edit_announcementPreview').attr('src', e.target.result);
+            $('#edit_announcementPreview').attr('width', '150px');
+            $('#edit_announcementPreview').attr('height', '130px');
+        };
+
+
+    });
+
+
+//
+    function simpleFormat(str) {
+      str = str.replace(/\r\n?/, "\n");
+      str = $.trim(str);
+      if (str.length > 0) {
+        str = str.replace(/\n\n+/g, '</p><p>');
+        str = str.replace(/\n/g, '<br />');
+        str = '<p>' + str + '</p>';
+      }
+      return str;
+    }
+
+    function resetForm() {
+     document.getElementById("description").value = "";
+     document.getElementById("publicationDate").value = "";
+     document.getElementById("expirationDate").value = "";
+   }
+
+</script>
+</br>
+</div>

@@ -1,0 +1,161 @@
+<script>
+$(document).ready(function () {
+          var role = localStorage.getItem("UserRole");
+          if (!role || role != "general") {
+              alert("Acceso denegado, no tiene autorización para este contenido");
+              location.href = "/logins";
+              return;
+
+          }
+        })
+</script>
+<div class="ui segment basic container">
+     <!-- Breadcrumbs -->
+    <div class="ui container basic">
+        <div class="ui large breadcrumb">
+            <div class="active section">Usuarios</div>
+        </div>
+        <div class="ui yellow left aligned padded basic segment">
+            <a class="ui labeled icon green button" href="/users/new"><i class="plus icon"></i>Crear Usuario</a>
+        </div>
+    </div>
+
+    <div class="ui segment basic container" id="listaCompu">
+        <table class="ui largue table">
+            <thead>
+                <tr>
+                    <th>Usuarios</th>
+                    <th>Correo</th>
+                    <th>Rol</th>
+                    <th>Departamentos</th>
+                    <th colspan="2">Opciones</th>
+
+                </tr>
+            </thead>
+
+            <tbody data-bind="foreach: users">
+                <tr data-bind="style: {backgroundColor: !lock ? 'white' : 'grey' }">
+                    <td>
+                        <div class=""><span data-bind="text: name + ' ' + last_name" /></div>
+                    </td>
+                    <td>
+                        <div class=""><span data-bind="text: email" /></div>
+                    </td>
+                    <td>
+                        <div class=""><span data-bind="text: role" /></div>
+                    </td>
+                    <td>
+                        <div class=""><span data-bind="text: department" /></div>
+                    </td>
+                    <td>
+                        <div data-bind='visible: !lock'>
+                            <a class="ui olive tiny button" data-bind="click: $parent.lockUser">Bloquear</a>
+                        </div>
+                        <div data-bind='visible: lock'>
+                            <a class="ui olive tiny button" data-bind="click: $parent.lockUser">Desbloquear</a>
+                        </div>
+                    </td>
+                    <td>
+                         <button class="ui yellow tiny button" data-bind="click: $parent.openUserToEdit">Nueva Contraseña</button>
+                    </td>
+                </tr>
+            </tbody>
+
+        </table>
+    </div>
+
+    <!-- Tabla empresas Movil-->
+    <div data-bind="foreach: users" class="ui cards centered basic segment container" id="listaMovil">
+      <div class="card" data-bind="style: {backgroundColor: !lock ? 'white' : 'grey' }">
+        <div class="content">
+            <i class="right floated user icon"></i>
+            <div class="header"><span data-bind="text: name + ' ' + last_name" /></div>
+            <div class="ui divider"></div>
+            <div class="description"><strong>Correo: </strong><span data-bind="text: email"></span></div>
+            <div class="description"><strong>Rol: </strong><span data-bind="text: role"></span></div>
+            <div class="description"><strong>Depatamento: </strong><span data-bind="text: department"></span></div>
+        </div>
+        <div class="extra content">
+            <button class="right floated ui yellow mini button" data-bind="click: $parent.openUserToEdit">Nueva Contraseña</button>
+            <div data-bind='visible: !lock'>
+                <a class="ui olive mini button left floated" data-bind="click: $parent.lockUser">Bloquear</a>
+            </div>
+            <div data-bind='visible: lock'>
+                <a class="ui olive mini button left floated" data-bind="click: $parent.lockUser">Desbloquear</a>
+            </div>
+        </div>
+      </div>
+    </div>
+        <div id="editUserDialog" class="ui inverted modal coupled first">
+
+<!-- Fin Tabla empresas Movil-->
+
+           <div data-bind="visible: hasError" class="ui negative message">
+                <i  data-bind="click: noErrors"></i>
+                <div class="header">
+                    No puedes modificar tu contraseña por las siguientes razones:
+                </div>
+                <ul data-bind="foreach:errorMessages"> <li><p data-bind="text: $data"></p></li></ul>
+          </div>
+          <div class="header">
+            Cambiar contraseña
+          </div>
+          <div class="ui form content">
+            <div class="field">
+              <label>Nueva Contraseña</label>
+              <input name="first-name"type="password" id="p1" data-bind="value: editingUserModel().new_password">
+            </div>
+            <div class="field">
+              <label>Confirmar nueva contraseña</label>
+              <input name="first-name"type="password" id="p2" data-bind="value: editingUserModel().new_password_confirmation"></input>
+            </div>
+           </div>
+          <div class="actions">
+            <div class="ui inverted red deny button">
+              Cancelar
+            </div>
+            <div class="ui inverted green positive right labeled icon button">
+              Guardar
+              <i class="save icon"></i>
+            </div>
+          </div>
+        </div>
+        <!-- Tabla empresas Movil-->
+</div>
+<script type="text/javascript">
+$('.coupled.modal')
+    .modal({
+        allowMultiple: true
+    })
+;
+    $('#editUserDialog')
+        .modal('attach events', '.yellow.button', 'show')
+        .modal('setting', 'closable', false)
+        .modal('setting', 'transition', 'vertical flip')
+        .modal({
+            onApprove: function () {
+              if (!usersModel.verifyPassword())
+              {
+                return false;
+              }
+            }
+        })
+    ;
+</script>
+
+<style>
+  #listaMovil {
+    display: none;
+  }
+
+  @media screen and (max-width: 995px ) {
+    #listaCompu {
+      display: none;
+    }
+
+    #listaMovil {
+      display: flex;
+    }
+
+  }
+</style>

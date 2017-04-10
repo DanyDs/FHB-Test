@@ -1,0 +1,51 @@
+
+      <%= javascript_include_tag "https://www.google.com/jsapi", "chartkick" %>
+
+
+
+      <!-- Breadcrumbs -->
+      <div class="ui container segment basic">
+        <div class="ui large breadcrumb">
+          <div class="active section">Estadísticas</div>
+        </div>
+        <div class="ui yellow left aligned padded basic segment" style="margin-bottom: -45px;">
+        </div>
+      </div>
+
+    <!--Contenido-->
+      <div class="ui container segment basic">
+    <!--Pestañas-->
+    <div class="three ui buttons">
+      <a class="ui button item" href="statistics_products" data-tab="productos">Productos</a>
+      <a class="ui button active item" href="statistics_services" data-tab="servicios">Servicios</a>
+      <a class="ui button item" href="statistics_companies" data-tab="empresas">Empresas</a>
+    </div>
+     <!--fin Pestañas-->
+
+     <br><br>
+     <div class="ui vertical stripe quote segment center aligned">
+         <h2 class="ui header blue">Los 20 Servicios mas visitados desde <%= @FechaS %>  <%= @mensaje %> <%= @FechaSF %></h2>
+     <div class="ui divider"></div>
+     <div class="ui one column stackable center aligned page grid">
+    <form class="ui form" method="get" action="statistics_services">
+        <div class="fields">
+            <div class="field">
+              <label>Desde</label>
+              <input type="date" maxlength="10" name="fechaS" required min="2000-01-01" required max="<%= Date.current.to_s%>" value="<%= @FechaS %>">
+            </div>
+            <div class="field">
+              <label>Hasta</label>
+              <input type="date" maxlength="10" name="fechaSF" required min="2000-01-01" required max="<%= Date.current.to_s%>" value="<%= @FechaSF %>">
+            </div>
+            <div class="field">
+                <label><br></label>
+              <input class="ui blue button" type="submit" value="visualizar">
+            </div>
+        </div>
+     </form>
+   </div>
+       <div class="ui divider"></div>
+       <%= bar_chart @EstadisticasS , label: "visitas" ,  xtitle: "Nro de visitas", ytitle: "nombre de servicio"%>
+     </div>
+    <!--Fin Contenido-->
+  </div>
